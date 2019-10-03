@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_colore_main_page"
+    tools:context="com.example.instalike.MainActivity">
+
+
+    <TextView
+        android:id="@+id/activity_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:padding="20dp"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:text="BIENVENUE SUR INSTALIKE"/>
+
+    <ImageView
+        android:id="@+id/activity_cpt_pic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/instagramlogo"></ImageView>
+
+    <EditText
+        android:id="@+id/activity_main_name_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="Pseudo"
+        android:textSize="25sp" />
+
+    <EditText
+        android:id="@+id/activity_main_mdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="password"
+        android:textSize="25sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        tools:context="com.example.instalike.MainActivity">
+
+        <Button
+            android:id="@+id/activity_main_connexion_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="80dp"
+            android:padding="30dp"
+            android:text="Connexion" />
+
+        <Button
+            android:id="@+id/activity_main_login_btn"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="30dp"
+            android:text="sign In" />
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
+

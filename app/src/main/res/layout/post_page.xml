@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/post_page_Relative_Layout"
+    android:background="#FDFEFE">
+
+    <ImageView
+        android:id="@+id/post_page_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"></ImageView>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/post_page_image">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/post_page_pseudo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pseudo"
+                android:textColor="#000000"
+                android:layout_margin="10dp"></TextView>
+            <TextView
+                android:id="@+id/post_page_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/post_page_pseudo"
+                android:text="Description du post"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000"
+                android:layout_margin="10dp"/>
+
+            <ImageView
+                android:id="@+id/post_page_heart"
+                android:clickable="true"
+                android:layout_width="46dp"
+                android:layout_height="44dp"
+                android:layout_below="@+id/post_page_description"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="20dp"
+                app:srcCompat="@drawable/heart" />
+
+            <ImageView
+                android:id="@+id/post_page_comment"
+                android:clickable="true"
+                android:layout_width="46dp"
+                android:layout_height="44dp"
+                android:layout_below="@+id/post_page_description"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="250dp"
+                app:srcCompat="@drawable/messagepost"></ImageView>
+            <TextView
+                android:id="@+id/post_page_nbLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/post_page_heart"
+                android:layout_marginLeft="120dp"
+                android:textColor="#000000"
+                android:text="x"></TextView>
+            <TextView
+                android:id="@+id/post_page_nbComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/post_page_heart"
+                android:layout_marginLeft="270dp"
+                android:textColor="#000000"
+                android:text="x"></TextView>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="100dp"
+                android:background="#1ABC9C"
+                android:text="Download"
+                android:layout_below="@+id/post_page_nbComment"></Button>
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+
+
+</RelativeLayout>
