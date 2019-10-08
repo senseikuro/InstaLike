@@ -82,11 +82,5 @@
                 android:text="Download"
                 android:layout_below="@+id/post_page_nbComment"></Button>
         </RelativeLayout>
-
     </ScrollView>
-
-
-
-
-
 </RelativeLayout>

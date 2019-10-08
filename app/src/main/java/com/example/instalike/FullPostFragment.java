@@ -16,21 +16,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
         import java.util.ArrayList;
 
-public class FullPostFragment extends Fragment {
+public class FullPostFragment extends Fragment implements View.OnClickListener {
     private ImageView mPhoto,mHeart,mComment;
     private TextView mUsername, mDescription, mNbLike, mNbComment;
     private View view;
+    int postisLike,imagePost,nbComment;
+    String nbLike,username,description;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.post_page,container,false);
 
-        String username=getArguments().getString("USERNAME");
-        String description=getArguments().getString("DESCRIPTION");
-        String nbLike=getArguments().getString("NBLIKE");
-        int imagePost=getArguments().getInt("IMAGE");
-        int postisLike=getArguments().getInt("ISLIKE",0);
-        int nbComment=getArguments().getInt("NBCOMMENT",0);
-        System.out.println(nbLike);
+        username=getArguments().getString("USERNAME");
+        description=getArguments().getString("DESCRIPTION");
+        nbLike=getArguments().getString("NBLIKE");
+        imagePost=getArguments().getInt("IMAGE");
+        postisLike=getArguments().getInt("ISLIKE",0);
+        nbComment=getArguments().getInt("NBCOMMENT",0);
         mPhoto=view.findViewById(R.id.post_page_image);
         mHeart=view.findViewById(R.id.post_page_heart);
         mComment=view.findViewById(R.id.post_page_comment);
@@ -45,9 +46,43 @@ public class FullPostFragment extends Fragment {
         mUsername.setText(username);
         mDescription.setText(description);
         mNbLike.setText(nbLike);
-
-
+        mComment.setOnClickListener(this);
+        mHeart.setOnClickListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.post_page_heart:
+                int currentLike=Integer.parseInt(nbLike);
+
+                if (postisLike==R.drawable.redheart){
+                    mHeart.setImageResource(R.drawable.heart);
+                    currentLike--;
+                    nbLike=String.valueOf(currentLike);
+                    postisLike=R.drawable.heart;
+                }
+                else{
+                    mHeart.setImageResource(R.drawable.redheart);
+                    currentLike++;
+                    nbLike=String.valueOf(currentLike);
+                    postisLike=R.drawable.redheart;
+                }
+                mNbLike.setText(String.valueOf(currentLike));
+                break;
+            case R.id.post_page_comment:
+                changeActivityToComment();
+                break;
+        }
+
+    }
+    public void changeActivityToComment(){
+        Fragment selectedFragment= null;
+        selectedFragment=new CommentFragment();
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                selectedFragment).addToBackStack(null).commit();
     }
 }
