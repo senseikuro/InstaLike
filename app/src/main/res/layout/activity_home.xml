@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".HomeActivity">
-    <LinearLayout
+
+
+    //TOP WHITE BAR
+    <RelativeLayout
+        android:id="@+id/top_white_bar"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:orientation="horizontal"
-        android:background="#FAFAFA">
+        android:background="@color/colorBackground">
 
-
+        //LOGO
         <ImageView
             android:id="@+id/activity_home_photo"
             android:layout_width="59dp"
@@ -21,39 +26,40 @@
             android:clickable="true"
             android:src="@drawable/appareil_photo"></ImageView>
 
+        //APP NAME
         <TextView
             android:id="@+id/activity_whome_texte_instagram"
             android:layout_width="104dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Instagram"
+            android:layout_toRightOf="@+id/activity_home_photo"
+            android:text="Instalike"
             android:textColor="#000000"
             android:textSize="20sp"></TextView>
 
-        <ImageView
-            android:id="@+id/activity_home_msg"
-            android:layout_width="54dp"
-            android:layout_height="43dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/message"></ImageView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    //APP CONTENT
+    <RelativeLayout
         android:id="@+id/rvPosts"
         android:layout_width="match_parent"
-        android:layout_height="559dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@id/bottom_navigation"
+        android:layout_below="@id/top_white_bar"
+        />
 
-    </LinearLayout>
+        //BOTTOM NAVIGATION
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorBackground"
+            app:itemIconTint="@drawable/bottom_navigation_colors"
+            app:menu="@menu/bottom_navigation" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/bottom_navigation"></com.google.android.material.bottomnavigation.BottomNavigationView>
 
-
-</LinearLayout>
+</RelativeLayout>

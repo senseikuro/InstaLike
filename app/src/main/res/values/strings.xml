@@ -4,4 +4,13 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!--BOTTOM NAVIGATION VIEW -->
+    <string name="bottom_navigation_menu_home">Home</string>
+    <string name="bottom_navigation_menu_search">Search</string>
+    <string name="bottom_navigation_menu_add_post">Add post</string>
+    <string name="bottom_navigation_menu_favorites">Favorites</string>
+    <string name="bottom_navigation_menu_profile">Profile</string>
+
+
 </resources>
