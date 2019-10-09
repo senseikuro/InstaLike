@@ -2,9 +2,9 @@
 <resources>
     <!-- APP BASE -->
     <color name="colorPrimary">#FDFEFE</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#D81B60</color>
-
+    <color name="colorbackgroudmainPage">#ECF0F1</color>
     <color name="colorBackground">#FFFFFF</color>
 
 

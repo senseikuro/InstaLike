@@ -6,13 +6,13 @@
     android:id="@+id/post_page_Relative_Layout"
     android:background="#FDFEFE">
 
-    <ImageView
-        android:id="@+id/post_page_image"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_margin="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"></ImageView>
+        <ImageView
+            android:id="@+id/post_page_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"></ImageView>
 
 
     <ScrollView
@@ -83,4 +83,6 @@
                 android:layout_below="@+id/post_page_nbComment"></Button>
         </RelativeLayout>
     </ScrollView>
+
+
 </RelativeLayout>

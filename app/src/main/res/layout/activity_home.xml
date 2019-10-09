@@ -41,15 +41,19 @@
     </RelativeLayout>
 
     //APP CONTENT
-    <RelativeLayout
-        android:id="@+id/rvPosts"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_above="@id/bottom_navigation"
         android:layout_below="@id/top_white_bar"
-        />
-
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp">
+        <RelativeLayout
+            android:id="@+id/rvPosts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </androidx.cardview.widget.CardView>
         //BOTTOM NAVIGATION
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
@@ -60,6 +64,5 @@
             android:background="@color/colorBackground"
             app:itemIconTint="@drawable/bottom_navigation_colors"
             app:menu="@menu/bottom_navigation" />
-
 
 </RelativeLayout>

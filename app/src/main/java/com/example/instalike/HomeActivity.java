@@ -50,9 +50,11 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_search:
                     selectedFragment=new SearchFragment();
+                    break;
 
                 case R.id.nav_profile:
-                    selectedFragment=new SearchFragment();
+                    selectedFragment=new ProfilFragement();
+                    break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
                     selectedFragment).commit();

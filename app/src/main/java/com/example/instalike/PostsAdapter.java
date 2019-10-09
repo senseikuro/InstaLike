@@ -17,6 +17,7 @@ import java.util.List;
             void onItemClick(int position);
             void onLikeClick(int position);
             void onCommentClick(int position);
+            void onProfilClick(int position);
         }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -64,6 +65,24 @@ import java.util.List;
                         int position=getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION)
                             listener.onCommentClick(position);
+                    }
+                }
+            });
+            mPicsPP.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v) {
+                    if(listener!= null){
+                        int position=getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                            listener.onProfilClick(position);
+                    }
+                }
+            });
+            mUserName.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v) {
+                    if(listener!= null){
+                        int position=getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                            listener.onProfilClick(position);
                     }
                 }
             });

@@ -54,8 +54,11 @@ public class SearchFragment extends Fragment{
     }
 
     public void changeItem(int position, String text){
-        Posts.get(position).changeDescription("clicked");
-        mAdapter.notifyItemChanged(position);
+        Fragment selectedFragment= null;
+        selectedFragment=new ProfilFragement();
+        System.out.println("je suis");
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                selectedFragment).addToBackStack(null).commit();
     }
 
     public void createList(){

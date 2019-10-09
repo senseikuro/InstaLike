@@ -76,6 +76,7 @@
                             android:layout_gravity="center_vertical">
 
                             <TextView
+                                android:id="@+id/profil_post"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -104,6 +105,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/profil_followers"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -133,6 +135,7 @@
                             android:orientation="vertical" >
 
                             <TextView
+                                android:id="@+id/profil_abonnement"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -163,7 +166,8 @@
                 android:layout_alignParentBottom="true">
 
                 //Follow button
-                <com.google.android.material.button.MaterialButton
+                <Button
+                    android:id="@+id/profil_follow_btn"
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:text="S'abonner"
@@ -181,6 +185,7 @@
 
     //Galerie photo
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_profil_listPost"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

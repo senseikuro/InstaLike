@@ -55,6 +55,13 @@ public class HomeFragment extends Fragment {
 
     }
 
+    public void changeActivityToProfil(){
+        Fragment selectedFragment= null;
+        selectedFragment=new ProfilFragement();
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                selectedFragment).addToBackStack(null).commit();
+    }
     public void changeActivityToComment(){
         Fragment selectedFragment= null;
         selectedFragment=new CommentFragment();
@@ -91,6 +98,7 @@ public class HomeFragment extends Fragment {
                 increaseLike(position);
             }
             public void onCommentClick(int position){changeActivityToComment();}
+            public void onProfilClick(int position){changeActivityToProfil();}
         });
     }
 }
