@@ -7,20 +7,22 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
 public class Database extends SQLiteOpenHelper {
 
-    private static final String TABLE_USER = "table_user";
+    private static final String USER_TABLE = "user_table";
     private static final String COL_ID = "ID";
     private static final String COL_NAME = "Name";
     private static final String COL_SURNAME = "Surname";
+    private static final String COL_PASSWORD = "Password";
     private static final String COL_MAIL = "Mail";
     private static final String COL_PSEUDEO = "Pseudeo";
     private static final String COL_DATE = "Date";
 
-    private static final String CREATE_BDD = "CREATE TABLE " + TABLE_USER + " ("
+    private static final String CREATE_BDD = "CREATE TABLE " + USER_TABLE + " ("
 
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_NAME + " TEXT NOT NULL, "
             + COL_SURNAME + " TEXT NOT NULL, "
             + COL_MAIL + " TEXT NOT NULL, "
+            + COL_PASSWORD + " TEXT NOT NULL, "
             + COL_PSEUDEO + " TEXT NOT NULL, "
             + COL_DATE + " DATETIME NOT NULL);";
 
@@ -38,7 +40,7 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //On peut faire ce qu'on veut ici moi j'ai décidé de supprimer la table et de la recréer
         //comme ça lorsque je change la version les id repartent de 0
-        db.execSQL("DROP TABLE " + TABLE_USER + ";");
+        db.execSQL("DROP TABLE " + USER_TABLE + ";");
         onCreate(db);
     }
 }

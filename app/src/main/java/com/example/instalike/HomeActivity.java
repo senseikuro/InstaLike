@@ -9,9 +9,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.example.instalike.db.User;
+import com.example.instalike.db.UserActions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.*;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity {
     private ImageView photo;
@@ -25,6 +29,38 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+        //Test BDD
+        //Création d'une instance de ma classe LivresBDD
+        UserActions userActions = new UserActions(this);
+
+        //Création d'un livre
+        Date today = Calendar.getInstance().getTime();
+        User user = new User("JOUANNE", "Vincent", "jouanne.vincent@gmail.com" , "123456", "Latruhm", today);
+
+        //On ouvre la base de données pour écrire dedans
+        userActions.open();
+        //On insère le livre que l'on vient de créer
+        userActions.insertUser(user);
+
+        //Pour vérifier que l'on a bien créé notre livre dans la BDD
+        //on extrait le livre de la BDD grâce au titre du livre que l'on a créé précédemment
+        User userFromBdd = userActions.getUserWithPseudeo(user.getPseudeo());
+        //Si un livre est retourné (donc si le livre à bien été ajouté à la BDD)
+        if(userFromBdd != null){
+            //On affiche les infos du livre dans un Toast
+            Toast.makeText(this, userFromBdd.toString(), Toast.LENGTH_LONG).show();
+            //On modifie le titre du livre
+            userFromBdd.setPseudeo("J'ai modifié le pseudeo du user");
+            //Puis on met à jour la BDD
+            userActions.updateUser(userFromBdd.getId(), userFromBdd);
+        }
+        userActions.close();
+
+
+
+
 
         /*HomeFragment fragment = new HomeFragment();
         FragmentManager fragmentManager=getSupportFragmentManager();
