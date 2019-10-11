@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Search"></item>
     <item
+        android:id="@+id/nav_publish_post"
+        android:icon="@drawable/ic_add_a_photo_black_24dp"
+        android:title="Publish"></item>
+    <item
         android:id="@+id/nav_favorites"
         android:icon="@drawable/ic_favorite_black_24dp"
         android:title="Favorites"></item>
@@ -17,5 +21,6 @@
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_person_black_24dp"
         android:title="Profile"></item>
+
 
 </menu>

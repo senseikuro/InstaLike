@@ -89,7 +89,7 @@ public class UserActions {
         values.put(COL_PASSWORD, user.getPassword());
         values.put(COL_MAIL, user.getMail());
         values.put(COL_PSEUDEO, user.getPseudeo());
-        values.put(COL_DATE, user.getDate().toString());
+        //values.put(COL_DATE, user.getDate().toString());
 
         return bdd.update(USER_TABLE, values, COL_ID + " = " +id, null);
     }
@@ -101,7 +101,7 @@ public class UserActions {
 
     public User getUserWithPseudeo(String pseudeo){
         //Récupère dans un Cursor les valeurs correspondant à un livre contenu dans la BDD (ici on sélectionne le livre grâce à son titre)
-        Cursor c = bdd.query(USER_TABLE, new String[] {COL_ID, COL_NAME,COL_SURNAME, COL_PSEUDEO}, COL_PSEUDEO + " LIKE \"" + pseudeo +"\"", null, null, null, null);
+        Cursor c = bdd.query(USER_TABLE, new String[] {COL_ID, COL_NAME,COL_SURNAME,COL_PASSWORD, COL_MAIL, COL_PSEUDEO}, COL_PSEUDEO + " LIKE \"" + pseudeo +"\"", null, null, null, null);
         return cursorToUser(c);
     }
 
@@ -116,13 +116,16 @@ public class UserActions {
         //On créé un livre
         User user = new User();
         //on lui affecte toutes les infos grâce aux infos contenues dans le Cursor
+        System.out.println(c.getInt(NUM_COL_ID));
+        System.out.println(c.getString(NUM_COL_NAME));
+        System.out.println(c.getString(NUM_COL_SURNAME));
+
         user.setId(c.getInt(NUM_COL_ID));
         user.setName(c.getString(NUM_COL_NAME));
         user.setSurname(c.getString(NUM_COL_SURNAME));
         user.setMail(c.getString(NUM_COL_MAIL));
         user.setPassword(c.getString(NUM_COL_PASSWORD));
         user.setPseudeo(c.getString(NUM_COL_PSEUDEO));
-
         //Et avec Date ?
 
 

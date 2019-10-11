@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+    <RelativeLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_publish_post">
+
+        <ImageView
+            android:id="@+id/fragment_publish_post_img"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"></ImageView>
+
+        <EditText
+            android:id="@+id/fragment_publish_post_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_publish_post_img"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="110dp"
+            android:text="Enter Your description"></EditText>
+
+        <Button
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_publish_post_description"
+            android:background="@color/colorPrimary"
+            android:text="POST"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"></Button>
+    </RelativeLayout>
+</ScrollView>
+

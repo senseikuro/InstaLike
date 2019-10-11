@@ -12,16 +12,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.instalike.db.User;
+import com.example.instalike.db.UserActions;
+
+import java.util.Calendar;
+import java.util.Date;
+
 public class FormulaireActivity extends AppCompatActivity {
 
 
-    private EditText mPseudo,mEmail,mMdp,mConfMdp;
+    private EditText mPseudo,mEmail,mMdp,mConfMdp,mName,mSurname;
     private Button mConnexionButton;
     private boolean pseudo=false;
     private boolean email=false;
     private boolean mdp=false;
     private boolean mdpConf=false;
-
+    private boolean name=false;
+    private boolean surname=false;
+    private UserActions userActions;
     protected void toastResgister(boolean valid,String error){
         if (valid){
             Context contexte=getApplicationContext();
@@ -46,13 +54,67 @@ public class FormulaireActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulaire);
 
-        mPseudo=(EditText)findViewById(R.id.activity_formulare_speudo);
-        mEmail=(EditText)findViewById(R.id.activity_formulare_email);
-        mMdp=(EditText)findViewById(R.id.activity_formulare_mdp);
-        mConfMdp=(EditText)findViewById(R.id.activity_formulare_confirmation_mdp);
-        mConnexionButton=(Button)findViewById(R.id.activity_formulare_btn);
+        mPseudo=findViewById(R.id.activity_formulare_speudo);
+        mEmail=findViewById(R.id.activity_formulare_email);
+        mMdp=findViewById(R.id.activity_formulare_mdp);
+        mConfMdp=findViewById(R.id.activity_formulare_confirmation_mdp);
+        mName=findViewById(R.id.activity_formulare_name);
+        mSurname=findViewById(R.id.activity_formulare_surname);
+        mConnexionButton=findViewById(R.id.activity_formulare_btn);
 
         mConnexionButton.setEnabled(false);
+
+        mName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() != 0)
+                    name=true;
+                else
+                    name=false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (mdpConf==true && mdp==true && pseudo==true && email==true && name==true && surname==true)
+                    mConnexionButton.setEnabled(true);
+                if(mdpConf==false || mdp==false || pseudo==false || email==false || name==false || surname==false)
+                    mConnexionButton.setEnabled(false);
+            }
+
+        });
+
+
+        mSurname.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() != 0)
+                    surname=true;
+                else
+                    surname=false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (mdpConf==true && mdp==true && pseudo==true && email==true && name==true && surname==true)
+                    mConnexionButton.setEnabled(true);
+                if(mdpConf==false || mdp==false || pseudo==false || email==false || name==false || surname==false)
+                    mConnexionButton.setEnabled(false);
+            }
+
+        });
+
 
         mPseudo.addTextChangedListener(new TextWatcher() {
             @Override
@@ -71,9 +133,9 @@ public class FormulaireActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if (mdpConf==true && mdp==true && pseudo==true && email==true)
+                if (mdpConf==true && mdp==true && pseudo==true && email==true && name==true && surname==true)
                     mConnexionButton.setEnabled(true);
-                if(mdpConf==false || mdp==false || pseudo==false || email==false)
+                if(mdpConf==false || mdp==false || pseudo==false || email==false || name==false || surname==false)
                     mConnexionButton.setEnabled(false);
             }
 
@@ -97,9 +159,9 @@ public class FormulaireActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
 
-                if (mdpConf==true && mdp==true && pseudo==true && email==true)
+                if (mdpConf==true && mdp==true && pseudo==true && email==true && name==true && surname==true)
                     mConnexionButton.setEnabled(true);
-                if(mdpConf==false || mdp==false || pseudo==false || email==false)
+                if(mdpConf==false || mdp==false || pseudo==false || email==false || name==false || surname==false)
                     mConnexionButton.setEnabled(false);
             }
 
@@ -123,10 +185,10 @@ public class FormulaireActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if (mdpConf==true && mdp==true && pseudo==true && email==true)
+                if (mdpConf==true && mdp==true && pseudo==true && email==true && name==true && surname==true)
                     mConnexionButton.setEnabled(true);
-                if(mdpConf==false || mdp==false || pseudo==false || email==false)
-                    mConnexionButton.setEnabled(false);            }
+                if(mdpConf==false || mdp==false || pseudo==false || email==false || name==false || surname==false)
+                    mConnexionButton.setEnabled(false);       }
 
         });
 
@@ -147,9 +209,9 @@ public class FormulaireActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if (mdpConf==true && mdp==true && pseudo==true && email==true)
+                if (mdpConf==true && mdp==true && pseudo==true && email==true && name==true && surname==true)
                     mConnexionButton.setEnabled(true);
-                if(mdpConf==false || mdp==false || pseudo==false || email==false)
+                if(mdpConf==false || mdp==false || pseudo==false || email==false || name==false || surname==false)
                     mConnexionButton.setEnabled(false);
 
             }
@@ -169,7 +231,17 @@ public class FormulaireActivity extends AppCompatActivity {
                 else{
 
                     if(mEmail.getText().toString().indexOf('@')!= -1){
-                        toastResgister(true,"no error");
+                        userActions = new UserActions(getApplicationContext());
+
+                        userActions.open();
+
+                        toastResgister(true,"You create yout account");
+                        Date today = Calendar.getInstance().getTime();
+                        User newUser=new User(mName.getText().toString(),mSurname.getText().toString(),mEmail.getText().toString(),mMdp.getText().toString(), mPseudo.getText().toString(),today);
+
+                        userActions.insertUser(newUser);
+                        userActions.close();
+
                         Intent homeActivity=new Intent(FormulaireActivity.this,HomeActivity.class);
                         startActivity(homeActivity);
                     }

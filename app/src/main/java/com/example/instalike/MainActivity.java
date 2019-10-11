@@ -11,6 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.instalike.db.User;
+import com.example.instalike.db.UserActions;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mWelcome;
@@ -20,10 +27,42 @@ public class MainActivity extends AppCompatActivity {
     private Typeface typeWelcome;
     private boolean boolPseudo=false;
     private boolean boolPassword=false;
+    private UserActions userActions;
+    private User user;
+    private String mPseudoConnexion, mPasswordConnexion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        userActions = new UserActions(this);
+
+        //Création d'un livre
+        //Date today = Calendar.getInstance().getTime();
+        //user = new User("JOUANNE", "Vincent", "jouanne.vincent@gmail.com" , "123456", "Latruhm", today);
+
+        //On ouvre la base de données pour écrire dedans
+        //On insère le livre que l'on vient de créer
+
+        //Pour vérifier que l'on a bien créé notre livre dans la BDD
+        //on extrait le livre de la BDD grâce au titre du livre que l'on a créé précédemment
+        /*User userFromBdd = userActions.getUserWithPseudeo("f");
+        //Si un livre est retourné (donc si le livre à bien été ajouté à la BDD)
+        if(userFromBdd != null){
+            //On affiche les infos du livre dans un Toast
+            //Toast.makeText(this, userFromBdd.toString(), Toast.LENGTH_LONG).show();
+            //On modifie le titre du livre
+            userFromBdd.setPseudeo("J'ai modifié le pseudeo du user");
+            //Puis on met à jour la BDD
+            userActions.updateUser(userFromBdd.getId(), userFromBdd);
+        }
+        userActions.close();*/
+
+
+
+
+
+
 
         mWelcome=(TextView) findViewById(R.id.activity_welcome);
         mNameInput=(EditText) findViewById(R.id.activity_main_name_input);
@@ -45,19 +84,21 @@ public class MainActivity extends AppCompatActivity {
                 else
                     boolPseudo=false;
 
+                mPseudoConnexion=s.toString();
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
-                System.out.println(mNameInput.getText().toString());
-                System.out.println(mPassword.getText().toString());
 
                 if(boolPassword==true && boolPseudo==true)
                     mConnexionButton.setEnabled(true);
                 if(boolPassword==false || boolPseudo==false)
                     mConnexionButton.setEnabled(false);
+
+
+
             }
 
         });
@@ -73,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 if(s.toString().length() != 0)
                     boolPassword=true;
                 else
-                    boolPseudo=false;
-
+                    boolPassword=false;
+                mPasswordConnexion=s.toString();
             }
 
             @Override
@@ -90,8 +131,29 @@ public class MainActivity extends AppCompatActivity {
         mConnexionButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent homeActivity=new Intent(MainActivity.this,HomeActivity.class);
-                startActivity(homeActivity);
+                userActions.open();
+
+                User userFromBdd = userActions.getUserWithPseudeo(mPseudoConnexion);
+                //Si un livre est retourné (donc si le livre à bien été ajouté à la BDD)
+                if(userFromBdd != null){
+                    System.out.println(userFromBdd.getPassword());
+                    System.out.println(mPasswordConnexion);
+                    System.out.println(userFromBdd.getPassword()==mPasswordConnexion);
+                    if(userFromBdd.getPassword().equals(mPasswordConnexion)){
+                        Intent homeActivity=new Intent(MainActivity.this,HomeActivity.class);
+                        startActivity(homeActivity);
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(),"wrong pseudo or password",Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),"wrong pseudo or password",Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                userActions.close();
             }
 
         });

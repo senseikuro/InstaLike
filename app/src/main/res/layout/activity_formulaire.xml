@@ -7,14 +7,29 @@
     android:orientation="vertical"
     android:background="@drawable/gradient_colore_main_page"
     tools:context=".FormulaireActivity">
-
+    <EditText
+        android:id="@+id/activity_formulare_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="name"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:textSize="30sp"></EditText>
+    <EditText
+        android:id="@+id/activity_formulare_surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="surname"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:textSize="30sp"></EditText>
     <EditText
         android:id="@+id/activity_formulare_speudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="speudo"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:textSize="30sp"></EditText>
 
     <EditText
@@ -23,7 +38,7 @@
         android:layout_height="wrap_content"
         android:hint="email address"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:inputType="textEmailAddress"
         android:textSize="30sp"></EditText>
     <EditText
@@ -32,7 +47,7 @@
         android:layout_height="wrap_content"
         android:hint="password"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:inputType="textPassword"
         android:textSize="30sp"></EditText>
     <EditText
@@ -41,14 +56,14 @@
         android:layout_height="wrap_content"
         android:hint="confirmation password"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:inputType="textPassword"
         android:textSize="30sp"></EditText>
     <Button
         android:id="@+id/activity_formulare_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:text="Register"></Button>
 
