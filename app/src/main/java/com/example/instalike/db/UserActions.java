@@ -11,11 +11,11 @@ public class UserActions {
     private static final String NOM_BDD = "instalike.db";
 
     //Tables names
-    private static final String USER_TABLE = "user_table";
+    private static final String USER_TABLE = "User";
 
     //Columns names
     //USER
-    private static final String COL_ID = "ID";
+    private static final String COL_ID = "Id";
     private static final int NUM_COL_ID = 0;
 
     private static final String COL_NAME = "Name";
