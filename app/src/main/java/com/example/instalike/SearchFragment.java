@@ -12,6 +12,10 @@ import android.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.instalike.db.User;
+import com.example.instalike.db.UserActions;
+
 import java.util.ArrayList;
 
 
@@ -22,14 +26,17 @@ public class SearchFragment extends Fragment{
     private SearchAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Post> Posts;
+    private ArrayList<User> listUsers;
+    private UserActions userActions;
     private View view;
     private SearchView editsearch;
+    private int mCurrentUser;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search,container,false);
         createList();
         buildRecycleView();
+        mCurrentUser=getArguments().getInt("CURRENT_USER");
         editsearch =view.findViewById(R.id.search);
         editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -44,11 +51,11 @@ public class SearchFragment extends Fragment{
             }
         });
         editsearch.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
+              @Override
+              public void onClick(View v) {
 
-                                          }
-                                      }
+              }
+          }
         );
         return view;
     }
@@ -56,17 +63,18 @@ public class SearchFragment extends Fragment{
     public void changeItem(int position, String text){
         Fragment selectedFragment= null;
         selectedFragment=new ProfilFragement();
-        System.out.println("je suis");
+        Bundle bundle= new Bundle();
+        bundle.putInt("USER_PROFIL",listUsers.get(position).getId());
+        bundle.putInt("CURRENT_USER",mCurrentUser);
+        selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
                 selectedFragment).addToBackStack(null).commit();
     }
 
     public void createList(){
-        Posts =new ArrayList<Post>();
-        Posts.add(new Post("ichiban japan", "super voyage à tokyo",R.drawable.paysage2,"120"));
-        Posts.add(new Post("VincentJouanne", "i love BJJ",R.drawable.paysage3,"110"));
-        Posts.add(new Post("Florent Brassac", "t'as dead ça chacal",R.drawable.paysage4,"105"));
-        Posts.add(new Post("PaullBoveyron", "Je suis une locomotive",R.drawable.paysage5,"23"));
+        userActions= new UserActions(getContext());
+        listUsers =new ArrayList<User>();
+        listUsers=userActions.getAllUsers();
     }
     public void buildRecycleView(){
 
@@ -74,7 +82,7 @@ public class SearchFragment extends Fragment{
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager=new LinearLayoutManager(getActivity());
-        mAdapter = new SearchAdapter(Posts);
+        mAdapter = new SearchAdapter(listUsers);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);

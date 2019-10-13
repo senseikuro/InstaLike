@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 public class UserActions {
 
     private static final int VERSION_BDD = 1;
@@ -132,5 +136,25 @@ public class UserActions {
 
         //On retourne le user
         return user;
+    }
+
+    public ArrayList<User> getAllUsers(){
+        ArrayList<User> users=new ArrayList<User>();
+        bdd= Database.getReadableDatabase();
+        String req="select * from User";
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        int i=0;
+        while(!curseur.isAfterLast()){
+            String pseudo=curseur.getString(5);
+            int id=curseur.getInt(0);
+            users.add(new User());
+            users.get(i).setPseudeo(pseudo);
+            users.get(i).setId(id);
+            i++;
+            curseur.moveToNext();
+        }
+        curseur.close();
+        return users;
     }
 }

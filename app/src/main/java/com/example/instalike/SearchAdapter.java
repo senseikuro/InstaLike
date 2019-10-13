@@ -12,14 +12,18 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instalike.db.User;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> implements Filterable {
     private OnItemClickListener mListener;
-    private List<Post> mPosts;
-    private List<Post> mPostsFull;
+    //private List<Post> mPosts;
+    //private List<Post> mPostsFull;
+    private List<User> mUsers;
+    private List<User> mUsersFull;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -54,9 +58,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
 
-    public SearchAdapter(List<Post> Posts) {
-        mPosts = Posts;
-        mPostsFull= new ArrayList<>(mPosts);// copy de la liste
+    public SearchAdapter(List<User> users) {
+        mUsers = users;
+        mUsersFull= new ArrayList<>(mUsers);// copy de la liste
     }
 
     public SearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -73,34 +77,34 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public void onBindViewHolder(SearchAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        Post postmember = mPosts.get(position);
+        User userMember = mUsers.get(position);
 
         // Set item views based on your views and data model
-        viewHolder.mPics.setImageResource(postmember.getmImagePosts());
-        viewHolder.mPseudo.setText(postmember.getmUserName());
+        viewHolder.mPics.setImageResource(R.drawable.paysage3);
+        viewHolder.mPseudo.setText(userMember.getPseudeo());
     }
 
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
-        return mPosts.size();
+        return mUsers.size();
     }
 
     public Filter getFilter(){
-        return mPostsFilter;
+        return mUsersFilter;
     }
-    private Filter mPostsFilter = new Filter() {
+    private Filter mUsersFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Post> filteredList= new ArrayList<>();
+            List<User> filteredList= new ArrayList<>();
             if (constraint == null || constraint.length()==0){// shw all the results
-                filteredList.addAll(mPostsFull);
+                filteredList.addAll(mUsersFull);
             }else{
                 String filter= constraint.toString().toLowerCase().trim();
 
-                for (Post post: mPostsFull){
-                    if(post.getmUserName().toLowerCase().contains(filter)){
-                        filteredList.add(post);
+                for (User user: mUsersFull){
+                    if(user.getPseudeo().toLowerCase().contains(filter)){
+                        filteredList.add(user);
                     }
                 }
             }
@@ -112,8 +116,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mPosts.clear();
-            mPosts.addAll((List)results.values);
+            mUsers.clear();
+            mUsers.addAll((List)results.values);
             notifyDataSetChanged();
         }
     };

@@ -32,7 +32,7 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Post> Posts;
     private ArrayList<Comment> mListComment;
-    private int mUser_id;
+    private int mUser_id, mCurrent_User;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile,container,false);
@@ -42,7 +42,11 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         mAbonnement=view.findViewById(R.id.profil_abonnement);
 
         mFollow.setOnClickListener(this);
-        mUser_id=getArguments().getInt("ID_USER");
+        mCurrent_User=getArguments().getInt("CURRENT_USER");
+        mUser_id=getArguments().getInt("USER_PROFIL");
+        if (mUser_id == mCurrent_User){
+            mFollow.setVisibility(view.INVISIBLE);
+        }
         createList();
         buildRecycleView();
         return view;
@@ -78,40 +82,17 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         Bundle bundle= new Bundle();
         // A MODIFIER PAS DYNAMIQUE
         bundle.putInt("POST",Posts.get(position).getId());
+        bundle.putInt("CURRENT_USER",mCurrent_User);
         selectedFragment=new FullPostFragment();
         selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
                 selectedFragment).addToBackStack(null).commit();
-        /*createComment(position);
 
-        bundle.putString("USERNAME",Posts.get(position).getmUserName());
-        bundle.putString("DESCRIPTION",Posts.get(position).getmDescription());
-        bundle.putInt("IMAGE",Posts.get(position).getmImagePosts());
-        bundle.putInt("ISLIKE",Posts.get(position).getmColorLike());
-        bundle.putString("NBLIKE",Posts.get(position).getmLike());
-        bundle.putInt("NBCOMMENT",Posts.get(position).getmListComment().size());
-        // ESSAYER DE PASSER L'OBJET COMMENT
-        // bundle.putString("COMMENT",Posts.get(position).getmListComment());
-        selectedFragment=new FullPostFragment();
-        selectedFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
-                selectedFragment).addToBackStack(null).commit();*/
     }
-    public void createComment(int position){
-       /* mListComment=new ArrayList<Comment>();
-        mListComment.add(new Comment("vincent",R.drawable.paysage2, "superbePhoto"));
-        mListComment.add(new Comment("paul",R.drawable.paysage3, "nice"));
-        mListComment.add(new Comment("Thomas",R.drawable.paysage4, "super à visiter"));
-        Posts.get(position).setmListComment(mListComment);
-        System.out.println(Posts.get(position).getmListComment());*/
-    }
+
     public void createList(){
-        /*Posts =new ArrayList<Post>();
-        Posts.add(new Post("ichiban japan", "super voyage à tokyo",R.drawable.paysage2,"120"));
-        Posts.add(new Post("VincentJouanne", "i love BJJ",R.drawable.paysage3,"110"));
-        Posts.add(new Post("Florent Brassac", "t'as dead ça chacal",R.drawable.paysage4,"105"));
-        Posts.add(new Post("PaullBoveyron", "Je suis une locomotive",R.drawable.paysage5,"23"));*/
-        Posts =new ArrayList<com.example.instalike.db.Post>();
+
+        Posts =new ArrayList<Post>();
         PostActions postAction=new PostActions(getContext());
         Posts=postAction.getAllPost(mUser_id);
 

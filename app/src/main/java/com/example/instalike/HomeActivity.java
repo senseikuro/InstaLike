@@ -38,7 +38,8 @@ public class HomeActivity extends AppCompatActivity {
         id_user=getIntent().getExtras().getInt("ID_USER");
         //on va le passer à l'autre activity
         mBundle= new Bundle();
-        mBundle.putInt("ID_USER",id_user);
+        mBundle.putInt("CURRENT_USER",id_user);
+        mBundle.putInt("USER_PROFIL",id_user);
 
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);

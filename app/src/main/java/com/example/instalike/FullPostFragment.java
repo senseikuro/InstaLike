@@ -26,7 +26,7 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
     private ImageView mPhoto,mHeart,mComment;
     private TextView mUsername, mDescription, mNbLike, mNbComment;
     private View view;
-    private int mPostID, nbLike,nbComment;
+    private int mPostID, nbLike,nbComment, mCurrent_user;
     private LikeActions mLikeAction;
     private Post post;
     private PostActions postAction;
@@ -41,6 +41,7 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         postisLike=getArguments().getInt("ISLIKE",0);
         nbComment=getArguments().getInt("NBCOMMENT",0);*/
         mPostID=getArguments().getInt("POST");
+        mCurrent_user=getArguments().getInt("CURRENT_USER");
 
         mPhoto=view.findViewById(R.id.post_page_image);
         mHeart=view.findViewById(R.id.post_page_heart);
@@ -75,7 +76,7 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         mHeart.setOnClickListener(this);
         //A VOIR
         mLikeAction= new LikeActions(getContext());
-        boolean islike=mLikeAction.postIsLike(post.getUser_id(),post.getId());
+        boolean islike=mLikeAction.postIsLike(mCurrent_user,post.getId());
         if (islike){
             mHeart.setImageResource(R.drawable.redheart);
         }
@@ -91,18 +92,18 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
             case R.id.post_page_heart:
 
 
-                boolean islike=mLikeAction.postIsLike(post.getUser_id(),post.getId());
+                boolean islike=mLikeAction.postIsLike(mCurrent_user,post.getId());
 
                 if (islike){
 
-                    mLikeAction.removeLikeWithID(mLikeAction.getPostLike(post.getUser_id(),post.getId()));
+                    mLikeAction.removeLikeWithID(mLikeAction.getPostLike(mCurrent_user,post.getId()));
                     mHeart.setImageResource(R.drawable.heart);
                 }
                 else{
                     Like newlike= new Like();
                     Date now= new Date(Calendar.getInstance().getTime().getTime());
 
-                    newlike.setUser_id(post.getUser_id());
+                    newlike.setUser_id(mCurrent_user);
                     newlike.setPost_id(post.getId());
                     newlike.setDate(now);
                     mLikeAction.insertLike(newlike);
@@ -124,7 +125,7 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         selectedFragment=new CommentFragment();
         Bundle bundle= new Bundle();
         bundle.putInt("POST_ID",mPostID);
-        bundle.putInt("Current_User",post.getUser_id());
+        bundle.putInt("CURRENT_USER",mCurrent_user);
         selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
                 selectedFragment).addToBackStack(null).commit();
