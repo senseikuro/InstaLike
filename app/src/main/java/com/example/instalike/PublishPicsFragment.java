@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -18,17 +20,25 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.example.instalike.db.Post;
+import com.example.instalike.db.PostActions;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.sql.Date;
+import java.util.Calendar;
 
 public class PublishPicsFragment extends Fragment {
     public static final int PHOTO_GALERY_REQUEST = 20;
     private View view;
     private ImageView mPhoto;
+    private EditText mDescription;
+    private Button mPublish;
+    private int user_ID;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_publish_pics,container,false);
-
+        user_ID=getArguments().getInt("ID_USER");
         Intent photoIntent=new Intent(Intent.ACTION_PICK);
 
         File photoDirectory= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -39,6 +49,21 @@ public class PublishPicsFragment extends Fragment {
         startActivityForResult(photoIntent, PHOTO_GALERY_REQUEST);
 
         mPhoto=view.findViewById(R.id.fragment_publish_post_img);
+        mDescription=view.findViewById(R.id.fragment_publish_post_description);
+        mPublish=view.findViewById(R.id.fragment_publish_post_btn);
+
+        mPublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPublish.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                Date now = new Date(Calendar.getInstance().getTime().getTime());
+                PostActions postAction=new PostActions(getContext());
+                postAction.open();
+                Post post= new Post(user_ID,R.drawable.paysage4,mDescription.getText().toString(),now);
+                postAction.insertPost(post);
+            }
+            });
+
         return view;
 
     }

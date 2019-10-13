@@ -13,7 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.instalike.db.CommentActions;
+
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class CommentFragment extends Fragment{
@@ -23,59 +28,64 @@ public class CommentFragment extends Fragment{
     private CommentAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Post> Posts;
+    private ArrayList<com.example.instalike.db.Comment> mListCommentBdd;
+    private CommentActions actionComment;
     private ArrayList<Comment> mListComment;
-
+    private int mPostID, mCurrentUserID;
     private View view;
     private Button mPublish;
     private EditText mComment;
+
+    private CommentActions commentActions;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_comment,container,false);
-        createList();
-        createComment(0);
-        buildRecycleView();
+
+        mPostID=getArguments().getInt("POST_ID");
+        mCurrentUserID=getArguments().getInt("Current_User");
         mPublish=view.findViewById(R.id.fragment_comment_publish_btn);
-
-
-
-
-
-
-
         mComment=view.findViewById(R.id.fragment_comment_edit_texte);
+
+
+        createList();
+        buildRecycleView();
+
         mPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListComment.add(new Comment("Florian",R.drawable.paysage4, mComment.getText().toString()));
-                Posts.get(0).setmListComment(mListComment);
+                Date now = new Date(Calendar.getInstance().getTime().getTime());
+                com.example.instalike.db.Comment newComment= new com.example.instalike.db.Comment(mCurrentUserID, mPostID,mComment.getText().toString(),now);
+                commentActions.insertComment(newComment);
+                mListComment.add(new Comment(commentActions.getPseudoComment(newComment.getUser_id()),R.drawable.paysage5,newComment.getContent()));
                 mAdapter.notifyDataSetChanged();
-                buildRecycleView();
             }
         });
         return view;
     }
 
+
+
     public void changeItem(int position, String text){
-        Posts.get(position).changeDescription("clicked");
         mAdapter.notifyItemChanged(position);
     }
 
     public void createList(){
-        Posts =new ArrayList<Post>();
-        Posts.add(new Post("ichiban japan", "super voyage à tokyo",R.drawable.paysage2,"120"));
-        Posts.add(new Post("VincentJouanne", "i love BJJ",R.drawable.paysage3,"110"));
-        Posts.add(new Post("Florent Brassac", "t'as dead ça chacal",R.drawable.paysage4,"105"));
-        Posts.add(new Post("PaullBoveyron", "Je suis une locomotive",R.drawable.paysage5,"23"));
+        mListCommentBdd= new ArrayList<com.example.instalike.db.Comment>();
+        actionComment=new CommentActions(getContext());
+        mListCommentBdd=actionComment.getAllComments(mPostID);
+        commentActions= new CommentActions(getContext());
+
+        mListComment=new ArrayList<Comment>();
+        for (int i =0; i<mListCommentBdd.size();i++){
+            mListComment.add(new Comment(commentActions.getPseudoComment(mListCommentBdd.get(i).getUser_id()),R.drawable.paysage5,mListCommentBdd.get(i).getContent()));
+        }
+
+
+
     }
 
     public void createComment(int position){
-        mListComment=new ArrayList<Comment>();
-        mListComment.add(new Comment("vincent",R.drawable.paysage2, "superbePhoto"));
-        mListComment.add(new Comment("paul",R.drawable.paysage3, "nice"));
-        mListComment.add(new Comment("Thomas",R.drawable.paysage4, "super à visiter"));
-        Posts.get(position).setmListComment(mListComment);
-        System.out.println(Posts.get(position).getmListComment());
+
     }
     public void buildRecycleView(){
 
@@ -84,7 +94,7 @@ public class CommentFragment extends Fragment{
 
         mLayoutManager=new LinearLayoutManager(getActivity());
 
-        mAdapter = new CommentAdapter(Posts.get(0).getmListComment());
+        mAdapter = new CommentAdapter(mListComment);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);

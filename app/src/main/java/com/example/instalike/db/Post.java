@@ -6,16 +6,18 @@ public class Post {
 
     private int id;
     private int user_id;
-    private String photo_path;
+    private int photo_path;
+    private String description;
     private Date date;
 
     public Post() {}
 
 
 
-    public Post(int user_id, String photo_path, Date date) {
+    public Post(int user_id, int photo_path, String description, Date date) {
         this.user_id = user_id;
         this.photo_path = photo_path;
+        this.description=description;
         this.date = date;
     }
 
@@ -37,11 +39,11 @@ public class Post {
         this.user_id = user_id;
     }
 
-    public String getPhoto_path() {
+    public int getPhoto_path() {
         return photo_path;
     }
 
-    public void setPhoto_path(String photo_path) {
+    public void setPhoto_path(int photo_path) {
         this.photo_path = photo_path;
     }
 
@@ -51,5 +53,13 @@ public class Post {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

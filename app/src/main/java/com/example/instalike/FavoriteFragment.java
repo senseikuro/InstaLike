@@ -87,7 +87,7 @@ public class FavoriteFragment extends Fragment{
 
 
         mLayoutManager=new LinearLayoutManager(getActivity());
-        mAdapter = new HashtagAdapter(Posts);
+       // mAdapter = new HashtagAdapter(Posts);
 
         // en forme de grill
         GridLayoutManager gridLayoutManager =

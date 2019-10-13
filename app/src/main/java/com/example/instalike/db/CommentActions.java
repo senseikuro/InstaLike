@@ -2,7 +2,12 @@ package com.example.instalike.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CommentActions {
 
@@ -55,11 +60,13 @@ public class CommentActions {
     }
 
     public long insertComment(Comment comment){
+        bdd = Database.getWritableDatabase();
 
         //Création d'un ContentValues (fonctionne comme une HashMap)
         ContentValues values = new ContentValues();
 
         //on lui ajoute une valeur associée à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
+        System.out.println(comment.getPost_id());
         values.put(COL_USER_ID, comment.getUser_id());
         values.put(COL_POST_ID, comment.getPost_id());
         values.put(COL_CONTENT, comment.getContent());
@@ -87,4 +94,37 @@ public class CommentActions {
         return bdd.delete(COMMENT_TABLE, COL_ID + " = " +id, null);
     }
 
+    public ArrayList<Comment> getAllComments(int PostID){
+        ArrayList<Comment> comments=new ArrayList<Comment>();
+        bdd= Database.getReadableDatabase();
+        String req="select * from Comment where Post_id="+PostID;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        while(!curseur.isAfterLast()){
+            int id=curseur.getInt(0);
+            int userId=curseur.getInt(1);
+            int post_id=curseur.getInt(2);
+            String commentaire=curseur.getString(3);
+            Date date = new Date(Calendar.getInstance().getTime().getTime());
+            comments.add(new Comment(userId,post_id,commentaire,date));
+            curseur.moveToNext();
+        }
+        curseur.close();
+        return comments;
+    }
+
+    public String getPseudoComment(int userId){
+
+        bdd= Database.getReadableDatabase();
+        String req="select * from User where Id="+userId;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        boolean postISLike=false;
+        String pseudo="";
+        if(!curseur.isAfterLast()){
+            pseudo=curseur.getString(5);
+        }
+        curseur.close();
+        return pseudo;
+    }
 }

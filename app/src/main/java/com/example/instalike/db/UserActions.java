@@ -45,6 +45,7 @@ public class UserActions {
     public UserActions(Context context){
         //On crée la BDD et sa table
         Database = new Database(context, NOM_BDD, null, VERSION_BDD);
+
     }
 
     public void open(){
@@ -116,10 +117,6 @@ public class UserActions {
         //On créé un livre
         User user = new User();
         //on lui affecte toutes les infos grâce aux infos contenues dans le Cursor
-        System.out.println(c.getInt(NUM_COL_ID));
-        System.out.println(c.getString(NUM_COL_NAME));
-        System.out.println(c.getString(NUM_COL_SURNAME));
-
         user.setId(c.getInt(NUM_COL_ID));
         user.setName(c.getString(NUM_COL_NAME));
         user.setSurname(c.getString(NUM_COL_SURNAME));

@@ -2,6 +2,7 @@ package com.example.instalike.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class LikeActions {
@@ -52,6 +53,7 @@ public class LikeActions {
     }
 
     public long insertLike(Like like){
+        bdd = Database.getWritableDatabase();
 
         //Création d'un ContentValues (fonctionne comme une HashMap)
         ContentValues values = new ContentValues();
@@ -80,5 +82,32 @@ public class LikeActions {
     public int removeLikeWithID(int id){
         //Suppression d'un livre de la BDD grâce à l'ID
         return bdd.delete(LIKE_TABLE, COL_ID + " = " +id, null);
+    }
+
+    public boolean postIsLike(int userId, int postId){
+        bdd= Database.getReadableDatabase();
+        String req="select COUNT(*) from [Like] where User_id="+userId+" and Post_id="+postId;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToLast();
+        boolean postISLike=false;
+        if(curseur.getInt(0)!=0){
+            postISLike=true;
+            System.out.println(curseur.getInt(0));
+        }
+        curseur.close();
+        return postISLike;
+    }
+    public int getPostLike(int userId, int postId){
+        bdd= Database.getReadableDatabase();
+        String req="select * from [Like] where User_id="+userId+" and Post_id="+postId;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        Like postLike= new Like();
+        int likeID=-1;
+        if(!curseur.isAfterLast()){
+            likeID=curseur.getInt(0);
+        }
+        curseur.close();
+        return likeID;
     }
 }

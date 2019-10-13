@@ -31,6 +31,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String POST_COL_USER_ID = "User_id";
     private static final String POST_COL_PHOTO_PATH = "Photo_path";
     private static final String POST_COL_DATE = "Date";
+    private static final String POST_COL_DESCRIPTION = "Description";
     //Comment
     private static final String COMMENT_COL_ID = "Id";
     private static final String COMMENT_COL_USER_ID = "User_id";
@@ -70,6 +71,7 @@ public class Database extends SQLiteOpenHelper {
              + POST_COL_USER_ID + " INT NOT NULL, "
              + POST_COL_PHOTO_PATH + " TEXT NOT NULL, "
              + POST_COL_DATE + " DATETIME NOT NULL,"
+             + POST_COL_DESCRIPTION +" TEXT NOT NULL, "
              + "FOREIGN KEY (" + POST_COL_USER_ID + ") REFERENCES " + USER_TABLE + "(Id));";
 
 
@@ -112,6 +114,7 @@ public class Database extends SQLiteOpenHelper {
 
     public Database(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
+
     }
 
     @Override
@@ -130,7 +133,7 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //On peut faire ce qu'on veut ici moi j'ai décidé de supprimer la table et de la recréer
         //comme ça lorsque je change la version les id repartent de 0
-        db.execSQL("DROP TABLE " + USER_TABLE + ";");
+        db.execSQL("DROP TABLE " + POST_TABLE + ";");
         onCreate(db);
     }
 }

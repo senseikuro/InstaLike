@@ -21,9 +21,10 @@ android:layout_height="match_parent">
             android:layout_below="@+id/fragment_publish_post_img"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="110dp"
-            android:text="Enter Your description"></EditText>
+            android:hint="Enter Your description"></EditText>
 
         <Button
+            android:id="@+id/fragment_publish_post_btn"
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,6 +33,7 @@ android:layout_height="match_parent">
             android:text="POST"
             android:textSize="20dp"
             android:textStyle="bold"
+            android:clickable="true"
             android:textColor="@color/colorPrimaryDark"></Button>
     </RelativeLayout>
 </ScrollView>

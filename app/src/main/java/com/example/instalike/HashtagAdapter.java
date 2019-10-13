@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instalike.db.Post;
+
 import java.util.List;
 
 public class HashtagAdapter extends RecyclerView.Adapter<HashtagAdapter.ViewHolder>{
@@ -54,9 +56,9 @@ public class HashtagAdapter extends RecyclerView.Adapter<HashtagAdapter.ViewHold
         }
     }
 
-    private List<Post> mPosts;
+    private List<com.example.instalike.db.Post> mPosts;
 
-    public HashtagAdapter(List<Post> Posts) {
+    public HashtagAdapter(List<com.example.instalike.db.Post> Posts) {
         mPosts = Posts;
     }
 
@@ -77,7 +79,7 @@ public class HashtagAdapter extends RecyclerView.Adapter<HashtagAdapter.ViewHold
         Post postmember = mPosts.get(position);
 
         // Set item views based on your views and data model
-        viewHolder.mPics.setImageResource(postmember.getmImagePosts());
+        viewHolder.mPics.setImageResource(postmember.getPhoto_path());
 
     }
 

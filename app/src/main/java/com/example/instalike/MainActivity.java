@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.instalike.db.Post;
+import com.example.instalike.db.PostActions;
 import com.example.instalike.db.User;
 import com.example.instalike.db.UserActions;
 
@@ -29,14 +31,15 @@ public class MainActivity extends AppCompatActivity {
     private boolean boolPassword=false;
     private UserActions userActions;
     private User user;
+    private Post post;
+    private PostActions postAction;
     private String mPseudoConnexion, mPasswordConnexion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        userActions = new UserActions(this);
-
+        userActions = new UserActions(getApplicationContext());
         //Création d'un livre
         //Date today = Calendar.getInstance().getTime();
         //user = new User("JOUANNE", "Vincent", "jouanne.vincent@gmail.com" , "123456", "Latruhm", today);
@@ -132,15 +135,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 userActions.open();
-
                 User userFromBdd = userActions.getUserWithPseudeo(mPseudoConnexion);
+                userActions.close();
+               // postAction=new PostActions(getApplicationContext());
+
+               // postAction.open();
+
                 //Si un livre est retourné (donc si le livre à bien été ajouté à la BDD)
                 if(userFromBdd != null){
-                    System.out.println(userFromBdd.getPassword());
-                    System.out.println(mPasswordConnexion);
-                    System.out.println(userFromBdd.getPassword()==mPasswordConnexion);
+
                     if(userFromBdd.getPassword().equals(mPasswordConnexion)){
+                        /*Date today = Calendar.getInstance().getTime();
+                        post=new Post(userFromBdd.getId(),R.drawable.paysage2,"superbe voyage avec les frérots",today);
+                        postAction.insertPost(post);*/
+                        Bundle bundle= new Bundle();
+                        bundle.putInt("ID_USER",userFromBdd.getId());
                         Intent homeActivity=new Intent(MainActivity.this,HomeActivity.class);
+                        homeActivity.putExtras(bundle);
                         startActivity(homeActivity);
                     }
                     else{
@@ -153,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(),"wrong pseudo or password",Toast.LENGTH_LONG);
                     toast.show();
                 }
-                userActions.close();
             }
 
         });
