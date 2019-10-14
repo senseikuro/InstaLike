@@ -50,6 +50,8 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         mAbonnement=view.findViewById(R.id.profil_abonnement);
 
         mFollow.setOnClickListener(this);
+        mFollowers.setOnClickListener(this);
+        mAbonnement.setOnClickListener(this);
         mCurrent_User=getArguments().getInt("CURRENT_USER");
         mUser_id=getArguments().getInt("USER_PROFIL");
         System.out.println(mUser_id);
@@ -81,10 +83,17 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         mPost.setText(String.valueOf(postActions.getnbPost(mUser_id)));
         createList();
         buildRecycleView();
+
+
         return view;
     }
     @Override
     public void onClick(View v) {
+        Fragment selectedFragment= null;
+        selectedFragment=new FollowFragment();
+        Bundle bundle= new Bundle();
+        bundle.putInt("CURRENT_USER",mCurrent_User);
+        bundle.putInt("USER_PROFIL",mUser_id);
         switch(v.getId()){
             case R.id.profil_follow_btn:
                 isFollow=followActions.isFollowed(mCurrent_User,mUser_id);
@@ -94,9 +103,10 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
                     int nbFollowers=Integer.parseInt(mFollowers.getText().toString());
                     int nbFollow=followActions.getNbFollow(mUser_id);
                     int nbAbonnement=followActions.getNbAbonnement(mUser_id);
-                    mFollowers.setText(nbFollow);
-                    mAbonnement.setText(nbAbonnement);
+                    mFollowers.setText(String.valueOf(nbFollow));
+                    mAbonnement.setText(String.valueOf(nbAbonnement));
                     mFollow.setText("S'abonner");
+
 
                 }
                 else{
@@ -113,7 +123,24 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
                     mFollow.setText("Follow");
 
                 }
-            followActions.close();
+                followActions.close();
+                break;
+
+            case R.id.profil_abonnement:
+
+                bundle.putString("CHOICE","abonnement");
+                selectedFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                        selectedFragment).addToBackStack(null).commit();
+                break;
+            case R.id.profil_followers:
+
+                bundle.putString("CHOICE","followers");
+                selectedFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                        selectedFragment).addToBackStack(null).commit();
+                break;
+
         }
     }
     public void changeItem(int position, String text){
@@ -123,9 +150,8 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
     public void changeActivity(int position){
         Fragment selectedFragment= null;
         Bundle bundle= new Bundle();
-        // A MODIFIER PAS DYNAMIQUE
         bundle.putInt("POST",Posts.get(position).getId());
-        bundle.putInt("CURRENT_USER",mCurrent_User);
+        bundle.putInt("CURRENT_USER",mUser_id);
         selectedFragment=new FullPostFragment();
         selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,

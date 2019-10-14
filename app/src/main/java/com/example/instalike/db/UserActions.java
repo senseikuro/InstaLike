@@ -157,4 +157,15 @@ public class UserActions {
         curseur.close();
         return users;
     }
+    public User getUserWithID(int id){
+        bdd=Database.getReadableDatabase();
+        String req="select * from User where Id="+id;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        User user= new User();
+        if(!curseur.isAfterLast()){
+            user.setPseudeo(curseur.getString(5));
+        }
+        return user;
+    }
 }

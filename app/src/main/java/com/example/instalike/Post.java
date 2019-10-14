@@ -15,13 +15,13 @@ public class Post {
     private int mColorLike;
     private boolean islike;
     private ArrayList<Comment> mListComment;
-    public Post(String username, String description, int imagePosts, String like){
+    public Post(String username, String description, int imagePosts, String like, int color, boolean islike){
         mUserName=username;
         mDescription=description;
         mImagePosts=imagePosts;
         mLike=like;
-        mColorLike=R.drawable.heart;
-        islike=false;
+        mColorLike=color;
+        this.islike=islike;
     }
     public Post(){
 

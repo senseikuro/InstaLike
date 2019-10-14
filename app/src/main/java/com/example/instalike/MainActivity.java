@@ -40,32 +40,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         userActions = new UserActions(getApplicationContext());
-        //Création d'un livre
-        //Date today = Calendar.getInstance().getTime();
-        //user = new User("JOUANNE", "Vincent", "jouanne.vincent@gmail.com" , "123456", "Latruhm", today);
-
-        //On ouvre la base de données pour écrire dedans
-        //On insère le livre que l'on vient de créer
-
-        //Pour vérifier que l'on a bien créé notre livre dans la BDD
-        //on extrait le livre de la BDD grâce au titre du livre que l'on a créé précédemment
-        /*User userFromBdd = userActions.getUserWithPseudeo("f");
-        //Si un livre est retourné (donc si le livre à bien été ajouté à la BDD)
-        if(userFromBdd != null){
-            //On affiche les infos du livre dans un Toast
-            //Toast.makeText(this, userFromBdd.toString(), Toast.LENGTH_LONG).show();
-            //On modifie le titre du livre
-            userFromBdd.setPseudeo("J'ai modifié le pseudeo du user");
-            //Puis on met à jour la BDD
-            userActions.updateUser(userFromBdd.getId(), userFromBdd);
-        }
-        userActions.close();*/
-
-
-
-
-
-
 
         mWelcome=(TextView) findViewById(R.id.activity_welcome);
         mNameInput=(EditText) findViewById(R.id.activity_main_name_input);

@@ -38,7 +38,7 @@ public class PublishPicsFragment extends Fragment {
     private int user_ID;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_publish_pics,container,false);
-        user_ID=getArguments().getInt("ID_USER");
+        user_ID=getArguments().getInt("CURRENT_USER");
         Intent photoIntent=new Intent(Intent.ACTION_PICK);
 
         File photoDirectory= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);

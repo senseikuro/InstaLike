@@ -145,4 +145,17 @@ public class FollowActions {
         curseur.close();
         return abonnement;
     }
+    public ArrayList<Integer> getAllAbonne(int user_ID){
+        bdd=Database.getReadableDatabase();
+        String req="select * from Follow where User_id_followed="+user_ID+" order by Date";
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        ArrayList<Integer> abonnement= new ArrayList<Integer>();
+        while (!curseur.isAfterLast()){
+            abonnement.add(curseur.getInt(1));
+            curseur.moveToNext();
+        }
+        curseur.close();
+        return abonnement;
+    }
 }

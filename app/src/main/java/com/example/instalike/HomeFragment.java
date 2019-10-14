@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment {
 
         mCurrent_User=getArguments().getInt("CURRENT_USER");
         mUser_id=getArguments().getInt("USER_PROFIL");
+        Posts =new ArrayList<Post>();
 
         createList();
         buildRecycleView();
@@ -110,34 +111,32 @@ public class HomeFragment extends Fragment {
         ArrayList<Integer> idAbonnement= new ArrayList<Integer>();
         idAbonnement=followActions.getAllAbonnement(mCurrent_User);
         followActions.close();
-        System.out.println("j'ai les follows");
         postActions= new PostActions(getContext());
         postAbonnement= new ArrayList<com.example.instalike.db.Post>();
         postAbonnement=postActions.getActuality(idAbonnement);
-        System.out.println("j'ai les actualités");
 
-        Posts =new ArrayList<Post>();
-        Post tempPost=new Post();
         for (int i=0;i<postAbonnement.size();i++){
-            tempPost.setUserName(postActions.getUserName(postAbonnement.get(i).getUser_id()));
-            tempPost.setDescription(postAbonnement.get(i).getDescription());
+            String userName=postActions.getUserName(postAbonnement.get(i).getUser_id());
+            String description=postAbonnement.get(i).getDescription();
+
             postActions.close();
             likeActions=new LikeActions(getContext());
-            tempPost.setIslike(likeActions.postIsLike(mCurrent_User,postAbonnement.get(i).getId()));
-            if (tempPost.isIslike()){
-                tempPost.setmColorLike(R.drawable.redheart);
+            boolean islike=likeActions.postIsLike(mCurrent_User,postAbonnement.get(i).getId());
+            int heartimage;
+            if (islike){
+                 heartimage=R.drawable.redheart;
             }
             else{
-                tempPost.setmColorLike(R.drawable.heart);
+                 heartimage=R.drawable.heart;
             }
             likeActions.close();
-            tempPost.setmLike(String.valueOf(postActions.getNbLike(postAbonnement.get(i).getId())));
+            String nblike=String.valueOf(postActions.getNbLike(postAbonnement.get(i).getId()));
 
-            tempPost.setImagePosts(postAbonnement.get(i).getPhoto_path());
-            Posts.add(tempPost);
-
+            int photo =postAbonnement.get(i).getPhoto_path();
+            Posts.add(new Post(userName,description,photo,nblike,heartimage,islike));
+            System.out.println(Posts.get(i).getmDescription());
+            System.out.println(i);
         }
-
 
     }
     public void buildRecycleView(){
@@ -145,6 +144,9 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager=new LinearLayoutManager(getActivity());
+        //System.out.println(Posts.get(0).getmDescription());
+        //System.out.println(Posts.get(1).getmDescription());
+
         mAdapter = new PostsAdapter(Posts);
 
 

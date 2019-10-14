@@ -20,21 +20,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-        //Test BDD
-        //Création d'une instance de ma classe LivresBDD
-
-
-
-
-
-        /*HomeFragment fragment = new HomeFragment();
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragementTransaction= fragmentManager.beginTransaction();
-        fragementTransaction.add(R.id.rvPosts,fragment);
-        fragementTransaction.commit();*/
-
-        //On vient récupérer l'ID de l'utilisateur
         id_user=getIntent().getExtras().getInt("ID_USER");
         //on va le passer à l'autre activity
         mBundle= new Bundle();
@@ -43,10 +28,10 @@ public class HomeActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        /*Fragment selectedFragment= null;
+        Fragment selectedFragment= null;
         selectedFragment=new HomeFragment();
         selectedFragment.setArguments(mBundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts, selectedFragment).commit();*/
+        getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts, selectedFragment).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
