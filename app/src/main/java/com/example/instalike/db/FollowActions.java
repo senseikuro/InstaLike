@@ -2,7 +2,11 @@ package com.example.instalike.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class FollowActions {
 
@@ -52,6 +56,7 @@ public class FollowActions {
     }
 
     public long insertFollow(Follow follow){
+        bdd = Database.getWritableDatabase();
 
         //Création d'un ContentValues (fonctionne comme une HashMap)
         ContentValues values = new ContentValues();
@@ -82,4 +87,62 @@ public class FollowActions {
         return bdd.delete(FOLLOW_TABLE, COL_ID + " = " +id, null);
     }
 
+    public boolean isFollowed(int current_User, int follow_user)
+    {
+        bdd= Database.getReadableDatabase();
+        String req="select COUNT(*) from Follow where User_id="+current_User+" and User_id_followed="+follow_user;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToLast();
+        boolean profilIsFollow=false;
+        if(curseur.getInt(0)!=0){
+            profilIsFollow=true;
+        }
+        curseur.close();
+        return profilIsFollow;
+    }
+    public int getFollow(int current_User, int follow_user)
+    {
+        bdd= Database.getReadableDatabase();
+        String req="select * from Follow where User_id="+current_User+" and User_id_followed="+follow_user;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToLast();
+        int follow=-1;
+        if(curseur.getInt(0)!=0){
+            follow=curseur.getInt(0);
+        }
+        curseur.close();
+        return follow;
+    }
+    public int getNbFollow(int user_post){
+        bdd= Database.getReadableDatabase();
+        String req="select COUNT(*) from Follow where User_id_followed="+user_post;
+        Cursor mCount=bdd.rawQuery(req,null);
+        mCount.moveToFirst();
+        int nbFollow=mCount.getInt(0);
+        mCount.close();
+        return nbFollow;
+    }
+    public int getNbAbonnement(int user_post){
+        bdd= Database.getReadableDatabase();
+        String req="select COUNT(*) from Follow where User_id="+user_post;
+        Cursor mCount=bdd.rawQuery(req,null);
+        mCount.moveToFirst();
+        int nbFollow=mCount.getInt(0);
+        mCount.close();
+        return nbFollow;
+    }
+
+    public ArrayList<Integer> getAllAbonnement(int user_ID){
+        bdd=Database.getReadableDatabase();
+        String req="select * from Follow where User_id="+user_ID+" order by Date";
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        ArrayList<Integer> abonnement= new ArrayList<Integer>();
+        while (!curseur.isAfterLast()){
+            abonnement.add(curseur.getInt(2));
+            curseur.moveToNext();
+        }
+        curseur.close();
+        return abonnement;
+    }
 }

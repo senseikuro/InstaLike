@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
+
+import java.net.Inet4Address;
+import java.util.ArrayList;
 
 public class LikeActions {
 
@@ -92,7 +96,6 @@ public class LikeActions {
         boolean postISLike=false;
         if(curseur.getInt(0)!=0){
             postISLike=true;
-            System.out.println(curseur.getInt(0));
         }
         curseur.close();
         return postISLike;
@@ -102,12 +105,23 @@ public class LikeActions {
         String req="select * from [Like] where User_id="+userId+" and Post_id="+postId;
         Cursor curseur=bdd.rawQuery(req,null);
         curseur.moveToFirst();
-        Like postLike= new Like();
         int likeID=-1;
         if(!curseur.isAfterLast()){
             likeID=curseur.getInt(0);
         }
         curseur.close();
         return likeID;
+    }
+    public ArrayList<Integer> getAllPostLike(int userID){
+        bdd= Database.getReadableDatabase();
+        String req="select * from [Like] where User_id="+userID;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        ArrayList<Integer> arrayPost=new ArrayList<Integer>();
+        while(!curseur.isAfterLast()){
+            arrayPost.add(curseur.getInt(2));
+            curseur.moveToNext();
+        }
+        return arrayPost;
     }
 }

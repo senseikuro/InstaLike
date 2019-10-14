@@ -23,6 +23,9 @@ public class Post {
         mColorLike=R.drawable.heart;
         islike=false;
     }
+    public Post(){
+
+    }
 
     public String getmUserName() {
         return mUserName;
@@ -37,6 +40,7 @@ public class Post {
     public int getmImagePosts() {
         return mImagePosts;
     }
+    public void setImagePosts(int image){mImagePosts=image;}
     public void changeDescription(String string){
         mDescription=string;
     }
@@ -44,6 +48,9 @@ public class Post {
     public String getmLike() {
         return mLike;
     }
+
+    public void setUserName(String user){mUserName=user;}
+    public void setDescription(String des){mDescription=des;}
 
     public void setmLike(String mLike) {
         this.mLike = mLike;

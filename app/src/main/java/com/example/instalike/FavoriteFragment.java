@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instalike.db.LikeActions;
+import com.example.instalike.db.Post;
+import com.example.instalike.db.PostActions;
+
 import java.util.ArrayList;
 
 
@@ -26,56 +30,54 @@ public class FavoriteFragment extends Fragment{
     private HashtagAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Post> Posts;
+    private ArrayList<Post> posts;
     private View view;
-    private ArrayList<Comment> mListComment;
+    private int mCurrentUser;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_favorite,container,false);
+        mCurrentUser=getArguments().getInt("CURRENT_USER");
         createList();
         buildRecycleView();
+
         return view;
     }
 
     public void changeItem(int position, String text){
-        Posts.get(position).changeDescription("clicked");
         mAdapter.notifyItemChanged(position);
     }
 
     public void createList(){
-        Posts =new ArrayList<Post>();
+        /*Posts =new ArrayList<Post>();
         Posts.add(new Post("ichiban japan", "super voyage à tokyo",R.drawable.paysage2,"120"));
         Posts.add(new Post("VincentJouanne", "i love BJJ",R.drawable.paysage3,"110"));
         Posts.add(new Post("Florent Brassac", "t'as dead ça chacal",R.drawable.paysage4,"105"));
-        Posts.add(new Post("PaullBoveyron", "Je suis une locomotive",R.drawable.paysage5,"23"));
+        Posts.add(new Post("PaullBoveyron", "Je suis une locomotive",R.drawable.paysage5,"23"));*/
+        ArrayList<Integer> postID=new ArrayList<Integer>();
+        LikeActions likeActions= new LikeActions(getContext());
+        postID=likeActions.getAllPostLike(mCurrentUser);
+        likeActions.close();
+        posts =new ArrayList<com.example.instalike.db.Post>();
+        PostActions postActions= new PostActions(getContext());
+        System.out.println("la taille est "+postID.size());
+        for (int i=0;i<postID.size();i++){
+            posts.add(postActions.getPostFromID(postID.get(i)));
+        }
+
     }
 
     public void changeActivity(int position){
         Fragment selectedFragment= null;
         Bundle bundle= new Bundle();
-        // A MODIFIER PAS DYNAMIQUE
-        createComment(position);
-        bundle.putString("USERNAME",Posts.get(position).getmUserName());
-        bundle.putString("DESCRIPTION",Posts.get(position).getmDescription());
-        bundle.putInt("IMAGE",Posts.get(position).getmImagePosts());
-        bundle.putInt("ISLIKE",Posts.get(position).getmColorLike());
-        bundle.putString("NBLIKE",Posts.get(position).getmLike());
-        bundle.putInt("NBCOMMENT",Posts.get(position).getmListComment().size());
-        // ESSAYER DE PASSER L'OBJET COMMENT
-        // bundle.putString("COMMENT",Posts.get(position).getmListComment());
+
+        bundle.putInt("POST",posts.get(position).getId());
+        bundle.putInt("CURRENT_USER",mCurrentUser);
         selectedFragment=new FullPostFragment();
         selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
                 selectedFragment).addToBackStack(null).commit();
     }
-    public void createComment(int position){
-        mListComment=new ArrayList<Comment>();
-        mListComment.add(new Comment("vincent",R.drawable.paysage2, "superbePhoto"));
-        mListComment.add(new Comment("paul",R.drawable.paysage3, "nice"));
-        mListComment.add(new Comment("Thomas",R.drawable.paysage4, "super à visiter"));
-        Posts.get(position).setmListComment(mListComment);
-        System.out.println(Posts.get(position).getmListComment());
-    }
+
     public void buildRecycleView(){
 
         LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation_fall_down);
@@ -87,7 +89,7 @@ public class FavoriteFragment extends Fragment{
 
 
         mLayoutManager=new LinearLayoutManager(getActivity());
-       // mAdapter = new HashtagAdapter(Posts);
+        mAdapter = new HashtagAdapter(posts);
 
         // en forme de grill
         GridLayoutManager gridLayoutManager =

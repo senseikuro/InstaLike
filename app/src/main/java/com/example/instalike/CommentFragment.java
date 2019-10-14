@@ -57,7 +57,6 @@ public class CommentFragment extends Fragment{
                 Date now = new Date(Calendar.getInstance().getTime().getTime());
                 com.example.instalike.db.Comment newComment= new com.example.instalike.db.Comment(mCurrentUserID, mPostID,mComment.getText().toString(),now);
                 commentActions.insertComment(newComment);
-                System.out.println("le com c'est"+newComment.getUser_id());
                 mListComment.add(new Comment(commentActions.getPseudoComment(newComment.getUser_id()),R.drawable.paysage5,newComment.getContent()));
                 mAdapter.notifyDataSetChanged();
             }

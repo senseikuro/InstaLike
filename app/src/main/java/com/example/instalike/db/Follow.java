@@ -15,7 +15,7 @@ public class Follow {
 
     public Follow(int user_id, int user_id_followed_id, Date date) {
         this.user_id = user_id;
-        this.user_id_followed = user_id_followed;
+        this.user_id_followed = user_id_followed_id;
         this.date = date;
     }
 

@@ -124,6 +124,15 @@ public class PostActions {
         mCount.close();
         return nbComment;
     }
+    public int getnbPost(int userID){
+        bdd= Database.getReadableDatabase();
+        String req="select COUNT(*) from Post where User_id="+userID;
+        Cursor mCount=bdd.rawQuery(req,null);
+        mCount.moveToFirst();
+        int nbPost=mCount.getInt(0);
+        mCount.close();
+        return nbPost;
+    }
     public int getNbLike(int postID){
         bdd= Database.getReadableDatabase();
         String req="select COUNT(*) from [Like] where Post_id="+postID;
@@ -157,7 +166,6 @@ public class PostActions {
     public String getUserName(int userID){
         bdd= Database.getReadableDatabase();
         String req="select * from User where Id="+userID;
-        System.out.println(req);
         Cursor curseur=bdd.rawQuery(req,null);
         curseur.moveToFirst();
         String pseudo="";
@@ -166,5 +174,30 @@ public class PostActions {
         }
         curseur.close();
         return pseudo;
+    }
+
+    public Boolean isAbonnement(ArrayList<Integer> users, int userToTest){
+        boolean isabonne=false;
+
+        for (int i=0;i<users.size();i++){
+            if (users.get(i)==userToTest){
+                return true;
+            }
+        }
+        return false;
+    }
+    public ArrayList<Post> getActuality(ArrayList<Integer> users){
+        bdd= Database.getReadableDatabase();
+        String req= "select * from Post order by Date";
+        Cursor curseur = bdd.rawQuery(req, null);
+        curseur.moveToFirst();
+        ArrayList<Post> actualityPost=new ArrayList<Post>();
+        while(!curseur.isAfterLast()){
+            if (isAbonnement(users,curseur.getInt(1))){
+                actualityPost.add(getPostFromID(curseur.getInt(0)));
+            }
+            curseur.moveToNext();
+        }
+        return actualityPost;
     }
 }

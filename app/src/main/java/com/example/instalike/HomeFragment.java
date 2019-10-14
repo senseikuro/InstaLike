@@ -12,7 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instalike.db.FollowActions;
+import com.example.instalike.db.Like;
+import com.example.instalike.db.LikeActions;
+import com.example.instalike.db.PostActions;
+
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
     @Nullable
@@ -23,59 +30,115 @@ public class HomeFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Post> Posts;
     private View view;
+
+    private int mUser_id, mCurrent_User;
+    private int mPostID, nbLike,nbComment;
+    private ArrayList<com.example.instalike.db.Post> postAbonnement;
+
+    private PostActions postActions;
+    private LikeActions likeActions;
+    private FollowActions followActions;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home,container,false);
+
+        mCurrent_User=getArguments().getInt("CURRENT_USER");
+        mUser_id=getArguments().getInt("USER_PROFIL");
+
         createList();
         buildRecycleView();
         return view;
     }
 
     public void changeItem(int position, String text){
-        Posts.get(position).changeDescription("clicked");
         mAdapter.notifyItemChanged(position);
     }
     public void increaseLike(int position){
-        int currentLike=Integer.parseInt(Posts.get(position).getmLike());
-        if(Posts.get(position).isIslike()){
-            currentLike--;
-            Posts.get(position).setIslike(false);
+
+        boolean islike=likeActions.postIsLike(mCurrent_User,postAbonnement.get(position).getId());
+
+        if (islike){
+            likeActions.removeLikeWithID(likeActions.getPostLike(mCurrent_User,postAbonnement.get(position).getId()));
+            Posts.get(position).setmLike(String.valueOf(postActions.getNbLike(postAbonnement.get(position).getId())));
+            Posts.get(position).setmColorLike(R.drawable.heart);
         }
         else{
-            currentLike++;
-            Posts.get(position).setIslike(true);
+            Like newlike= new Like();
+            Date now= new Date(Calendar.getInstance().getTime().getTime());
 
-        }
-        Posts.get(position).setmLike(String.valueOf(currentLike));
-        if (Posts.get(position).getmColorLike()==R.drawable.heart)
+            newlike.setUser_id(mCurrent_User);
+            newlike.setPost_id(postAbonnement.get(position).getId());
+            newlike.setDate(now);
+            likeActions.insertLike(newlike);
+            Posts.get(position).setmLike(String.valueOf(postActions.getNbLike(postAbonnement.get(position).getId())));
             Posts.get(position).setmColorLike(R.drawable.redheart);
-        else
-            Posts.get(position).setmColorLike(R.drawable.heart);
+            likeActions.close();
+        }
+
         mAdapter.notifyItemChanged(position);
 
     }
 
-    public void changeActivityToProfil(){
+    public void changeActivityToProfil(int position){
         Fragment selectedFragment= null;
         selectedFragment=new ProfilFragement();
-
+        Bundle bundle= new Bundle();
+        bundle.putInt("CURRENT_USER",mCurrent_User);
+        bundle.putInt("USER_PROFIL",postAbonnement.get(position).getUser_id());
+        selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
                 selectedFragment).addToBackStack(null).commit();
-    }
-    public void changeActivityToComment(){
-        Fragment selectedFragment= null;
-        selectedFragment=new CommentFragment();
 
+
+    }
+    public void changeActivityToComment(int position){
+        Fragment selectedFragment= null;
+        Bundle bundle= new Bundle();
+        // A MODIFIER PAS DYNAMIQUE
+        bundle.putInt("POST_ID",postAbonnement.get(position).getId());
+        bundle.putInt("CURRENT_USER",mCurrent_User);
+        selectedFragment=new CommentFragment();
+        selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
                 selectedFragment).addToBackStack(null).commit();
     }
 
     public void createList(){
+
+        followActions= new FollowActions(getContext());
+        ArrayList<Integer> idAbonnement= new ArrayList<Integer>();
+        idAbonnement=followActions.getAllAbonnement(mCurrent_User);
+        followActions.close();
+        System.out.println("j'ai les follows");
+        postActions= new PostActions(getContext());
+        postAbonnement= new ArrayList<com.example.instalike.db.Post>();
+        postAbonnement=postActions.getActuality(idAbonnement);
+        System.out.println("j'ai les actualités");
+
         Posts =new ArrayList<Post>();
-        Posts.add(new Post("ichiban japan", "super voyage à tokyo",R.drawable.paysage2,"120"));
-        Posts.add(new Post("VincentJouanne", "i love BJJ",R.drawable.paysage3,"110"));
-        Posts.add(new Post("Florent Brassac", "t'as dead ça chacal",R.drawable.paysage4,"105"));
-        Posts.add(new Post("PaullBoveyron", "Je suis une locomotive",R.drawable.paysage5,"23"));
+        Post tempPost=new Post();
+        for (int i=0;i<postAbonnement.size();i++){
+            tempPost.setUserName(postActions.getUserName(postAbonnement.get(i).getUser_id()));
+            tempPost.setDescription(postAbonnement.get(i).getDescription());
+            postActions.close();
+            likeActions=new LikeActions(getContext());
+            tempPost.setIslike(likeActions.postIsLike(mCurrent_User,postAbonnement.get(i).getId()));
+            if (tempPost.isIslike()){
+                tempPost.setmColorLike(R.drawable.redheart);
+            }
+            else{
+                tempPost.setmColorLike(R.drawable.heart);
+            }
+            likeActions.close();
+            tempPost.setmLike(String.valueOf(postActions.getNbLike(postAbonnement.get(i).getId())));
+
+            tempPost.setImagePosts(postAbonnement.get(i).getPhoto_path());
+            Posts.add(tempPost);
+
+        }
+
+
     }
     public void buildRecycleView(){
         mRecyclerView=view.findViewById(R.id.ListRecycleView);
@@ -97,8 +160,8 @@ public class HomeFragment extends Fragment {
             public void onLikeClick(int position) {
                 increaseLike(position);
             }
-            public void onCommentClick(int position){changeActivityToComment();}
-            public void onProfilClick(int position){changeActivityToProfil();}
+            public void onCommentClick(int position){changeActivityToComment(position);}
+            public void onProfilClick(int position){changeActivityToProfil(position);}
         });
     }
 }

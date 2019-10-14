@@ -17,10 +17,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instalike.db.Follow;
+import com.example.instalike.db.FollowActions;
 import com.example.instalike.db.Post;
 import com.example.instalike.db.PostActions;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ProfilFragement extends Fragment  implements View.OnClickListener{
     View view;
@@ -33,6 +37,10 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
     private ArrayList<Post> Posts;
     private ArrayList<Comment> mListComment;
     private int mUser_id, mCurrent_User;
+    private FollowActions followActions;
+    private PostActions postActions;
+    private Follow follow;
+    private boolean isFollow;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile,container,false);
@@ -44,9 +52,33 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         mFollow.setOnClickListener(this);
         mCurrent_User=getArguments().getInt("CURRENT_USER");
         mUser_id=getArguments().getInt("USER_PROFIL");
-        if (mUser_id == mCurrent_User){
+        System.out.println(mUser_id);
+        followActions= new FollowActions(view.getContext());
+        if (mUser_id == mCurrent_User){ 
             mFollow.setVisibility(view.INVISIBLE);
         }
+        else{
+            isFollow=followActions.isFollowed(mCurrent_User,mUser_id);
+
+
+            if (isFollow){
+                mFollow.setText("Follow");
+            }
+            else {
+                mFollow.setText("S'abonner");
+            }
+
+        }
+        int nbFollow=followActions.getNbFollow(mUser_id);
+        int nbAbonnement=followActions.getNbAbonnement(mUser_id);
+        mFollowers.setText(String.valueOf(nbFollow));
+        mAbonnement.setText(String.valueOf(nbAbonnement));
+        followActions.close();
+
+
+        postActions=new PostActions(view.getContext());
+
+        mPost.setText(String.valueOf(postActions.getnbPost(mUser_id)));
         createList();
         buildRecycleView();
         return view;
@@ -55,22 +87,33 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.profil_follow_btn:
-                String isFollow=mFollow.getText().toString();
-                if (isFollow=="Follow"){
-                    mFollow.setText("S'abonner");
+                isFollow=followActions.isFollowed(mCurrent_User,mUser_id);
+
+                if (isFollow){
+                    followActions.removeFollowWithID(followActions.getFollow(mCurrent_User,mUser_id));
                     int nbFollowers=Integer.parseInt(mFollowers.getText().toString());
-                    nbFollowers--;
-                    mFollowers.setText(String.valueOf(nbFollowers));
+                    int nbFollow=followActions.getNbFollow(mUser_id);
+                    int nbAbonnement=followActions.getNbAbonnement(mUser_id);
+                    mFollowers.setText(nbFollow);
+                    mAbonnement.setText(nbAbonnement);
+                    mFollow.setText("S'abonner");
 
                 }
                 else{
+                    Date now = new Date(Calendar.getInstance().getTime().getTime());
+                    System.out.println("user_profil"+mUser_id+" user current"+mCurrent_User);
+
+                    follow=new Follow(mCurrent_User,mUser_id,now);
+                    followActions.insertFollow(follow);
                     int nbFollowers=Integer.parseInt(mFollowers.getText().toString());
-                    nbFollowers++;
-                    mFollowers.setText(String.valueOf(nbFollowers));
+                    int nbFollow=followActions.getNbFollow(mUser_id);
+                    int nbAbonnement=followActions.getNbAbonnement(mUser_id);
+                    mFollowers.setText(String.valueOf(nbFollow));
+                    mAbonnement.setText(String.valueOf(nbAbonnement));
                     mFollow.setText("Follow");
 
                 }
-
+            followActions.close();
         }
     }
     public void changeItem(int position, String text){
