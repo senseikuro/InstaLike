@@ -200,4 +200,16 @@ public class PostActions {
         }
         return actualityPost;
     }
+    public int getUserIDFromPost(int postId){
+        bdd= Database.getReadableDatabase();
+        String req= "select * from Post where Id="+postId;
+        Cursor curseur = bdd.rawQuery(req, null);
+        curseur.moveToFirst();
+        int ownerPost=-1;
+        if(!curseur.isAfterLast()){
+            ownerPost=curseur.getInt(1);
+
+        }
+        return ownerPost;
+    }
 }

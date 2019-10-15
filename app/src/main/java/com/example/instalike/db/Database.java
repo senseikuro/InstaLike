@@ -13,10 +13,11 @@ public class Database extends SQLiteOpenHelper {
     private static final String COMMENT_TABLE = "Comment";
     private static final String LIKE_TABLE = "[Like]";
     private static final String FOLLOW_TABLE = "Follow";
-
+    private static final String NOTIFY_TABLE="Notification";
 
 
     //Colonnes des tables de la base
+
 
     //User
     private static final String USER_COL_ID = "Id";
@@ -48,6 +49,15 @@ public class Database extends SQLiteOpenHelper {
     private static final String FOLLOW_COL_USER_ID = "User_id";
     private static final String FOLLOW_COL_USER_ID_FOLLOWED = "User_id_followed";
     private static final String FOLLOW_COL_DATE = "Date";
+    //Notify
+    private static final String NOTIFY_COL_ID = "Id";
+    private static final String NOTIFY_COL_USER = "User_id";
+    private static final String NOTIFY_COL_USER_NOTIFY="User_notify_id";
+    private static final String NOTIFY_COL_ACTION="Event";
+    private static final String NOTIFY_COL_POST="Post_id";
+    private static final String NOTIFY_COL_DATE = "Date";
+
+
 
 
 
@@ -108,6 +118,17 @@ public class Database extends SQLiteOpenHelper {
             + "FOREIGN KEY (" + FOLLOW_COL_USER_ID + ") REFERENCES " + USER_TABLE + "(Id),"
             + "FOREIGN KEY (" + FOLLOW_COL_USER_ID_FOLLOWED + ") REFERENCES " + USER_TABLE + "(Id));";
 
+    private static final String CREATE_NOTIFY_TABLE=
+            "CREATE TABLE " + NOTIFY_TABLE + " ("
+            + NOTIFY_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + NOTIFY_COL_USER + " INT NOT NULL, "
+            + NOTIFY_COL_USER_NOTIFY + " INT NOT NULL, "
+            + NOTIFY_COL_ACTION + " INT NOT NULL, "
+            + NOTIFY_COL_POST + " TEXT NOT NULL, "
+            + NOTIFY_COL_DATE + " DATETIME NOT NULL,"
+            + "FOREIGN KEY(" + NOTIFY_COL_USER + ") REFERENCES " + USER_TABLE + "(Id),"
+            + "FOREIGN KEY(" + NOTIFY_COL_USER_NOTIFY + ") REFERENCES " + USER_TABLE + "(Id),"
+            + "FOREIGN KEY (" + NOTIFY_COL_POST + ") REFERENCES " + POST_TABLE + "(Id));";
 
 
 
@@ -126,14 +147,14 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(CREATE_COMMENT_TABLE);
         db.execSQL(CREATE_LIKE_TABLE);
         db.execSQL(CREATE_FOLLOW_TABLE);
-
+        db.execSQL(CREATE_NOTIFY_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //On peut faire ce qu'on veut ici moi j'ai décidé de supprimer la table et de la recréer
         //comme ça lorsque je change la version les id repartent de 0
-        db.execSQL("DROP TABLE " + POST_TABLE + ";");
+        //db.execSQL("DROP TABLE " + POST_TABLE + ";");
         onCreate(db);
     }
 }

@@ -36,13 +36,14 @@ public class PublishPicsFragment extends Fragment {
     private EditText mDescription;
     private Button mPublish;
     private int user_ID;
+    private String path;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_publish_pics,container,false);
         user_ID=getArguments().getInt("CURRENT_USER");
         Intent photoIntent=new Intent(Intent.ACTION_PICK);
 
         File photoDirectory= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String path= photoDirectory.getPath();
+        path= photoDirectory.getPath();
 
         Uri data=Uri.parse(path);
         photoIntent.setDataAndType(data,"image/*");
@@ -59,6 +60,8 @@ public class PublishPicsFragment extends Fragment {
                 Date now = new Date(Calendar.getInstance().getTime().getTime());
                 PostActions postAction=new PostActions(getContext());
                 postAction.open();
+                Bitmap myPhoto=BitmapFactory.decodeFile(path);
+
                 Post post= new Post(user_ID,R.drawable.paysage4,mDescription.getText().toString(),now);
                 postAction.insertPost(post);
             }

@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.instalike.db.FollowActions;
 import com.example.instalike.db.Like;
 import com.example.instalike.db.LikeActions;
+import com.example.instalike.db.Notify;
+import com.example.instalike.db.NotifyActions;
 import com.example.instalike.db.PostActions;
 
 import java.sql.Date;
@@ -35,6 +37,7 @@ public class HomeFragment extends Fragment {
     private int mPostID, nbLike,nbComment;
     private ArrayList<com.example.instalike.db.Post> postAbonnement;
 
+    private NotifyActions notifyActions;
     private PostActions postActions;
     private LikeActions likeActions;
     private FollowActions followActions;
@@ -58,6 +61,7 @@ public class HomeFragment extends Fragment {
     public void increaseLike(int position){
 
         boolean islike=likeActions.postIsLike(mCurrent_User,postAbonnement.get(position).getId());
+        Date now= new Date(Calendar.getInstance().getTime().getTime());
 
         if (islike){
             likeActions.removeLikeWithID(likeActions.getPostLike(mCurrent_User,postAbonnement.get(position).getId()));
@@ -66,7 +70,6 @@ public class HomeFragment extends Fragment {
         }
         else{
             Like newlike= new Like();
-            Date now= new Date(Calendar.getInstance().getTime().getTime());
 
             newlike.setUser_id(mCurrent_User);
             newlike.setPost_id(postAbonnement.get(position).getId());
@@ -75,8 +78,12 @@ public class HomeFragment extends Fragment {
             Posts.get(position).setmLike(String.valueOf(postActions.getNbLike(postAbonnement.get(position).getId())));
             Posts.get(position).setmColorLike(R.drawable.redheart);
             likeActions.close();
-        }
+            notifyActions=new NotifyActions(getContext());
 
+            Notify notif= new Notify(mCurrent_User,postAbonnement.get(position).getUser_id(),postAbonnement.get(position).getId(),"like",now);
+            notifyActions.insertNotification(notif);
+            notifyActions.close();
+        }
         mAdapter.notifyItemChanged(position);
 
     }
@@ -99,6 +106,8 @@ public class HomeFragment extends Fragment {
         // A MODIFIER PAS DYNAMIQUE
         bundle.putInt("POST_ID",postAbonnement.get(position).getId());
         bundle.putInt("CURRENT_USER",mCurrent_User);
+        bundle.putInt("USER_PROFIL",mUser_id);
+
         selectedFragment=new CommentFragment();
         selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
@@ -114,6 +123,9 @@ public class HomeFragment extends Fragment {
         postActions= new PostActions(getContext());
         postAbonnement= new ArrayList<com.example.instalike.db.Post>();
         postAbonnement=postActions.getActuality(idAbonnement);
+        boolean islike=false;
+
+
 
         for (int i=0;i<postAbonnement.size();i++){
             String userName=postActions.getUserName(postAbonnement.get(i).getUser_id());
@@ -121,7 +133,7 @@ public class HomeFragment extends Fragment {
 
             postActions.close();
             likeActions=new LikeActions(getContext());
-            boolean islike=likeActions.postIsLike(mCurrent_User,postAbonnement.get(i).getId());
+            islike=likeActions.postIsLike(mCurrent_User,postAbonnement.get(i).getId());
             int heartimage;
             if (islike){
                  heartimage=R.drawable.redheart;

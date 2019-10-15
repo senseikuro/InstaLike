@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instalike.db.Follow;
 import com.example.instalike.db.FollowActions;
+import com.example.instalike.db.Notify;
+import com.example.instalike.db.NotifyActions;
 import com.example.instalike.db.Post;
 import com.example.instalike.db.PostActions;
 
@@ -39,6 +41,7 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
     private int mUser_id, mCurrent_User;
     private FollowActions followActions;
     private PostActions postActions;
+    private NotifyActions notifyActions;
     private Follow follow;
     private boolean isFollow;
 
@@ -106,6 +109,7 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
                     mFollowers.setText(String.valueOf(nbFollow));
                     mAbonnement.setText(String.valueOf(nbAbonnement));
                     mFollow.setText("S'abonner");
+                    followActions.close();
 
 
                 }
@@ -121,9 +125,15 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
                     mFollowers.setText(String.valueOf(nbFollow));
                     mAbonnement.setText(String.valueOf(nbAbonnement));
                     mFollow.setText("Follow");
+                    followActions.close();
 
+                    notifyActions=new NotifyActions(getContext());
+
+                    Notify notif= new Notify(mCurrent_User,mUser_id,-1,"follow",now);
+                    notifyActions.insertNotification(notif);
+                    notifyActions.close();
                 }
-                followActions.close();
+
                 break;
 
             case R.id.profil_abonnement:
@@ -150,8 +160,9 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
     public void changeActivity(int position){
         Fragment selectedFragment= null;
         Bundle bundle= new Bundle();
-        bundle.putInt("POST",Posts.get(position).getId());
-        bundle.putInt("CURRENT_USER",mUser_id);
+        bundle.putInt("POST_ID",Posts.get(position).getId());
+        bundle.putInt("USER_PROFIL",mUser_id);
+        bundle.putInt("CURRENT_USER",mCurrent_User);
         selectedFragment=new FullPostFragment();
         selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,

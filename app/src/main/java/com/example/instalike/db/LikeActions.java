@@ -98,6 +98,7 @@ public class LikeActions {
             postISLike=true;
         }
         curseur.close();
+        close();
         return postISLike;
     }
     public int getPostLike(int userId, int postId){

@@ -26,7 +26,7 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
     private ImageView mPhoto,mHeart,mComment;
     private TextView mUsername, mDescription, mNbLike, mNbComment;
     private View view;
-    private int mPostID, nbLike,nbComment, mCurrent_user;
+    private int mPostID, nbLike,nbComment, mCurrent_user, mUserId_post;
     private LikeActions mLikeAction;
     private Post post;
     private PostActions postAction;
@@ -40,9 +40,9 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         imagePost=getArguments().getInt("IMAGE");
         postisLike=getArguments().getInt("ISLIKE",0);
         nbComment=getArguments().getInt("NBCOMMENT",0);*/
-        mPostID=getArguments().getInt("POST");
+        mPostID=getArguments().getInt("POST_ID");
         mCurrent_user=getArguments().getInt("CURRENT_USER");
-
+        mUserId_post=getArguments().getInt("USER_PROFIL");
         mPhoto=view.findViewById(R.id.post_page_image);
         mHeart=view.findViewById(R.id.post_page_heart);
         mComment=view.findViewById(R.id.post_page_comment);
@@ -126,6 +126,7 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         Bundle bundle= new Bundle();
         bundle.putInt("POST_ID",mPostID);
         bundle.putInt("CURRENT_USER",mCurrent_user);
+        bundle.putInt("USER_PROFIL",mUserId_post);
         selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
                 selectedFragment).addToBackStack(null).commit();
