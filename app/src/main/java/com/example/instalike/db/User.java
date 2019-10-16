@@ -10,18 +10,22 @@ public class User {
     private String mail;
     private String password;
     private String pseudeo;
+    private byte[] photo_pp;
+    private String description;
     private Date date;
 
     public User() {}
 
 
 
-    public User(String name, String surname, String mail,String password ,String pseudeo, Date date) {
+    public User(String name, String surname, String mail,String password ,String pseudeo, byte[] photo_pp, String description, Date date) {
         this.name = name;
         this.surname = surname;
         this.mail = mail;
         this.password = password;
         this.pseudeo = pseudeo;
+        this.photo_pp=photo_pp;
+        this.description=description;
         this.date = date;
     }
 
@@ -82,5 +86,21 @@ public class User {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public byte[] getPhoto_path() {
+        return photo_pp;
+    }
+
+    public void setPhoto_path(byte[] photo_path) {
+        this.photo_pp = photo_path;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.instalike;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +26,10 @@ import com.example.instalike.db.Notify;
 import com.example.instalike.db.NotifyActions;
 import com.example.instalike.db.Post;
 import com.example.instalike.db.PostActions;
+import com.example.instalike.db.User;
+import com.example.instalike.db.UserActions;
 
+import java.io.ByteArrayInputStream;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,8 +37,8 @@ import java.util.Calendar;
 public class ProfilFragement extends Fragment  implements View.OnClickListener{
     View view;
     Button mFollow;
-    TextView mPost,mFollowers,mAbonnement;
-
+    TextView mPost,mFollowers,mAbonnement, mPseudo, mDescription;
+    ImageView mPP;
     private HashtagAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -41,6 +47,7 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
     private int mUser_id, mCurrent_User;
     private FollowActions followActions;
     private PostActions postActions;
+    private UserActions userActions;
     private NotifyActions notifyActions;
     private Follow follow;
     private boolean isFollow;
@@ -51,16 +58,26 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         mPost=view.findViewById(R.id.profil_post);
         mFollowers=view.findViewById(R.id.profil_followers);
         mAbonnement=view.findViewById(R.id.profil_abonnement);
+        mPseudo=view.findViewById(R.id.profil_user_name);
+        mDescription=view.findViewById(R.id.profil_description);
+        mPP=view.findViewById(R.id.profile_picture);
+
 
         mFollow.setOnClickListener(this);
         mFollowers.setOnClickListener(this);
         mAbonnement.setOnClickListener(this);
         mCurrent_User=getArguments().getInt("CURRENT_USER");
         mUser_id=getArguments().getInt("USER_PROFIL");
-        System.out.println(mUser_id);
+
+        setRessource();
+
+        return view;
+    }
+
+    public void setRessource(){
         followActions= new FollowActions(view.getContext());
-        if (mUser_id == mCurrent_User){ 
-            mFollow.setVisibility(view.INVISIBLE);
+        if (mUser_id == mCurrent_User){
+            mFollow.setText("Modifier profil");
         }
         else{
             isFollow=followActions.isFollowed(mCurrent_User,mUser_id);
@@ -80,15 +97,30 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         mAbonnement.setText(String.valueOf(nbAbonnement));
         followActions.close();
 
+        userActions= new UserActions(getContext());
+        User user= userActions.getUserWithID(mUser_id);
+        user.setDescription(userActions.getUserDescription(mUser_id));
+        user.setPhoto_path(userActions.getUserPP(mUser_id));
+        mPseudo.setText(user.getPseudeo());
+
+        if (user.getDescription()==null){
+            mDescription.setText("Description");
+        }
+        else{
+            mDescription.setText(userActions.getUserDescription(mUser_id));
+        }
+        if (user.getPhoto_path()!=null){
+            byte[] outImage=user.getPhoto_path();
+            ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
+            Bitmap theImage = BitmapFactory.decodeStream(imageStream);
+            mPP.setImageBitmap(theImage);
+        }
 
         postActions=new PostActions(view.getContext());
 
         mPost.setText(String.valueOf(postActions.getnbPost(mUser_id)));
         createList();
         buildRecycleView();
-
-
-        return view;
     }
     @Override
     public void onClick(View v) {
@@ -99,41 +131,51 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         bundle.putInt("USER_PROFIL",mUser_id);
         switch(v.getId()){
             case R.id.profil_follow_btn:
-                isFollow=followActions.isFollowed(mCurrent_User,mUser_id);
 
-                if (isFollow){
-                    followActions.removeFollowWithID(followActions.getFollow(mCurrent_User,mUser_id));
-                    int nbFollowers=Integer.parseInt(mFollowers.getText().toString());
-                    int nbFollow=followActions.getNbFollow(mUser_id);
-                    int nbAbonnement=followActions.getNbAbonnement(mUser_id);
-                    mFollowers.setText(String.valueOf(nbFollow));
-                    mAbonnement.setText(String.valueOf(nbAbonnement));
-                    mFollow.setText("S'abonner");
-                    followActions.close();
+                if(mUser_id != mCurrent_User){
+                    isFollow=followActions.isFollowed(mCurrent_User,mUser_id);
 
+                    if (isFollow){
+                        followActions.removeFollowWithID(followActions.getFollow(mCurrent_User,mUser_id));
+                        int nbFollowers=Integer.parseInt(mFollowers.getText().toString());
+                        int nbFollow=followActions.getNbFollow(mUser_id);
+                        int nbAbonnement=followActions.getNbAbonnement(mUser_id);
+                        mFollowers.setText(String.valueOf(nbFollow));
+                        mAbonnement.setText(String.valueOf(nbAbonnement));
+                        mFollow.setText("S'abonner");
+                        followActions.close();
+
+
+                    }
+                    else{
+                        Date now = new Date(Calendar.getInstance().getTime().getTime());
+                        System.out.println("user_profil"+mUser_id+" user current"+mCurrent_User);
+
+                        follow=new Follow(mCurrent_User,mUser_id,now);
+                        followActions.insertFollow(follow);
+                        int nbFollowers=Integer.parseInt(mFollowers.getText().toString());
+                        int nbFollow=followActions.getNbFollow(mUser_id);
+                        int nbAbonnement=followActions.getNbAbonnement(mUser_id);
+                        mFollowers.setText(String.valueOf(nbFollow));
+                        mAbonnement.setText(String.valueOf(nbAbonnement));
+                        mFollow.setText("Follow");
+                        followActions.close();
+
+                        notifyActions=new NotifyActions(getContext());
+
+                        Notify notif= new Notify(mCurrent_User,mUser_id,-1,"follow",now);
+                        notifyActions.insertNotification(notif);
+                        notifyActions.close();
+                    }
 
                 }
-                else{
-                    Date now = new Date(Calendar.getInstance().getTime().getTime());
-                    System.out.println("user_profil"+mUser_id+" user current"+mCurrent_User);
+                else {
+                    selectedFragment=new ModifyProfil();
+                    selectedFragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                            selectedFragment).addToBackStack(null).commit();
 
-                    follow=new Follow(mCurrent_User,mUser_id,now);
-                    followActions.insertFollow(follow);
-                    int nbFollowers=Integer.parseInt(mFollowers.getText().toString());
-                    int nbFollow=followActions.getNbFollow(mUser_id);
-                    int nbAbonnement=followActions.getNbAbonnement(mUser_id);
-                    mFollowers.setText(String.valueOf(nbFollow));
-                    mAbonnement.setText(String.valueOf(nbAbonnement));
-                    mFollow.setText("Follow");
-                    followActions.close();
-
-                    notifyActions=new NotifyActions(getContext());
-
-                    Notify notif= new Notify(mCurrent_User,mUser_id,-1,"follow",now);
-                    notifyActions.insertNotification(notif);
-                    notifyActions.close();
                 }
-
                 break;
 
             case R.id.profil_abonnement:

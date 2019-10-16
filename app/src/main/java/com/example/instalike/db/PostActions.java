@@ -78,6 +78,8 @@ public class PostActions {
     public int updatePost(int id, Post post){
         //La mise à jour d'un livre dans la BDD fonctionne plus ou moins comme une insertion
         //il faut simplement préciser quel livre on doit mettre à jour grâce à l'ID
+        bdd = Database.getWritableDatabase();
+
         ContentValues values = new ContentValues();
 
         values.put(COL_USER_ID, post.getUser_id());

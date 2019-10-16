@@ -26,6 +26,8 @@ public class Database extends SQLiteOpenHelper {
     private static final String USER_COL_PASSWORD = "Password";
     private static final String USER_COL_MAIL = "Mail";
     private static final String USER_COL_PSEUDEO = "Pseudeo";
+    private static final String USER_COL_PHOTO = "Photo";
+    private static final String USER_COL_DESCRIPTION = "Description";
     private static final String USER_COL_DATE = "Date";
     //Post
     private static final String POST_COL_ID = "Id";
@@ -71,6 +73,8 @@ public class Database extends SQLiteOpenHelper {
             + USER_COL_MAIL + " TEXT NOT NULL, "
             + USER_COL_PASSWORD + " TEXT NOT NULL, "
             + USER_COL_PSEUDEO + " TEXT NOT NULL, "
+            + USER_COL_PHOTO + " BLOB , "
+            + USER_COL_DESCRIPTION + " TEXT , "
             + USER_COL_DATE + " DATETIME NOT NULL);";
 
 

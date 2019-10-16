@@ -237,7 +237,7 @@ public class FormulaireActivity extends AppCompatActivity {
 
                         toastResgister(true,"You create yout account");
                         Date today = Calendar.getInstance().getTime();
-                        User newUser=new User(mName.getText().toString(),mSurname.getText().toString(),mEmail.getText().toString(),mMdp.getText().toString(), mPseudo.getText().toString(),today);
+                        User newUser=new User(mName.getText().toString(),mSurname.getText().toString(),mEmail.getText().toString(),mMdp.getText().toString(), mPseudo.getText().toString(),null, null, today);
 
                         userActions.insertUser(newUser);
                         userActions.close();

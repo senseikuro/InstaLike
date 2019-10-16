@@ -37,8 +37,16 @@ public class UserActions {
     private static final String COL_PSEUDEO = "Pseudeo";
     private static final int NUM_COL_PSEUDEO = 5;
 
-    private static final String COL_DATE = "Date";
-    private static final int NUM_COL_DATE = 6;
+
+    private static final String COL_PHOTO = "Photo";
+    private static final int NUM_COL_PHOTO = 6;
+
+    private static final String COL_DESCRIPTION = "Description";
+    private static final int NUM_COL_DESCRIPTION = 7;
+
+
+    private static final String COL_DATE= "Date";
+    private static final int NUM_COL_DATE = 8;
 
 
 
@@ -77,6 +85,8 @@ public class UserActions {
         values.put(COL_PASSWORD, user.getPassword());
         values.put(COL_MAIL, user.getMail());
         values.put(COL_PSEUDEO, user.getPseudeo());
+        values.put(COL_PHOTO,user.getPhoto_path());
+        values.put(COL_DESCRIPTION,user.getDescription());
         values.put(COL_DATE, user.getDate().toString());
 
 
@@ -94,7 +104,9 @@ public class UserActions {
         values.put(COL_PASSWORD, user.getPassword());
         values.put(COL_MAIL, user.getMail());
         values.put(COL_PSEUDEO, user.getPseudeo());
-        //values.put(COL_DATE, user.getDate().toString());
+        values.put(COL_PHOTO,user.getPhoto_path());
+        values.put(COL_DESCRIPTION,user.getDescription());
+        values.put(COL_DATE, user.getDate().toString());
 
         return bdd.update(USER_TABLE, values, COL_ID + " = " +id, null);
     }
@@ -138,6 +150,30 @@ public class UserActions {
         return user;
     }
 
+    public byte[] getUserPP(int id_user){
+        bdd=Database.getReadableDatabase();
+        String req="select * from User where Id="+id_user;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        byte[] pp=null;
+        if (!curseur.isAfterLast()){
+            pp=curseur.getBlob(6);
+        }
+        return pp;
+    }
+
+    public String getUserDescription(int id_user) {
+        bdd = Database.getReadableDatabase();
+        String req = "select * from User where Id=" + id_user;
+        Cursor curseur = bdd.rawQuery(req, null);
+        curseur.moveToFirst();
+        String description="";
+        if (!curseur.isAfterLast()) {
+            description = curseur.getString(7);
+        }
+        return description;
+    }
+
     public ArrayList<User> getAllUsers(){
         ArrayList<User> users=new ArrayList<User>();
         bdd= Database.getReadableDatabase();
@@ -164,6 +200,11 @@ public class UserActions {
         curseur.moveToFirst();
         User user= new User();
         if(!curseur.isAfterLast()){
+            user.setId(curseur.getInt(0));
+            user.setName(curseur.getString(1));
+            user.setSurname(curseur.getString(2));
+            user.setMail(curseur.getString(3));
+            user.setPassword(curseur.getString(4));
             user.setPseudeo(curseur.getString(5));
         }
         return user;

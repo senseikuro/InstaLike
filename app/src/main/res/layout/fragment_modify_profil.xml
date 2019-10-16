@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_publish_post">
+
+        <ImageView
+            android:id="@+id/fragment_profil_modify_pp_img"
+            android:clickable="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            ></ImageView>
+
+        <EditText
+            android:id="@+id/fragment_profil_modify_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_publish_post_img"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="110dp"
+            android:hint="Enter Your description"></EditText>
+
+        <Button
+            android:id="@+id/fragment_profil_modify_btn"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_publish_post_description"
+            android:background="@color/colorPrimary"
+            android:text="Modifier profil"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:textColor="@color/colorPrimaryDark"></Button>
+    </LinearLayout>
+</ScrollView>
+
