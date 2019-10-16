@@ -1,15 +1,28 @@
 package com.example.instalike;
 
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instalike.db.Post;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class HashtagAdapter extends RecyclerView.Adapter<HashtagAdapter.ViewHolder>{
@@ -79,10 +92,22 @@ public class HashtagAdapter extends RecyclerView.Adapter<HashtagAdapter.ViewHold
         Post postmember = mPosts.get(position);
 
         // Set item views based on your views and data model
-        viewHolder.mPics.setImageResource(postmember.getPhoto_path());
+        byte[] outImage=postmember.getPhoto_path();
+        ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
+        Bitmap theImage = BitmapFactory.decodeStream(imageStream);
+        viewHolder.mPics.setImageBitmap(theImage);
 
     }
-
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {

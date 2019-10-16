@@ -1,7 +1,10 @@
 package com.example.instalike;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import com.example.instalike.db.LikeActions;
 import com.example.instalike.db.Post;
 import com.example.instalike.db.PostActions;
 
+import java.io.ByteArrayInputStream;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -59,6 +63,16 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
 
         return view;
     }
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
     public void setRecources(){
 
         postAction=new PostActions(getContext());
@@ -66,8 +80,11 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         nbLike=postAction.getNbLike(mPostID);
         post=postAction.getPostFromID(mPostID);
 
+        byte[] outImage=post.getPhoto_path();
+        ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
+        Bitmap theImage = BitmapFactory.decodeStream(imageStream);
+        mPhoto.setImageBitmap(theImage);
 
-        mPhoto.setImageResource(post.getPhoto_path());
         mUsername.setText(postAction.getUserName(post.getUser_id()));
         mDescription.setText(post.getDescription());
         mNbLike.setText(String.valueOf(nbLike));

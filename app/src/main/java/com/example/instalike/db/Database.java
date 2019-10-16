@@ -79,7 +79,7 @@ public class Database extends SQLiteOpenHelper {
             "CREATE TABLE " + POST_TABLE + " ("
              + POST_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
              + POST_COL_USER_ID + " INT NOT NULL, "
-             + POST_COL_PHOTO_PATH + " TEXT NOT NULL, "
+             + POST_COL_PHOTO_PATH + " BLOB NOT NULL, "
              + POST_COL_DATE + " DATETIME NOT NULL,"
              + POST_COL_DESCRIPTION +" TEXT NOT NULL, "
              + "FOREIGN KEY (" + POST_COL_USER_ID + ") REFERENCES " + USER_TABLE + "(Id));";

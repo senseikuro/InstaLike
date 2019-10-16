@@ -1,21 +1,23 @@
 package com.example.instalike;
 
+import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
 import android.media.Image;
 import android.widget.ImageView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Post {
 
     private String mUserName;
     private String mDescription;
-    private int mImagePosts;
+    private byte[] mImagePosts;
     private String mLike;
     private int mColorLike;
     private boolean islike;
     private ArrayList<Comment> mListComment;
-    public Post(String username, String description, int imagePosts, String like, int color, boolean islike){
+    public Post(String username, String description, byte[] imagePosts, String like, int color, boolean islike){
         mUserName=username;
         mDescription=description;
         mImagePosts=imagePosts;
@@ -37,10 +39,10 @@ public class Post {
 
     private static int lastPostID = 0;
 
-    public int getmImagePosts() {
+    public byte[] getmImagePosts() {
         return mImagePosts;
     }
-    public void setImagePosts(int image){mImagePosts=image;}
+    public void setImagePosts(byte[] image){mImagePosts=image;}
     public void changeDescription(String string){
         mDescription=string;
     }

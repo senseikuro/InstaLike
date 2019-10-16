@@ -1,6 +1,9 @@
 package com.example.instalike;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
     public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
@@ -115,10 +119,25 @@ import java.util.List;
         viewHolder.mUserName.setText(postmember.getmUserName());
         viewHolder.mDescription.setText(postmember.getmDescription());
         viewHolder.mLike.setText(postmember.getmLike());
-        viewHolder.mPicsPost.setImageResource(postmember.getmImagePosts());
-        viewHolder.mheartpic.setImageResource(postmember.getmColorLike());
-    }
+        byte[] outImage=postmember.getmImagePosts();
+        ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
+        Bitmap theImage = BitmapFactory.decodeStream(imageStream);
 
+        viewHolder.mPicsPost.setImageBitmap(theImage);
+        viewHolder.mheartpic.setImageResource(postmember.getmColorLike());
+
+
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {

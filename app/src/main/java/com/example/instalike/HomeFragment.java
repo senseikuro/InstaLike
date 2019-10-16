@@ -1,5 +1,8 @@
 package com.example.instalike;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,9 @@ import com.example.instalike.db.Notify;
 import com.example.instalike.db.NotifyActions;
 import com.example.instalike.db.PostActions;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,7 +47,7 @@ public class HomeFragment extends Fragment {
     private PostActions postActions;
     private LikeActions likeActions;
     private FollowActions followActions;
-
+    private InputStream inputStream;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home,container,false);
@@ -50,7 +56,11 @@ public class HomeFragment extends Fragment {
         mUser_id=getArguments().getInt("USER_PROFIL");
         Posts =new ArrayList<Post>();
 
-        createList();
+        try {
+            createList();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         buildRecycleView();
         return view;
     }
@@ -114,7 +124,7 @@ public class HomeFragment extends Fragment {
                 selectedFragment).addToBackStack(null).commit();
     }
 
-    public void createList(){
+    public void createList() throws FileNotFoundException {
 
         followActions= new FollowActions(getContext());
         ArrayList<Integer> idAbonnement= new ArrayList<Integer>();
@@ -144,8 +154,7 @@ public class HomeFragment extends Fragment {
             likeActions.close();
             String nblike=String.valueOf(postActions.getNbLike(postAbonnement.get(i).getId()));
 
-            int photo =postAbonnement.get(i).getPhoto_path();
-            Posts.add(new Post(userName,description,photo,nblike,heartimage,islike));
+            Posts.add(new Post(userName,description,postAbonnement.get(i).getPhoto_path(),nblike,heartimage,islike));
             System.out.println(Posts.get(i).getmDescription());
             System.out.println(i);
         }

@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.example.instalike.db.Post;
 import com.example.instalike.db.PostActions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -36,14 +37,15 @@ public class PublishPicsFragment extends Fragment {
     private EditText mDescription;
     private Button mPublish;
     private int user_ID;
-    private String path;
+    private byte[] pathImage;
+    private Bitmap mImage;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_publish_pics,container,false);
         user_ID=getArguments().getInt("CURRENT_USER");
         Intent photoIntent=new Intent(Intent.ACTION_PICK);
 
         File photoDirectory= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        path= photoDirectory.getPath();
+        String path= photoDirectory.getPath();
 
         Uri data=Uri.parse(path);
         photoIntent.setDataAndType(data,"image/*");
@@ -60,9 +62,12 @@ public class PublishPicsFragment extends Fragment {
                 Date now = new Date(Calendar.getInstance().getTime().getTime());
                 PostActions postAction=new PostActions(getContext());
                 postAction.open();
-                Bitmap myPhoto=BitmapFactory.decodeFile(path);
 
-                Post post= new Post(user_ID,R.drawable.paysage4,mDescription.getText().toString(),now);
+               /* pathImage
+                String[] split = pathImage.split("/");
+                String fileName=split[split.length-1];
+                String fileNameNoExt= fileName.split("\\.")[0];*/
+                Post post= new Post(user_ID,pathImage,mDescription.getText().toString(),now);
                 postAction.insertPost(post);
             }
             });
@@ -86,13 +91,14 @@ public class PublishPicsFragment extends Fragment {
                 // we are getting an input stream, based on the URI of the image.
                 try {
                     inputStream = getContext().getContentResolver().openInputStream(imageUri);
-
                     // get a bitmap from the stream.
-                    Bitmap image = BitmapFactory.decodeStream(inputStream);
-
+                    mImage = BitmapFactory.decodeStream(inputStream);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    mImage.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                    pathImage=stream.toByteArray();
 
                     // show the image to the user
-                    mPhoto.setImageBitmap(image);
+                    mPhoto.setImageBitmap(mImage);
 
 
                 } catch (FileNotFoundException e) {

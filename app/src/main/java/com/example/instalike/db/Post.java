@@ -1,12 +1,14 @@
 package com.example.instalike.db;
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 public class Post {
 
     private int id;
     private int user_id;
-    private int photo_path;
+    private byte[] photo_path;
     private String description;
     private Date date;
 
@@ -14,7 +16,7 @@ public class Post {
 
 
 
-    public Post(int user_id, int photo_path, String description, Date date) {
+    public Post(int user_id, byte[] photo_path, String description, Date date) {
         this.user_id = user_id;
         this.photo_path = photo_path;
         this.description=description;
@@ -39,11 +41,11 @@ public class Post {
         this.user_id = user_id;
     }
 
-    public int getPhoto_path() {
+    public byte[] getPhoto_path() {
         return photo_path;
     }
 
-    public void setPhoto_path(int photo_path) {
+    public void setPhoto_path(byte[] photo_path) {
         this.photo_path = photo_path;
     }
 

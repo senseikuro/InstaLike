@@ -101,9 +101,10 @@ public class PostActions {
         curseur.moveToFirst();
         int i=0;
         while(!curseur.isAfterLast()){
+            System.out.println("YES     "+curseur.getInt(0));
             int id=curseur.getInt(0);
             int userId=curseur.getInt(1);
-            int photo=curseur.getInt(2);
+            byte[] photo=curseur.getBlob(2);
             String description=curseur.getString(4);
             Date today = Calendar.getInstance().getTime();
             posts.add(new Post(userId,photo,description,today));
@@ -151,7 +152,7 @@ public class PostActions {
         curseur.moveToFirst();
         if(!curseur.isAfterLast()){
             int userId=curseur.getInt(1);
-            int photo=curseur.getInt(2);
+            byte[] photo=curseur.getBlob(2);
             String description=curseur.getString(4);
             Date today = Calendar.getInstance().getTime();
             post.setId(postID);

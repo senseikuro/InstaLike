@@ -35,10 +35,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        Fragment selectedFragment= null;
+        /*Fragment selectedFragment= null;
         selectedFragment=new HomeFragment();
         selectedFragment.setArguments(mBundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts, selectedFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts, selectedFragment).commit();*/
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
