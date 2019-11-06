@@ -7,12 +7,14 @@ android:layout_height="match_parent">
     <RelativeLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:id="@+id/fragment_publish_post">
 
         <ImageView
             android:id="@+id/fragment_publish_post_img"
             android:layout_width="match_parent"
-            android:layout_height="500dp"></ImageView>
+            android:layout_height="500dp"
+            android:clickable="true"></ImageView>
 
         <EditText
             android:id="@+id/fragment_publish_post_description"
