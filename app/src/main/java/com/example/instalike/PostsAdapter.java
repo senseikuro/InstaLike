@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instalike.db.UserActions;
+
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
@@ -121,22 +123,17 @@ import java.util.List;
         viewHolder.mLike.setText(postmember.getmLike());
         byte[] outImage=postmember.getmImagePosts();
         ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
-        Bitmap theImage = BitmapFactory.decodeStream(imageStream);
+        Bitmap image = BitmapFactory.decodeStream(imageStream);
 
-        viewHolder.mPicsPost.setImageBitmap(theImage);
+        viewHolder.mPicsPost.setImageBitmap(image);
+        outImage=postmember.getMpp();
+        imageStream = new ByteArrayInputStream(outImage);
+        image = BitmapFactory.decodeStream(imageStream);
+        viewHolder.mPicsPP.setImageBitmap(image);
+
         viewHolder.mheartpic.setImageResource(postmember.getmColorLike());
 
 
-    }
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        }catch(Exception e){
-            e.getMessage();
-            return null;
-        }
     }
     // Returns the total count of items in the list
     @Override

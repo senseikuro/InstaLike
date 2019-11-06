@@ -2,6 +2,8 @@ package com.example.instalike;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,8 +74,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(CommentAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
        Comment comments = mListComment.get(position);
-
-        viewHolder.mPics.setImageResource(comments.getmImagePosts());
+        byte[] outImage=comments.getimagepp();
+        ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
+        Bitmap image = BitmapFactory.decodeStream(imageStream);
+        viewHolder.mPics.setImageBitmap(image);
         viewHolder.mPseudo.setText(comments.getmUserName());
         viewHolder.mComment.setText(comments.getmComment());
     }

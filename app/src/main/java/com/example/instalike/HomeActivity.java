@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.instalike.db.Notify;
+import com.example.instalike.db.NotifyActions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -31,14 +33,23 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
 
         mNotification=findViewById(R.id.activity_main_notification);
+
+        NotifyActions notifyActions= new NotifyActions(getApplicationContext());
+
+        if (notifyActions.isNotify(id_user)){
+            mNotification.setImageResource(R.drawable.ic_notifications_active_black_24dp);
+        }
+        else{
+            mNotification.setImageResource(R.drawable.ic_notifications_black_24dp);
+        }
         mNotification.setOnClickListener(this);
 
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        /*Fragment selectedFragment= null;
+        Fragment selectedFragment= null;
         selectedFragment=new HomeFragment();
         selectedFragment.setArguments(mBundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts, selectedFragment).commit();*/
+        getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts, selectedFragment).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -1,8 +1,10 @@
 package com.example.instalike;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -74,6 +77,7 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void setRessource(){
         followActions= new FollowActions(view.getContext());
         if (mUser_id == mCurrent_User){
@@ -84,10 +88,18 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
 
 
             if (isFollow){
-                mFollow.setText("Follow");
+                mFollow.setText("abonné");
+                mFollow.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                Drawable d= getContext().getResources().getDrawable(R.drawable.rounded_button_white_and_grey);
+                mFollow.setBackground(d);
+
             }
             else {
+                mFollow.setTextColor(getResources().getColor(R.color.colorPrimary));
                 mFollow.setText("S'abonner");
+                Drawable d= getContext().getResources().getDrawable(R.drawable.rounded_button_blue);
+                mFollow.setBackground(d);
+
             }
 
         }
@@ -122,6 +134,7 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         createList();
         buildRecycleView();
     }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         Fragment selectedFragment= null;
@@ -143,6 +156,9 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
                         mFollowers.setText(String.valueOf(nbFollow));
                         mAbonnement.setText(String.valueOf(nbAbonnement));
                         mFollow.setText("S'abonner");
+                        mFollow.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        Drawable d= getContext().getResources().getDrawable(R.drawable.rounded_button_blue);
+                        mFollow.setBackground(d);
                         followActions.close();
 
 
@@ -158,7 +174,11 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
                         int nbAbonnement=followActions.getNbAbonnement(mUser_id);
                         mFollowers.setText(String.valueOf(nbFollow));
                         mAbonnement.setText(String.valueOf(nbAbonnement));
-                        mFollow.setText("Follow");
+                        mFollow.setText("Abonné");
+                        mFollow.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                        Drawable d= getContext().getResources().getDrawable(R.drawable.rounded_button_white_and_grey);
+                        mFollow.setBackground(d);
+
                         followActions.close();
 
                         notifyActions=new NotifyActions(getContext());

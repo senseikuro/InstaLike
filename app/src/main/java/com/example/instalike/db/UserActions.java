@@ -182,11 +182,13 @@ public class UserActions {
         curseur.moveToFirst();
         int i=0;
         while(!curseur.isAfterLast()){
-            String pseudo=curseur.getString(5);
-            int id=curseur.getInt(0);
             users.add(new User());
-            users.get(i).setPseudeo(pseudo);
-            users.get(i).setId(id);
+            users.get(i).setId(curseur.getInt(0));
+            users.get(i).setName(curseur.getString(1));
+            users.get(i).setSurname(curseur.getString(2));
+            users.get(i).setPseudeo(curseur.getString(5));
+            users.get(i).setPhoto_path(curseur.getBlob(6));
+            users.get(i).setDescription(curseur.getString(7));
             i++;
             curseur.moveToNext();
         }

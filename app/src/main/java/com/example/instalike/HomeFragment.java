@@ -21,6 +21,7 @@ import com.example.instalike.db.LikeActions;
 import com.example.instalike.db.Notify;
 import com.example.instalike.db.NotifyActions;
 import com.example.instalike.db.PostActions;
+import com.example.instalike.db.UserActions;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -153,8 +154,9 @@ public class HomeFragment extends Fragment {
             }
             likeActions.close();
             String nblike=String.valueOf(postActions.getNbLike(postAbonnement.get(i).getId()));
+            UserActions userActions= new UserActions(getContext());
 
-            Posts.add(new Post(userName,description,postAbonnement.get(i).getPhoto_path(),nblike,heartimage,islike));
+            Posts.add(new Post(userName,description,postAbonnement.get(i).getPhoto_path(),userActions.getUserPP(postAbonnement.get(i).getUser_id()),nblike,heartimage,islike));
             System.out.println(Posts.get(i).getmDescription());
             System.out.println(i);
         }

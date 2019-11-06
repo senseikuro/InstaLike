@@ -18,6 +18,8 @@ import com.example.instalike.db.CommentActions;
 import com.example.instalike.db.Notify;
 import com.example.instalike.db.NotifyActions;
 import com.example.instalike.db.PostActions;
+import com.example.instalike.db.User;
+import com.example.instalike.db.UserActions;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -69,7 +71,10 @@ public class CommentFragment extends Fragment{
                 Date now = new Date(Calendar.getInstance().getTime().getTime());
                 com.example.instalike.db.Comment newComment= new com.example.instalike.db.Comment(mCurrentUserID, mPostID,mComment.getText().toString(),now);
                 commentActions.insertComment(newComment);
-                mListComment.add(new Comment(commentActions.getPseudoComment(newComment.getUser_id()),R.drawable.paysage5,newComment.getContent()));
+                UserActions userActions= new UserActions(getContext());
+                byte[] pp = userActions.getUserPP(mCurrentUserID);
+                userActions.close();
+                mListComment.add(new Comment(commentActions.getPseudoComment(newComment.getUser_id()),pp,newComment.getContent()));
 
                 notifyActions=new NotifyActions(getContext());
                 Notify notif= new Notify(mCurrentUserID,mPost_UserID,mPostID,"comment",now);
@@ -91,20 +96,19 @@ public class CommentFragment extends Fragment{
         mListCommentBdd= new ArrayList<com.example.instalike.db.Comment>();
         actionComment=new CommentActions(getContext());
         mListCommentBdd=actionComment.getAllComments(mPostID);
+        UserActions userActions= new UserActions(getContext());
+
         commentActions= new CommentActions(getContext());
 
         mListComment=new ArrayList<Comment>();
         for (int i =0; i<mListCommentBdd.size();i++){
-            mListComment.add(new Comment(commentActions.getPseudoComment(mListCommentBdd.get(i).getUser_id()),R.drawable.paysage5,mListCommentBdd.get(i).getContent()));
+            mListComment.add(new Comment(commentActions.getPseudoComment(mListCommentBdd.get(i).getUser_id()),userActions.getUserPP(mListCommentBdd.get(i).getUser_id()),mListCommentBdd.get(i).getContent()));
         }
 
 
 
     }
 
-    public void createComment(int position){
-
-    }
     public void buildRecycleView(){
 
         mRecyclerView=view.findViewById(R.id.ListCommentView);

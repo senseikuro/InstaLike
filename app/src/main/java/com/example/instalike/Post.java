@@ -17,13 +17,16 @@ public class Post {
     private int mColorLike;
     private boolean islike;
     private ArrayList<Comment> mListComment;
-    public Post(String username, String description, byte[] imagePosts, String like, int color, boolean islike){
+    private byte[] mpp;
+
+    public Post(String username, String description, byte[] imagePosts, byte[] mpp, String like, int color, boolean islike){
         mUserName=username;
         mDescription=description;
         mImagePosts=imagePosts;
         mLike=like;
         mColorLike=color;
         this.islike=islike;
+        this.mpp=mpp;
     }
     public Post(){
 
@@ -91,5 +94,13 @@ public class Post {
     }
     public String getOneComment(int position){
         return mListComment.get(position).getmComment();
+    }
+
+    public byte[] getMpp() {
+        return mpp;
+    }
+
+    public void setMpp(byte[] mpp) {
+        this.mpp = mpp;
     }
 }

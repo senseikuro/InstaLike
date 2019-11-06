@@ -87,6 +87,20 @@ public class NotifyActions {
         return users;
     }
 
+    public boolean isNotify(int userID){
+        ArrayList<Integer> users=new ArrayList<Integer>();
+        bdd= Database.getReadableDatabase();
+        String req="select COUNT(*) from Notification where User_notify_id="+userID;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        boolean notify=false;
+        int count=curseur.getInt(0);
+        if (count!=0)
+            notify=true;
+        curseur.close();
+        return notify;
+    }
+
     public ArrayList<Notify> getAllNotificationOfUser(int user_notified){
         bdd= Database.getReadableDatabase();
         String req="select * from Notification where User_notify_id="+user_notified;

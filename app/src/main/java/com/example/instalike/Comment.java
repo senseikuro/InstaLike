@@ -3,12 +3,12 @@ package com.example.instalike;
 public class Comment {
 
     private String mUserName;
-    private int mImagePosts;
+    private byte[] mImagepp;
     private String mComment;
-    public Comment(String username,int imagePosts, String comment){
-        mUserName=username;
-        mImagePosts=imagePosts;
-        mComment=comment;
+    public Comment(String username,byte [] mImagepp, String comment){
+        this.mUserName=username;
+        this.mImagepp=mImagepp;
+        this.mComment=comment;
 
     }
 
@@ -20,12 +20,12 @@ public class Comment {
         this.mUserName = mUserName;
     }
 
-    public int getmImagePosts() {
-        return mImagePosts;
+    public byte[] getimagepp() {
+        return mImagepp;
     }
 
-    public void setmImagePosts(int mImagePosts) {
-        this.mImagePosts = mImagePosts;
+    public void setimagepp(byte[] mImagepp) {
+        this.mImagepp = mImagepp;
     }
 
 

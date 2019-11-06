@@ -2,6 +2,8 @@ package com.example.instalike;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instalike.db.User;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,8 +82,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         // Get the data model based on position
         User userMember = mUsers.get(position);
 
-        // Set item views based on your views and data model
-        viewHolder.mPics.setImageResource(R.drawable.paysage3);
+        byte[] outImage=userMember.getPhoto_path();
+        System.out.println(outImage);
+        System.out.println(userMember.getPseudeo());
+        ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
+        Bitmap theImage = BitmapFactory.decodeStream(imageStream);
+        viewHolder.mPics.setImageBitmap(theImage);
         viewHolder.mPseudo.setText(userMember.getPseudeo());
     }
 

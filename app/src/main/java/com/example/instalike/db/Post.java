@@ -12,6 +12,7 @@ public class Post {
     private String description;
     private Date date;
 
+
     public Post() {}
 
 

@@ -48,18 +48,13 @@ public class FavoriteFragment extends Fragment{
     }
 
     public void createList(){
-        /*Posts =new ArrayList<Post>();
-        Posts.add(new Post("ichiban japan", "super voyage à tokyo",R.drawable.paysage2,"120"));
-        Posts.add(new Post("VincentJouanne", "i love BJJ",R.drawable.paysage3,"110"));
-        Posts.add(new Post("Florent Brassac", "t'as dead ça chacal",R.drawable.paysage4,"105"));
-        Posts.add(new Post("PaullBoveyron", "Je suis une locomotive",R.drawable.paysage5,"23"));*/
+
         ArrayList<Integer> postID=new ArrayList<Integer>();
         LikeActions likeActions= new LikeActions(getContext());
         postID=likeActions.getAllPostLike(mCurrentUser);
         likeActions.close();
         posts =new ArrayList<com.example.instalike.db.Post>();
         PostActions postActions= new PostActions(getContext());
-        System.out.println("la taille est "+postID.size());
         for (int i=0;i<postID.size();i++){
             posts.add(postActions.getPostFromID(postID.get(i)));
         }
@@ -70,8 +65,9 @@ public class FavoriteFragment extends Fragment{
         Fragment selectedFragment= null;
         Bundle bundle= new Bundle();
 
-        bundle.putInt("POST",posts.get(position).getId());
+        bundle.putInt("POST_ID",posts.get(position).getId());
         bundle.putInt("CURRENT_USER",mCurrentUser);
+
         selectedFragment=new FullPostFragment();
         selectedFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
