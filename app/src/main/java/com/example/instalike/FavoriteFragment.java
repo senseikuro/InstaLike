@@ -67,6 +67,8 @@ public class FavoriteFragment extends Fragment{
 
         bundle.putInt("POST_ID",posts.get(position).getId());
         bundle.putInt("CURRENT_USER",mCurrentUser);
+        bundle.putInt("USER_PROFIL",posts.get(position).getUser_id());
+
 
         selectedFragment=new FullPostFragment();
         selectedFragment.setArguments(bundle);

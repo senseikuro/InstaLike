@@ -1,9 +1,15 @@
 package com.example.instalike;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +21,7 @@ import android.widget.Toast;
 import com.example.instalike.db.User;
 import com.example.instalike.db.UserActions;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -220,6 +227,7 @@ public class FormulaireActivity extends AppCompatActivity {
 
 
         mConnexionButton.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v){
 
@@ -235,9 +243,15 @@ public class FormulaireActivity extends AppCompatActivity {
 
                         userActions.open();
 
-                        toastResgister(true,"You create yout account");
+                        toastResgister(true,"You create your account");
                         Date today = Calendar.getInstance().getTime();
-                        User newUser=new User(mName.getText().toString(),mSurname.getText().toString(),mEmail.getText().toString(),mMdp.getText().toString(), mPseudo.getText().toString(),null, null, today);
+
+                        Drawable imageDefault= getDrawable(R.drawable.user); // the drawable (Captain Obvious, to the rescue!!!)
+                        Bitmap bitmap = ((BitmapDrawable)imageDefault).getBitmap();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        byte[] bitmapdata = stream.toByteArray();
+                        User newUser=new User(mName.getText().toString(),mSurname.getText().toString(),mEmail.getText().toString(),mMdp.getText().toString(), mPseudo.getText().toString(),bitmapdata, null, today);
 
                         userActions.insertUser(newUser);
                         userActions.close();

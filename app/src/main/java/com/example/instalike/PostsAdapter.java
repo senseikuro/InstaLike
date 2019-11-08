@@ -24,6 +24,7 @@ import java.util.List;
             void onLikeClick(int position);
             void onCommentClick(int position);
             void onProfilClick(int position);
+            void onDoubleTapImage(int position);
         }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -62,6 +63,16 @@ import java.util.List;
                         int position=getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION)
                             listener.onLikeClick(position);
+                    }
+                }
+            });
+            mPicsPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!= null){
+                        int position=getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                            listener.onDoubleTapImage(position);
                     }
                 }
             });

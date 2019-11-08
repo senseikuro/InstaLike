@@ -191,7 +191,7 @@ public class PostActions {
     }
     public ArrayList<Post> getActuality(ArrayList<Integer> users){
         bdd= Database.getReadableDatabase();
-        String req= "select * from Post order by Date";
+        String req= "select * from Post order by Date DESC";
         Cursor curseur = bdd.rawQuery(req, null);
         curseur.moveToFirst();
         ArrayList<Post> actualityPost=new ArrayList<Post>();
@@ -214,5 +214,11 @@ public class PostActions {
 
         }
         return ownerPost;
+    }
+
+    public void suppPost(int postId){
+        bdd= Database.getWritableDatabase();
+        String req= "Delete from Post where Id="+postId;
+        bdd.execSQL(req);
     }
 }

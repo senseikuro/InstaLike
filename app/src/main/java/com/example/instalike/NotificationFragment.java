@@ -1,12 +1,14 @@
 package com.example.instalike;
 
 import android.app.Notification;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,12 +16,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instalike.db.Follow;
+import com.example.instalike.db.FollowActions;
 import com.example.instalike.db.Notify;
 import com.example.instalike.db.NotifyActions;
 import com.example.instalike.db.User;
 import com.example.instalike.db.UserActions;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class NotificationFragment extends Fragment {
 
@@ -30,6 +36,9 @@ public class NotificationFragment extends Fragment {
     private ArrayList<Notify> listNotification;
     private UserActions userActions;
     private NotifyActions notifyActions;
+    private ArrayList<Integer> usersNotifier;
+    private Boolean isFollow;
+
 
     private View view;
     private int mCurrentUser;
@@ -38,14 +47,16 @@ public class NotificationFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home,container,false);
         mCurrentUser=getArguments().getInt("CURRENT_USER");
         notifications=new ArrayList<String>();
+
         createList();
+        listNotification=notifyActions.getAllNotificationOfUser(mCurrentUser);
+
         buildRecycleView();
 
         return view;
     }
 
     public void changeItem(int position){
-        listNotification=notifyActions.getAllNotificationOfUser(mCurrentUser);
         Fragment selectedFragment= null;
         Bundle bundle= new Bundle();
         bundle.putInt("USER_PROFIL",listNotification.get(position).getUser_id());
@@ -81,11 +92,11 @@ public class NotificationFragment extends Fragment {
     }
 
     public void createList(){
-        ArrayList<Integer> usersNotifier= new ArrayList<Integer>();
+        usersNotifier= new ArrayList<Integer>();
         notifyActions= new NotifyActions(getContext());
         usersNotifier=notifyActions.getAllUserNotifier(mCurrentUser);
         notifyActions.close();
-        UserActions userActions= new UserActions(getContext());
+        userActions= new UserActions(getContext());
         ArrayList<String> nameUserNotifier=new ArrayList<String>();
         User user= new User();
         for (int i=0;i<usersNotifier.size();i++){
@@ -94,6 +105,33 @@ public class NotificationFragment extends Fragment {
         }
 
         notifications=notifyActions.getNotification(mCurrentUser,nameUserNotifier);
+    }
+
+    public void follow(int position){
+        User user;
+        user=userActions.getUserWithID(listNotification.get(position).getUser_id());
+        FollowActions followActions= new FollowActions(getContext());
+        isFollow=followActions.isFollowed(mCurrentUser,user.getId());
+        Follow follow;
+        if (!isFollow){
+            Date now = new Date(Calendar.getInstance().getTime().getTime());
+
+            follow=new Follow(mCurrentUser,user.getId(),now);
+            followActions.insertFollow(follow);
+            followActions.close();
+
+            notifyActions=new NotifyActions(getContext());
+
+            Notify notif= new Notify(mCurrentUser,user.getId(),-1,"follow",now);
+            notifyActions.insertNotification(notif);
+            notifyActions.close();
+            Toast.makeText(getContext(),"vous suivez maintenant cette personne",Toast.LENGTH_SHORT).show();
+
+        }
+        else{
+            Toast.makeText(getContext(),"vous suivez déjà cette personne",Toast.LENGTH_SHORT).show();
+        }
+        changeItem(position);
     }
     public void buildRecycleView(){
 
@@ -110,7 +148,9 @@ public class NotificationFragment extends Fragment {
             public void onItemClick(int position) {
                 changeItem(position);
             }
-
+            public void onFollowBack(int position){
+                follow(position);
+            }
         });
     }
 

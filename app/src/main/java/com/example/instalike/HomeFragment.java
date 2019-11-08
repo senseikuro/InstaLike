@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
     private LikeActions likeActions;
     private FollowActions followActions;
     private InputStream inputStream;
+    private boolean doubleTap;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home,container,false);
@@ -56,7 +58,7 @@ public class HomeFragment extends Fragment {
         mCurrent_User=getArguments().getInt("CURRENT_USER");
         mUser_id=getArguments().getInt("USER_PROFIL");
         Posts =new ArrayList<Post>();
-
+        doubleTap=false;
         try {
             createList();
         } catch (FileNotFoundException e) {
@@ -187,6 +189,21 @@ public class HomeFragment extends Fragment {
             }
             public void onCommentClick(int position){changeActivityToComment(position);}
             public void onProfilClick(int position){changeActivityToProfil(position);}
+            public void onDoubleTapImage(int position){
+                if(doubleTap){
+                    increaseLike(position);
+                }
+                else{
+                    doubleTap=true;
+                    Handler event= new Handler();
+                    event.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            doubleTap=false;
+                        }
+                    },500);
+                }
+            }
         });
     }
 }

@@ -45,7 +45,6 @@ import java.util.List;
 
 
 public class PublishPicsFragment extends Fragment {
-    public static final int PHOTO_GALERY_REQUEST = 20;
     public static final int REQUEST_IMAGE = 100;
     private View view;
     private ImageView mPhoto;
@@ -54,7 +53,7 @@ public class PublishPicsFragment extends Fragment {
     private int user_ID;
     private byte[] pathImage;
     private Bitmap mImage;
-
+    private Bundle mBundle;
 
 
     public static final int CAMERA_ACTION_PICK_REQUEST_CODE = 0;
@@ -70,26 +69,25 @@ public class PublishPicsFragment extends Fragment {
         mPublish=view.findViewById(R.id.fragment_publish_post_btn);
 
         user_ID=getArguments().getInt("CURRENT_USER");
-        /*Intent photoIntent=new Intent(Intent.ACTION_PICK);
-
-        File photoDirectory= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String path= photoDirectory.getPath();
-
-        Uri data=Uri.parse(path);
-        photoIntent.setDataAndType(data,"image/*");
-        startActivityForResult(photoIntent, PHOTO_GALERY_REQUEST);*/
-
 
         mPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPublish.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                mPublish.setTextColor(getResources().getColor(R.color.colorPrimary));
                 Date now = new Date(Calendar.getInstance().getTime().getTime());
                 PostActions postAction=new PostActions(getContext());
                 postAction.open();
                 Post post= new Post(user_ID,pathImage,mDescription.getText().toString(),now);
                 postAction.insertPost(post);
-            }
+                mBundle= new Bundle();
+                mBundle.putInt("CURRENT_USER",user_ID);
+                mBundle.putInt("USER_PROFIL",user_ID);
+                Fragment selectedFragment= null;
+                selectedFragment=new ProfilFragement();
+                selectedFragment.setArguments(mBundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                        selectedFragment).addToBackStack(null).commit();            }
             });
 
         return view;
@@ -185,8 +183,8 @@ public class PublishPicsFragment extends Fragment {
 
         // setting aspect ratio
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 16); // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 9);
 
         // setting maximum bitmap width and height
         intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, true);
@@ -201,8 +199,8 @@ public class PublishPicsFragment extends Fragment {
 
         // setting aspect ratio
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 16); // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 9);
         startActivityForResult(intent, REQUEST_IMAGE);
     }
 

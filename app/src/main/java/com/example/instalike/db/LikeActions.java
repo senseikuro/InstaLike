@@ -83,9 +83,9 @@ public class LikeActions {
         return bdd.update(LIKE_TABLE, values, COL_ID + " = " +id, null);
     }
 
-    public int removeLikeWithID(int id){
+    public void removeLikeWithID(int id){
         //Suppression d'un livre de la BDD grâce à l'ID
-        return bdd.delete(LIKE_TABLE, COL_ID + " = " +id, null);
+         bdd.delete(LIKE_TABLE, COL_ID + " = " +id, null);
     }
 
     public boolean postIsLike(int userId, int postId){
@@ -124,5 +124,18 @@ public class LikeActions {
             curseur.moveToNext();
         }
         return arrayPost;
+    }
+
+    public ArrayList<Integer> getAllUserLikePost(int postID){
+        bdd= Database.getReadableDatabase();
+        String req="select * from [Like] where Post_id="+postID;
+        Cursor curseur=bdd.rawQuery(req,null);
+        curseur.moveToFirst();
+        ArrayList<Integer> arrayLike=new ArrayList<Integer>();
+        while(!curseur.isAfterLast()){
+            arrayLike.add(curseur.getInt(0));
+            curseur.moveToNext();
+        }
+        return arrayLike;
     }
 }

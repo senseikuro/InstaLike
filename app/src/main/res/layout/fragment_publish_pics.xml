@@ -23,6 +23,8 @@ android:layout_height="match_parent">
             android:layout_below="@+id/fragment_publish_post_img"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="110dp"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimaryDark"
             android:hint="Enter Your description"></EditText>
 
         <Button

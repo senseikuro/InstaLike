@@ -5,15 +5,53 @@
     android:layout_height="match_parent"
     android:id="@+id/post_page_Relative_Layout"
     android:background="#FDFEFE">
+    <LinearLayout
+        android:id="@+id/post_page_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.mikhaellopez.circularimageview.CircularImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/post_page_Image_pp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:civ_border_color="#3f51b5"
+            app:civ_border_width="2dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            app:civ_shadow_color="#3f51b5"/>
+
+        <TextView
+            android:id="@+id/post_page_pseudo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pseudo"
+            android:textColor="#000000"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"></TextView>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/post_page_image"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_margin="10dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"></ImageView>
+            android:id="@+id/post_page_menu"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:src="@drawable/ic_edit_black_24dp" />
+    </LinearLayout>
 
+
+    <ImageView
+        android:id="@+id/post_page_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/post_page_label"
+        android:layout_marginTop="-9dp"
+        android:layout_marginBottom="10dp"></ImageView>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,17 +61,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/post_page_pseudo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pseudo"
-                android:textColor="#000000"
-                android:layout_margin="10dp"></TextView>
-            <TextView
                 android:id="@+id/post_page_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/post_page_pseudo"
                 android:text="Description du post"
                 android:layout_marginTop="20dp"
                 android:textColor="#000000"

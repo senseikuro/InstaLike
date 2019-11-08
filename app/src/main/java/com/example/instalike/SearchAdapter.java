@@ -85,7 +85,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         byte[] outImage=userMember.getPhoto_path();
         System.out.println(outImage);
         System.out.println(userMember.getPseudeo());
-        ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
+        ByteArrayInputStream imageStream = null;
+        try {
+            imageStream = new ByteArrayInputStream(outImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Bitmap theImage = BitmapFactory.decodeStream(imageStream);
         viewHolder.mPics.setImageBitmap(theImage);
         viewHolder.mPseudo.setText(userMember.getPseudeo());

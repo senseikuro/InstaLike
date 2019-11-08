@@ -90,7 +90,7 @@ public class HashtagAdapter extends RecyclerView.Adapter<HashtagAdapter.ViewHold
     public void onBindViewHolder(HashtagAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
         Post postmember = mPosts.get(position);
-
+        System.out.println(mPosts.size());
         // Set item views based on your views and data model
         byte[] outImage=postmember.getPhoto_path();
         ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);

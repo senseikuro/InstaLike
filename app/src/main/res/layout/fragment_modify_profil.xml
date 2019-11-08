@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    >
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
         android:id="@+id/fragment_publish_post">
-
-        <ImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/fragment_profil_modify_pp_img"
-            android:clickable="true"
+
+            app:civ_border_color="#3f51b5"
+            app:civ_border_width="2dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="40dp"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            ></ImageView>
+            app:civ_shadow_color="#3f51b5"/>
+
+
+        <EditText
+            android:id="@+id/fragment_profil_modify_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_publish_post_img"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:hint="Change your username"></EditText>
 
         <EditText
             android:id="@+id/fragment_profil_modify_description"
@@ -23,21 +41,29 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_publish_post_img"
             android:layout_marginTop="50dp"
-            android:layout_marginLeft="110dp"
-            android:hint="Enter Your description"></EditText>
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:hint="Change your bio"></EditText>
 
-        <Button
-            android:id="@+id/fragment_profil_modify_btn"
-            android:layout_marginTop="50dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_publish_post_description"
-            android:background="@color/colorPrimary"
-            android:text="Modifier profil"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:clickable="true"
-            android:textColor="@color/colorPrimaryDark"></Button>
-    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_gravity="bottom|fill_horizontal|top" />
+
+    <Button
+        android:id="@+id/fragment_profil_modify_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_publish_post_description"
+        android:layout_gravity=""
+        android:background="@color/colorPrimary"
+        android:clickable="true"
+        android:text="Modifier profil"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold"></Button>
+
+</LinearLayout>
+
 </ScrollView>
-

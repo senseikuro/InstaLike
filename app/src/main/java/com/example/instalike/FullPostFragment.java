@@ -1,69 +1,144 @@
 package com.example.instalike;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Base64;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instalike.db.Comment;
+import com.example.instalike.db.CommentActions;
 import com.example.instalike.db.Like;
 import com.example.instalike.db.LikeActions;
 import com.example.instalike.db.Post;
 import com.example.instalike.db.PostActions;
+import com.example.instalike.db.UserActions;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class FullPostFragment extends Fragment implements View.OnClickListener {
-    private ImageView mPhoto,mHeart,mComment;
+    private ImageView mPhoto,mHeart,mComment,mPP;
     private TextView mUsername, mDescription, mNbLike, mNbComment;
     private View view;
     private int mPostID, nbLike,nbComment, mCurrent_user, mUserId_post;
     private LikeActions mLikeAction;
     private Post post;
     private PostActions postAction;
+    private UserActions mUserActions;
+    private ImageView mModify;
+
+    private static final int   MENU_SUPPRIMER= Menu.FIRST;
+    private static final int   MENU_EDIT= Menu.FIRST+1;
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.post_page,container,false);
 
-        /*username=getArguments().getString("USERNAME");
-        description=getArguments().getString("DESCRIPTION");
-        nbLike=getArguments().getString("NBLIKE");
-        imagePost=getArguments().getInt("IMAGE");
-        postisLike=getArguments().getInt("ISLIKE",0);
-        nbComment=getArguments().getInt("NBCOMMENT",0);*/
         mPostID=getArguments().getInt("POST_ID");
         mCurrent_user=getArguments().getInt("CURRENT_USER");
         mUserId_post=getArguments().getInt("USER_PROFIL");
+        System.out.println(mUserId_post);
         mPhoto=view.findViewById(R.id.post_page_image);
         mHeart=view.findViewById(R.id.post_page_heart);
         mComment=view.findViewById(R.id.post_page_comment);
-        
+        mPP=view.findViewById(R.id.post_page_Image_pp);
+        mModify=view.findViewById(R.id.post_page_menu);
+
         mUsername=view.findViewById(R.id.post_page_pseudo);
         mDescription=view.findViewById(R.id.post_page_description);
         mNbLike=view.findViewById(R.id.post_page_nbLike);
         mNbComment=view.findViewById(R.id.post_page_nbComment);
-
-
+        postAction=new PostActions(getContext());
+        mModify.setVisibility(view.INVISIBLE);
         setRecources();
+        if(mCurrent_user==mUserId_post){
+            mModify.setVisibility(view.VISIBLE);
+
+            mModify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().openContextMenu(v);
+                }
+            });
+            registerForContextMenu(mModify);
+        }
+
 
         return view;
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo menuInfo){
+            super.onCreateContextMenu(contextMenu,view,menuInfo);
+            /*contextMenu.add(Menu.NONE,MENU_SUPPRIMER,1,"supprimer le post");
+            contextMenu.add(Menu.NONE,MENU_EDIT,1,"Editer le post");*/
+            getActivity().getMenuInflater().inflate(R.menu.menu_post,contextMenu);
+
+    }
+
+    public boolean onContextItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.menu_post_supprimer:
+                supprimerPost();
+                break;
+            case R.id.menu_post_modify:
+                modifyDescription();
+
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+
+    private void supprimerPost(){
+        postAction.suppPost(mPostID);
+        LikeActions likeActions= new LikeActions(getContext());
+        ArrayList<Integer> like= new ArrayList<>();
+        like=likeActions.getAllUserLikePost(mPostID);
+
+        for(int i=0;i<like.size();i++){
+            likeActions.removeLikeWithID(like.get(i));
+        }
+
+        CommentActions commentActions= new CommentActions(getContext());
+        ArrayList<Comment> comments= new ArrayList<>();
+        comments=commentActions.getAllComments(mPostID);
+        for (int i=0;i<comments.size();i++){
+            commentActions.removeCommentWithID(comments.get(i).getId());
+        }
+        Fragment selectedFragment= null;
+        selectedFragment=new ProfilFragement();
+        Bundle bundle= new Bundle();
+        bundle.putInt("CURRENT_USER",mCurrent_user);
+        bundle.putInt("USER_PROFIL",mCurrent_user);
+        selectedFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                selectedFragment).addToBackStack(null).commit();
+    }
     public void setRecources(){
 
-        postAction=new PostActions(getContext());
         nbComment=postAction.getNbComment(mPostID);
         nbLike=postAction.getNbLike(mPostID);
         post=postAction.getPostFromID(mPostID);
@@ -88,8 +163,43 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         else{
             mHeart.setImageResource(R.drawable.heart);
         }
-
         mLikeAction.close();
+        mUserActions= new UserActions(getContext());
+
+
+        if (mUserActions.getUserPP(mUserId_post)!=null){
+            outImage=mUserActions.getUserPP(mUserId_post);
+            imageStream = new ByteArrayInputStream(outImage);
+            theImage = BitmapFactory.decodeStream(imageStream);
+            mPP.setImageBitmap(theImage);
+        }
+
+
+    }
+    public void modifyDescription(){
+        Context context=getContext();
+        EditText editDescription= new EditText(context);
+        Post post=postAction.getPostFromID(mPostID);
+        editDescription.setText(post.getDescription());
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle("Modify your description")
+                .setView(editDescription)
+                .setPositiveButton("modify", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newEdit= String.valueOf(editDescription.getText());
+                        Post post= new Post();
+                        post= postAction.getPostFromID(mPostID);
+                        post.setDescription(newEdit);
+                        postAction.updatePost(mPostID,post);
+                        setRecources();
+
+
+                    }
+                })
+                .setNegativeButton("Cancel",null)
+                .create();
+        dialog.show();
     }
     @Override
     public void onClick(View v) {

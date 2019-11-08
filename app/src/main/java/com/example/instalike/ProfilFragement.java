@@ -113,6 +113,7 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
         User user= userActions.getUserWithID(mUser_id);
         user.setDescription(userActions.getUserDescription(mUser_id));
         user.setPhoto_path(userActions.getUserPP(mUser_id));
+
         mPseudo.setText(user.getPseudeo());
 
         if (user.getDescription()==null){

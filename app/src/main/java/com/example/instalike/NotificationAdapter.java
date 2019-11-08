@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ public class NotificationAdapter  extends RecyclerView.Adapter<NotificationAdapt
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+        void onFollowBack(int position);
     }
 
     public void setOnItemClickListener(NotificationAdapter.OnItemClickListener listener) {
@@ -32,13 +34,23 @@ public class NotificationAdapter  extends RecyclerView.Adapter<NotificationAdapt
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView notif;
-
+        public Button followBack;
         public ViewHolder(View itemView, final NotificationAdapter.OnItemClickListener listener) {
             super(itemView);
 
 
             notif = itemView.findViewById(R.id.notification_list);
-
+            followBack=itemView.findViewById(R.id.notification_follow_back);
+            followBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                            listener.onFollowBack(position);
+                    }
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -74,7 +86,12 @@ public class NotificationAdapter  extends RecyclerView.Adapter<NotificationAdapt
         // Set item views based on your views and data model
         if( mNotification.size()!=0){
             String notifyMember = mNotification.get(position);
-
+            if(notifyMember.contains("suivre")){
+                viewHolder.followBack.setVisibility(View.VISIBLE);
+            }
+            else{
+                viewHolder.followBack.setVisibility(View.INVISIBLE);
+            }
             viewHolder.notif.setText(notifyMember);
         }
 
