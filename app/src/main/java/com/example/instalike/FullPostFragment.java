@@ -75,7 +75,6 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         setRecources();
         if(mCurrent_user==mUserId_post){
             mModify.setVisibility(view.VISIBLE);
-
             mModify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,9 +90,10 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo menuInfo){
+
             super.onCreateContextMenu(contextMenu,view,menuInfo);
-            /*contextMenu.add(Menu.NONE,MENU_SUPPRIMER,1,"supprimer le post");
-            contextMenu.add(Menu.NONE,MENU_EDIT,1,"Editer le post");*/
+            MenuItem logout=contextMenu.findItem(R.id.menu_parameter_log_out);// vient prendre le menu de l'activity qui l'entoure donc en se retrouvait avec modify supprimer et log out
+            logout.setVisible(false);
             getActivity().getMenuInflater().inflate(R.menu.menu_post,contextMenu);
 
     }
@@ -105,6 +105,7 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.menu_post_modify:
                 modifyDescription();
+                break;
 
         }
         return super.onOptionsItemSelected(item);
@@ -147,6 +148,8 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
         Bitmap theImage = BitmapFactory.decodeStream(imageStream);
         mPhoto.setImageBitmap(theImage);
+        postAction.close();
+        System.out.println(mPhoto);
 
         mUsername.setText(postAction.getUserName(post.getUser_id()));
         mDescription.setText(post.getDescription());
@@ -154,6 +157,8 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
         mNbComment.setText(String.valueOf(nbComment));
         mComment.setOnClickListener(this);
         mHeart.setOnClickListener(this);
+        mPP.setOnClickListener(this);
+        mUsername.setOnClickListener(this);
         //A VOIR
         mLikeAction= new LikeActions(getContext());
         boolean islike=mLikeAction.postIsLike(mCurrent_user,post.getId());
@@ -232,8 +237,24 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
             case R.id.post_page_comment:
                 changeActivityToComment();
                 break;
+            case R.id.post_page_Image_pp:
+                changeActivityToProfil();
+                break;
+            case R.id.post_page_pseudo:
+                changeActivityToProfil();
+                break;
         }
 
+    }
+    public void changeActivityToProfil(){
+        Fragment selectedFragment= null;
+        selectedFragment=new ProfilFragement();
+        Bundle bundle= new Bundle();
+        bundle.putInt("CURRENT_USER",mCurrent_user);
+        bundle.putInt("USER_PROFIL",mUserId_post);
+        selectedFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                selectedFragment).addToBackStack(null).commit();
     }
     public void changeActivityToComment(){
         Fragment selectedFragment= null;

@@ -139,18 +139,18 @@ public class NotifyActions {
         String req="select * from Notification where User_notify_id="+user_notified;
         Cursor curseur=bdd.rawQuery(req,null);
         curseur.moveToFirst();
-        ArrayList<String> notifactions= new ArrayList<String>();
+        ArrayList<String> notifications= new ArrayList<String>();
         int i=0;
         while(!curseur.isAfterLast()){
             switch(curseur.getString(3)){
                 case "follow":
-                    notifactions.add(nameNotifier.get(i)+" vient de vous suivre!");
+                    notifications.add(nameNotifier.get(i)+" vient de vous suivre!");
                     break;
                 case "like":
-                    notifactions.add(nameNotifier.get(i)+" vient de liker un de vos posts");
+                    notifications.add(nameNotifier.get(i)+" vient de liker un de vos posts");
                     break;
                 case "comment":
-                    notifactions.add(nameNotifier.get(i)+" vient de commenter un de vos posts");
+                    notifications.add(nameNotifier.get(i)+" vient de commenter un de vos posts");
                     break;
                 default:
                     i++;
@@ -160,6 +160,6 @@ public class NotifyActions {
         }
         curseur.close();
         close();
-        return notifactions;
+        return notifications;
     }
 }

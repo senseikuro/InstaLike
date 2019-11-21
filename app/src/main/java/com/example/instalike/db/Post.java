@@ -10,14 +10,14 @@ public class Post {
     private int user_id;
     private byte[] photo_path;
     private String description;
-    private Date date;
+    private String date;
 
 
     public Post() {}
 
 
 
-    public Post(int user_id, byte[] photo_path, String description, Date date) {
+    public Post(int user_id, byte[] photo_path, String description, String date) {
         this.user_id = user_id;
         this.photo_path = photo_path;
         this.description=description;
@@ -50,11 +50,11 @@ public class Post {
         this.photo_path = photo_path;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

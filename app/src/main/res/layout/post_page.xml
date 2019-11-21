@@ -1,118 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/post_page_Relative_Layout"
-    android:background="#FDFEFE">
-    <LinearLayout
-        android:id="@+id/post_page_label"
-        android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDFEFE"
+    android:orientation="vertical">
+
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/post_page_Image_pp"
+        android:layout_width="65dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:civ_border_color="#3f51b5"
+        app:civ_border_width="2dp"
+        app:civ_shadow="true"
+        app:civ_shadow_color="#3f51b5"
+        app:civ_shadow_radius="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/post_page_menu"
+        android:layout_width="53dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/post_page_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.066"
+        app:srcCompat="@drawable/ic_edit_black_24dp" />
+
+    <TextView
+        android:id="@+id/post_page_pseudo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <com.mikhaellopez.circularimageview.CircularImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/post_page_Image_pp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:civ_border_color="#3f51b5"
-            app:civ_border_width="2dp"
-            app:civ_shadow="true"
-            app:civ_shadow_radius="10"
-            app:civ_shadow_color="#3f51b5"/>
-
-        <TextView
-            android:id="@+id/post_page_pseudo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pseudo"
-            android:textColor="#000000"
-            android:layout_gravity="bottom"
-            android:layout_margin="10dp"></TextView>
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/post_page_menu"
-            android:layout_width="50dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:src="@drawable/ic_edit_black_24dp" />
-    </LinearLayout>
-
+        android:layout_marginTop="24dp"
+        android:text="Pseudo"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/post_page_image"
+        app:layout_constraintEnd_toStartOf="@+id/post_page_menu"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toEndOf="@+id/post_page_Image_pp"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <ImageView
         android:id="@+id/post_page_image"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@+id/post_page_label"
-        android:layout_marginTop="-9dp"
-        android:layout_marginBottom="10dp"></ImageView>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/paysage5"
+        app:layout_constraintDimensionRatio="h,16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_page_Image_pp"></ImageView>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/post_page_image">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/post_page_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Description du post"
-                android:layout_marginTop="20dp"
-                android:textColor="#000000"
-                android:layout_margin="10dp"/>
+    <TextView
+        android:id="@+id/post_page_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Description du post"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_page_nbLike" />
 
-            <ImageView
-                android:id="@+id/post_page_heart"
-                android:clickable="true"
-                android:layout_width="46dp"
-                android:layout_height="44dp"
-                android:layout_below="@+id/post_page_description"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="20dp"
-                app:srcCompat="@drawable/heart" />
+    <ImageView
+        android:id="@+id/post_page_heart"
+        android:layout_width="46dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/post_page_nbLike"
+        app:layout_constraintEnd_toStartOf="@+id/post_page_comment"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_page_image"
+        app:srcCompat="@drawable/heart" />
 
-            <ImageView
-                android:id="@+id/post_page_comment"
-                android:clickable="true"
-                android:layout_width="46dp"
-                android:layout_height="44dp"
-                android:layout_below="@+id/post_page_description"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="250dp"
-                app:srcCompat="@drawable/messagepost"></ImageView>
-            <TextView
-                android:id="@+id/post_page_nbLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/post_page_heart"
-                android:layout_marginLeft="120dp"
-                android:textColor="#000000"
-                android:text="x"></TextView>
-            <TextView
-                android:id="@+id/post_page_nbComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/post_page_heart"
-                android:layout_marginLeft="270dp"
-                android:textColor="#000000"
-                android:text="x"></TextView>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="100dp"
-                android:background="#1ABC9C"
-                android:text="Download"
-                android:layout_below="@+id/post_page_nbComment"></Button>
-        </RelativeLayout>
-    </ScrollView>
+    <ImageView
+        android:id="@+id/post_page_comment"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/post_page_heart"
+        app:layout_constraintTop_toBottomOf="@+id/post_page_image"
+        app:srcCompat="@drawable/messagepost"></ImageView>
+
+    <TextView
+        android:id="@+id/post_page_nbComment"
+        android:layout_width="23dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="16dp"
+        android:text="x"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/post_page_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/post_page_nbLike"
+        app:layout_constraintTop_toBottomOf="@+id/post_page_comment"
+        app:layout_constraintVertical_bias="0.0"></TextView>
+
+    <TextView
+        android:id="@+id/post_page_nbLike"
+        android:layout_width="14dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:text="x"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/post_page_description"
+        app:layout_constraintEnd_toStartOf="@+id/post_page_nbComment"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_page_heart"></TextView>
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

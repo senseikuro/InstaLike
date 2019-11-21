@@ -24,7 +24,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private int id_user;
     private ImageView mNotification,mParamtre;
     private Bundle mBundle;
-
+    private boolean isActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         });
         registerForContextMenu(mParamtre);
 
-
         BottomNavigationView bottomNav=findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         Fragment selectedFragment= null;
@@ -72,8 +71,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             Fragment selectedFragment= null;
             switch(menuItem.getItemId()){
                 case R.id.nav_home:
-                    selectedFragment=new HomeFragment();
-                    break;
+                    finish();
+                    startActivity(getIntent());
+                    return true;
                 case R.id.nav_favorites:
                     selectedFragment=new FavoriteFragment();
                     break;
@@ -87,6 +87,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 case R.id.nav_publish_post:
                     selectedFragment=new PublishPicsFragment();
             }
+
             selectedFragment.setArguments(mBundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
                     selectedFragment).commit();

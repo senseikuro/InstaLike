@@ -32,7 +32,7 @@ import java.util.List;
     }
      public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView mLike,mDescription,mUserName;
+        public TextView mLike,mDescription,mUserName, mDate;
         public ImageView mPicsPP,mPicsPost,mheartpic,mCommentary;
 
         public ViewHolder(View itemView, final OnItemClickListener listener){
@@ -45,7 +45,7 @@ import java.util.List;
             mPicsPost=(ImageView)itemView.findViewById(R.id.post_image_post);
             mheartpic=itemView.findViewById(R.id.post_like);
             mCommentary=itemView.findViewById(R.id.post_commentary);
-
+            mDate=itemView.findViewById(R.id.post_date);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -132,6 +132,7 @@ import java.util.List;
         viewHolder.mUserName.setText(postmember.getmUserName());
         viewHolder.mDescription.setText(postmember.getmDescription());
         viewHolder.mLike.setText(postmember.getmLike());
+        viewHolder.mDate.setText(postmember.getDate().toString());
         byte[] outImage=postmember.getmImagePosts();
         ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
         Bitmap image = BitmapFactory.decodeStream(imageStream);

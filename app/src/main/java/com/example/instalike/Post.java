@@ -6,6 +6,7 @@ import android.media.Image;
 import android.widget.ImageView;
 
 import java.io.InputStream;
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Post {
@@ -18,8 +19,9 @@ public class Post {
     private boolean islike;
     private ArrayList<Comment> mListComment;
     private byte[] mpp;
+    private String date;
 
-    public Post(String username, String description, byte[] imagePosts, byte[] mpp, String like, int color, boolean islike){
+    public Post(String username, String description, byte[] imagePosts, byte[] mpp, String like, int color, boolean islike, String date){
         mUserName=username;
         mDescription=description;
         mImagePosts=imagePosts;
@@ -27,6 +29,7 @@ public class Post {
         mColorLike=color;
         this.islike=islike;
         this.mpp=mpp;
+        this.date=date;
     }
     public Post(){
 
@@ -102,5 +105,13 @@ public class Post {
 
     public void setMpp(byte[] mpp) {
         this.mpp = mpp;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

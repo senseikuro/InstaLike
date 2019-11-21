@@ -76,9 +76,10 @@ public class PublishPicsFragment extends Fragment {
                 mPublish.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 mPublish.setTextColor(getResources().getColor(R.color.colorPrimary));
                 Date now = new Date(Calendar.getInstance().getTime().getTime());
+                String date= now.toString();
                 PostActions postAction=new PostActions(getContext());
                 postAction.open();
-                Post post= new Post(user_ID,pathImage,mDescription.getText().toString(),now);
+                Post post= new Post(user_ID,pathImage,mDescription.getText().toString(),date);
                 postAction.insertPost(post);
                 mBundle= new Bundle();
                 mBundle.putInt("CURRENT_USER",user_ID);
@@ -93,54 +94,7 @@ public class PublishPicsFragment extends Fragment {
         return view;
 
     }
-   /* @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-            // if we are here, everything processed successfully.
-            if (requestCode == PHOTO_GALERY_REQUEST) {
-                // if we are here, we are hearing back from the image gallery.
-
-                // the address of the image on the SD Card.
-                Uri imageUri = data.getData();
-
-                // declare a stream to read the image data from the SD Card.
-                InputStream inputStream;
-
-                // we are getting an input stream, based on the URI of the image.
-                try {
-                    inputStream = getContext().getContentResolver().openInputStream(imageUri);
-                    // get a bitmap from the stream.
-                    mImage = BitmapFactory.decodeStream(inputStream);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    mImage.compress(Bitmap.CompressFormat.JPEG,100,stream);
-                    pathImage=stream.toByteArray();
-
-                    // show the image to the user
-                    mPhoto.setImageBitmap(mImage);
-
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    // show a message to the user indictating that the image is unavailable.
-                    Toast.makeText(getActivity(), "Unable to open image", Toast.LENGTH_LONG).show();
-                }
-
-
-        }
-    }*/
-   /*private void loadProfile(String url) {
-       Log.d(TAG, "Image cache path: " + url);
-
-       Glide.with(this).load(url)
-               .into(mPhoto);
-       mPhoto.setColorFilter(ContextCompat.getColor(getActivity(), android.R.color.transparent));
-   }
-
-    private void loadProfileDefault() {
-        Glide.with(this).load(R.drawable.baseline_account_circle_black_48)
-                .into(mPhoto);
-        mPhoto.setColorFilter(ContextCompat.getColor(this, R.color.profile_default_tint));
-    }*/
     public void onPublishClick(){
         Dexter.withActivity(getActivity())
                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)

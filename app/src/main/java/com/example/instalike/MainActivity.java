@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Post post;
     private PostActions postAction;
     private String mPseudoConnexion, mPasswordConnexion;
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

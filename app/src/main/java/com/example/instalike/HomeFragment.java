@@ -157,10 +157,8 @@ public class HomeFragment extends Fragment {
             likeActions.close();
             String nblike=String.valueOf(postActions.getNbLike(postAbonnement.get(i).getId()));
             UserActions userActions= new UserActions(getContext());
-
-            Posts.add(new Post(userName,description,postAbonnement.get(i).getPhoto_path(),userActions.getUserPP(postAbonnement.get(i).getUser_id()),nblike,heartimage,islike));
-            System.out.println(Posts.get(i).getmDescription());
-            System.out.println(i);
+            String datepost=postAbonnement.get(i).getDate();
+            Posts.add(new Post(userName,description,postAbonnement.get(i).getPhoto_path(),userActions.getUserPP(postAbonnement.get(i).getUser_id()),nblike,heartimage,islike,datepost));
         }
 
     }

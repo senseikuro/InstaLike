@@ -143,11 +143,6 @@ public class ImagePickerActivity extends AppCompatActivity {
 
                             Uri data=Uri.parse(path);
                             pickPhoto.setDataAndType(data,"image/*");
-                            /*File photoDirectory= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                            String path= photoDirectory.getPath();
-
-                            Uri data=Uri.parse(path);
-                            pickPhoto.setDataAndType(data,"image/*");*/
                             startActivityForResult(pickPhoto, REQUEST_GALLERY_IMAGE);
                         }
                     }

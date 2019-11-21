@@ -81,6 +81,8 @@ public class CommentFragment extends Fragment{
                 notifyActions.insertNotification(notif);
                 notifyActions.close();
                 mAdapter.notifyDataSetChanged();
+                mComment.setText(null);
+
             }
         });
         return view;
@@ -125,6 +127,16 @@ public class CommentFragment extends Fragment{
             public void onItemClick(int position) {
                 changeItem(position,"clicked");
 
+            }
+            public void onProfil(int position){
+                Fragment selectedFragment= null;
+                selectedFragment=new ProfilFragement();
+                Bundle bundle= new Bundle();
+                bundle.putInt("CURRENT_USER",mCurrentUserID);
+                bundle.putInt("USER_PROFIL",mListCommentBdd.get(position).getUser_id());
+                selectedFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rvPosts,
+                        selectedFragment).addToBackStack(null).commit();
             }
 
         });

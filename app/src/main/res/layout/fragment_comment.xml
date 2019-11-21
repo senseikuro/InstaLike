@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout6"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/fragment_comment_edit_texte"
-            android:layout_width="326dp"
-            android:layout_height="50dp"
-            android:background="@color/cardview_dark_background"
-            android:hint="write your comment"></EditText>
+    <Button
+        android:id="@+id/fragment_comment_publish_btn"
+        android:layout_width="124dp"
+        android:layout_height="0dp"
+        android:text="Publish"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragment_comment_edit_texte"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/fragment_comment_edit_texte"></Button>
 
-        <Button
-            android:id="@+id/fragment_comment_publish_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Publish"></Button>
-    </LinearLayout>
+    <EditText
+        android:id="@+id/fragment_comment_edit_texte"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@color/colorPrimary"
+        android:hint="write your comment"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toTopOf="@+id/ListCommentView"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_comment_publish_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></EditText>
+
     <androidx.recyclerview.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ListCommentView">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:id="@+id/ListCommentView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_comment_publish_btn"></androidx.recyclerview.widget.RecyclerView>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,101 +11,155 @@
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="4dp"
 >
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FAFAFA"
-    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="#FAFAFA"
+        android:orientation="vertical">
+
+
         <com.mikhaellopez.circularimageview.CircularImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/post_Image_pp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:civ_border_color="#3f51b5"
-            app:civ_border_width="2dp"
-            app:civ_shadow="true"
-            app:civ_shadow_radius="10"
-            app:civ_shadow_color="#3f51b5"/>
+            android:layout_width="48dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/post_image_post"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toStartOf="@+id/post_name_user"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/post_name_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:padding="10dp"
             android:text="Ichiban Japan"
             android:textColor="#000000"
-            android:padding="10dp"
-            android:layout_gravity="center"></TextView>
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/post_image_post"
-        android:layout_width="match_parent"
-        android:layout_height="193dp"
-        android:adjustViewBounds="true"></ImageView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            app:layout_constraintStart_toEndOf="@+id/post_Image_pp"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
 
         <ImageView
             android:id="@+id/post_like"
             android:layout_width="34dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"
             android:adjustViewBounds="true"
             android:clickable="true"
-            android:src="@drawable/heart"></ImageView>
+            app:layout_constraintBottom_toTopOf="@+id/post_nb_like"
+            app:layout_constraintEnd_toStartOf="@+id/post_commentary"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/heart"></ImageView>
+
         <ImageView
             android:id="@+id/post_commentary"
-            android:layout_width="34dp"
-            android:layout_height="match_parent"
+            android:layout_width="37dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginBottom="12dp"
             android:adjustViewBounds="true"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/messagepost"></ImageView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+            app:layout_constraintBottom_toTopOf="@+id/post_jaime"
+            app:layout_constraintStart_toEndOf="@+id/post_like"
+            app:srcCompat="@drawable/messagepost"></ImageView>
+
+        <TextView
+            android:id="@+id/post_jaime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="J'aime"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/post_nb_like"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/post_nb_like"></TextView>
 
         <TextView
             android:id="@+id/post_nb_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
             android:text="132"
-            android:textSize="20sp"
-            android:textColor="#000000"></TextView>
-        <TextView
-            android:id="@+id/post_jaime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="J'aime"
-            android:textSize="20sp"
             android:textColor="#000000"
-            android:layout_marginLeft="10dp"></TextView>
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/post_description"
+            app:layout_constraintEnd_toStartOf="@+id/post_jaime"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"></TextView>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
         <TextView
             android:id="@+id/post_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Ichiban Japan: superbe voyage dans la ville de tokyo, j'ai pu décuvrir plein de nouveaux plats et faire des rencontres"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/post_jaime"></TextView>
+
+        <ImageView
+            android:id="@+id/post_image_post"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/paysage2"
+            app:layout_constraintBottom_toTopOf="@+id/post_commentary"
+            app:layout_constraintDimensionRatio="h,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/post_name_user"></ImageView>
+
+        <TextView
+            android:id="@+id/post_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ichiban Japan: superbe voyage dans la ville de tokyo, j'ai pu décuvrir plein de nouveaux plats et faire des rencontres"
-            android:textSize="20sp"
-            android:textColor="#000000"></TextView>
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="jj/mm/aaaa"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/post_description" />
 
-    </LinearLayout>
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

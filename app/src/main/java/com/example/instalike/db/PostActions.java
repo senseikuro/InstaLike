@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.ContactsContract;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Currency;
-import java.util.Date;
 
 public class PostActions {
 
@@ -69,7 +69,7 @@ public class PostActions {
         //on lui ajoute une valeur associée à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
         values.put(COL_USER_ID, post.getUser_id());
         values.put(COL_PHOTO_PATH, post.getPhoto_path());
-        values.put(COL_DATE, post.getDate().toString());
+        values.put(COL_DATE, post.getDate());
         values.put(COL_DESCRIPTION,post.getDescription());
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(POST_TABLE, null, values);
@@ -103,12 +103,11 @@ public class PostActions {
         curseur.moveToFirst();
         int i=0;
         while(!curseur.isAfterLast()){
-            System.out.println("YES     "+curseur.getInt(0));
             int id=curseur.getInt(0);
             int userId=curseur.getInt(1);
             byte[] photo=curseur.getBlob(2);
             String description=curseur.getString(4);
-            Date today = Calendar.getInstance().getTime();
+            String today = curseur.getString(3);
             posts.add(new Post(userId,photo,description,today));
             posts.get(i).setId(id);
             i++;
@@ -156,7 +155,8 @@ public class PostActions {
             int userId=curseur.getInt(1);
             byte[] photo=curseur.getBlob(2);
             String description=curseur.getString(4);
-            Date today = Calendar.getInstance().getTime();
+            String datePost=curseur.getString(3);
+            post.setDate(datePost);
             post.setId(postID);
             post.setUser_id(userId);
             post.setDescription(description);
@@ -197,6 +197,8 @@ public class PostActions {
         ArrayList<Post> actualityPost=new ArrayList<Post>();
         while(!curseur.isAfterLast()){
             if (isAbonnement(users,curseur.getInt(1))){
+                String date=curseur.getString(3);
+                System.out.println(date);
                 actualityPost.add(getPostFromID(curseur.getInt(0)));
             }
             curseur.moveToNext();

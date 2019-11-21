@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/Rlayout">
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_marginLeft="@dimen/post_pading_horizontal"
-        android:layout_marginTop="@dimen/post_pading_vertical"
-        android:layout_marginRight="@dimen/post_pading_horizontal"
-        app:cardUseCompatPadding="true"
-        app:cardCornerRadius="4dp"
-        >
-    <ImageView
-        android:id="@+id/Hashtag_post"
-        android:layout_width="210dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"></ImageView>
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+    android:layout_marginLeft="@dimen/post_pading_horizontal"
+    android:layout_marginTop="@dimen/post_pading_vertical"
+    android:layout_marginRight="@dimen/post_pading_horizontal"
+    app:cardCornerRadius="4dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/Rlayout"
+        android:background="@color/colorPrimary"
+        android:layout_width="203dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/Hashtag_post"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

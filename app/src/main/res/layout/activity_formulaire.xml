@@ -1,82 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/gradient_colore_main_page"
     tools:context=".FormulaireActivity">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <EditText
-                android:id="@+id/activity_formulare_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="name"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:textSize="30sp"></EditText>
-            <EditText
-                android:id="@+id/activity_formulare_surname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="surname"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:textSize="30sp"></EditText>
-            <EditText
-                android:id="@+id/activity_formulare_speudo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="speudo"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:textSize="30sp"></EditText>
-
-            <EditText
-                android:id="@+id/activity_formulare_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="email address"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:inputType="textEmailAddress"
-                android:textSize="30sp"></EditText>
-            <EditText
-                android:id="@+id/activity_formulare_mdp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="password"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:inputType="textPassword"
-                android:textSize="30sp"></EditText>
-            <EditText
-                android:id="@+id/activity_formulare_confirmation_mdp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="confirmation password"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:inputType="textPassword"
-                android:textSize="30sp"></EditText>
-            <Button
-                android:id="@+id/activity_formulare_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_gravity="center"
-                android:text="Register"></Button>
-        </LinearLayout>
-
-    </ScrollView>
 
 
-</LinearLayout>
+    <EditText
+        android:id="@+id/activity_formulare_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="name"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_formulare_surname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></EditText>
+
+    <EditText
+        android:id="@+id/activity_formulare_surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="surname"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_formulare_speudo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_formulare_name"></EditText>
+
+    <EditText
+        android:id="@+id/activity_formulare_speudo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="speudo"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_formulare_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_formulare_surname"></EditText>
+
+    <EditText
+        android:id="@+id/activity_formulare_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="email address"
+        android:inputType="textEmailAddress"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_formulare_mdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_formulare_speudo"></EditText>
+
+    <EditText
+        android:id="@+id/activity_formulare_mdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_formulare_confirmation_mdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_formulare_email"></EditText>
+
+    <EditText
+        android:id="@+id/activity_formulare_confirmation_mdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="confirmation password"
+        android:inputType="textPassword"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_formulare_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_formulare_mdp"></EditText>
+
+    <Button
+        android:id="@+id/activity_formulare_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_formulare_confirmation_mdp"></Button>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private OnItemClickListener mListener;
     public interface OnItemClickListener {
         void onItemClick(int position);
+        void onProfil(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -48,8 +49,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                             listener.onItemClick(position);
                     }
                 }
-            });
 
+            });
+            mPics.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                            listener.onProfil(position);
+                    }
+                }
+            });
+            mPseudo.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                            listener.onProfil(position);
+                    }
+                }
+            });
         }
     }
 
@@ -73,7 +94,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @Override
     public void onBindViewHolder(CommentAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-       Comment comments = mListComment.get(position);
+        Comment comments = mListComment.get(position);
         byte[] outImage=comments.getimagepp();
         ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
         Bitmap image = BitmapFactory.decodeStream(imageStream);
@@ -87,4 +108,5 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public int getItemCount() {
         return mListComment.size();
     }
+
 }

@@ -10,30 +10,48 @@
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="4dp"
     app:cardBackgroundColor="@color/colorPrimary">
-<RelativeLayout
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/search_PP"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_vertical"
-        app:civ_border_color="#3f51b5"
-        app:civ_border_width="2dp"
-        app:civ_shadow="true"
-        app:civ_shadow_radius="10"
-        app:civ_shadow_color="#3f51b5"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/search_pseudo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/search_PP"
-        android:gravity="center_vertical"
-        android:paddingLeft="100dp"
-        android:text="pseudo"
-        android:textColor="@color/colorPrimaryDark"></TextView>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/search_pseudo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="16dp"
+            android:paddingLeft="0dp"
+            android:text="pseudo"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/search_PP"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"></TextView>
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/search_PP"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            app:civ_border_color="#3f51b5"
+            app:civ_border_width="2dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="#3f51b5"
+            app:civ_shadow_radius="10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/search_pseudo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
