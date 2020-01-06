@@ -47,7 +47,7 @@ public class ImagePickerActivity extends AppCompatActivity {
     public static final int REQUEST_GALLERY_IMAGE = 1;
 
     private boolean lockAspectRatio = false, setBitmapMaxWidthHeight = false;
-    private int ASPECT_RATIO_X = 16, ASPECT_RATIO_Y = 9, bitmapMaxWidth = 1000, bitmapMaxHeight = 1000;
+    private int ASPECT_RATIO_X = 16, ASPECT_RATIO_Y = 10, bitmapMaxWidth = 1000, bitmapMaxHeight = 1000;
     private int IMAGE_COMPRESSION = 100;
     public static String fileName;
 
@@ -87,7 +87,7 @@ public class ImagePickerActivity extends AppCompatActivity {
     public static void showImagePickerOptions(Context context, PickerOptionListener listener) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("set profil photo");
+        builder.setTitle("Photo");
 
         // add a list
         String[] animals = {"take a picture","choose from gallery"};

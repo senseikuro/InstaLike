@@ -7,13 +7,13 @@ public class Like {
     private int id;
     private int user_id;
     private int post_id;
-    private Date date;
+    private String date;
 
     public Like() {}
 
 
 
-    public Like(int user_id, int post_id, Date date) {
+    public Like(int user_id, int post_id, String date) {
         this.user_id = user_id;
         this.post_id = post_id;
         this.date = date;
@@ -45,11 +45,11 @@ public class Like {
         this.post_id = post_id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

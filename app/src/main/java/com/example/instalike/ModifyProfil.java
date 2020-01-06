@@ -178,7 +178,7 @@ public class ModifyProfil extends Fragment implements View.OnClickListener {
                     user.setDescription(mDescription.getText().toString());
                     user.setPseudeo(mUsername.getText().toString());
                     Date now = new Date(Calendar.getInstance().getTime().getTime());
-                    user.setDate(now);
+                    user.setDate(now.toString());
                     user.setPhoto_path(pathImage);
                     userActions.updateUser(user_ID,user);
                     userActions.close();

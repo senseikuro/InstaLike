@@ -61,7 +61,6 @@ public class CommentFragment extends Fragment{
         mPublish=view.findViewById(R.id.fragment_comment_publish_btn);
         mComment=view.findViewById(R.id.fragment_comment_edit_texte);
 
-
         createList();
         buildRecycleView();
 
@@ -69,7 +68,7 @@ public class CommentFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Date now = new Date(Calendar.getInstance().getTime().getTime());
-                com.example.instalike.db.Comment newComment= new com.example.instalike.db.Comment(mCurrentUserID, mPostID,mComment.getText().toString(),now);
+                com.example.instalike.db.Comment newComment= new com.example.instalike.db.Comment(mCurrentUserID, mPostID,mComment.getText().toString(),now.toString());
                 commentActions.insertComment(newComment);
                 UserActions userActions= new UserActions(getContext());
                 byte[] pp = userActions.getUserPP(mCurrentUserID);
@@ -77,7 +76,7 @@ public class CommentFragment extends Fragment{
                 mListComment.add(new Comment(commentActions.getPseudoComment(newComment.getUser_id()),pp,newComment.getContent()));
 
                 notifyActions=new NotifyActions(getContext());
-                Notify notif= new Notify(mCurrentUserID,mPost_UserID,mPostID,"comment",now);
+                Notify notif= new Notify(mCurrentUserID,mPost_UserID,mPostID,"comment",now.toString());
                 notifyActions.insertNotification(notif);
                 notifyActions.close();
                 mAdapter.notifyDataSetChanged();

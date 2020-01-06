@@ -138,7 +138,7 @@ public class PublishPicsFragment extends Fragment {
         // setting aspect ratio
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
         intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 16); // 16x9, 1x1, 3:4, 3:2
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 9);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 10);
 
         // setting maximum bitmap width and height
         intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, true);
@@ -154,7 +154,7 @@ public class PublishPicsFragment extends Fragment {
         // setting aspect ratio
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
         intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 16); // 16x9, 1x1, 3:4, 3:2
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 9);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 10);
         startActivityForResult(intent, REQUEST_IMAGE);
     }
 

@@ -63,7 +63,7 @@ public class NotifyActions {
         values.put(COL_USER_NOTIFY_ID, notification.getUser_notified_id());
         values.put(COL_ACTION, notification.getEvent());
         values.put(COL_POST_ID,notification.getPost_id());
-        values.put(COL_DATE,notification.getDate().toString());
+        values.put(COL_DATE,notification.getDate());
 
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(NOTIFY_TABLE, null, values);
@@ -108,7 +108,6 @@ public class NotifyActions {
         ArrayList<Notify> listNotification= new ArrayList<Notify>();
         Notify notification= new Notify();
         curseur.moveToFirst();
-        Date now = new Date (Calendar.getInstance().getTime().getTime());
         int i=0;
         while (!curseur.isAfterLast()){
 
@@ -116,7 +115,8 @@ public class NotifyActions {
             int userNotified=curseur.getInt(2);
             String event=curseur.getString(3);
             int postId=curseur.getInt(4);
-            listNotification.add(new Notify(userID,userNotified,postId,event,now));
+            String date=curseur.getString(5);
+            listNotification.add(new Notify(userID,userNotified,postId,event,date));
             listNotification.get(i).setId(curseur.getInt(0));
             i++;
             curseur.moveToNext();

@@ -65,23 +65,23 @@ public class LikeActions {
         //on lui ajoute une valeur associée à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
         values.put(COL_USER_ID, like.getUser_id());
         values.put(COL_POST_ID, like.getPost_id());
-        values.put(COL_DATE, like.getDate().toString());
+        values.put(COL_DATE, like.getDate());
 
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(LIKE_TABLE, null, values);
     }
 
-    public int updateLike(int id, Like like){
+   /* public int updateLike(int id, Like like){
         //La mise à jour d'un livre dans la BDD fonctionne plus ou moins comme une insertion
         //il faut simplement préciser quel livre on doit mettre à jour grâce à l'ID
         ContentValues values = new ContentValues();
 
         values.put(COL_USER_ID, like.getUser_id());
         values.put(COL_POST_ID, like.getPost_id());
-        values.put(COL_DATE, like.getDate().toString());
+        values.put(COL_DATE, like.getDate());
 
         return bdd.update(LIKE_TABLE, values, COL_ID + " = " +id, null);
-    }
+    }*/
 
     public void removeLikeWithID(int id){
         //Suppression d'un livre de la BDD grâce à l'ID

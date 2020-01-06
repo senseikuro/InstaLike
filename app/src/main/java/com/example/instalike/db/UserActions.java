@@ -87,7 +87,7 @@ public class UserActions {
         values.put(COL_PSEUDEO, user.getPseudeo());
         values.put(COL_PHOTO,user.getPhoto_path());
         values.put(COL_DESCRIPTION,user.getDescription());
-        values.put(COL_DATE, user.getDate().toString());
+        values.put(COL_DATE, user.getDate());
 
 
         //on insère l'objet dans la BDD via le ContentValues
@@ -106,7 +106,7 @@ public class UserActions {
         values.put(COL_PSEUDEO, user.getPseudeo());
         values.put(COL_PHOTO,user.getPhoto_path());
         values.put(COL_DESCRIPTION,user.getDescription());
-        values.put(COL_DATE, user.getDate().toString());
+        values.put(COL_DATE, user.getDate());
 
         return bdd.update(USER_TABLE, values, COL_ID + " = " +id, null);
     }
@@ -139,7 +139,6 @@ public class UserActions {
         user.setMail(c.getString(NUM_COL_MAIL));
         user.setPassword(c.getString(NUM_COL_PASSWORD));
         user.setPseudeo(c.getString(NUM_COL_PSEUDEO));
-        //Et avec Date ?
 
 
 
@@ -189,6 +188,7 @@ public class UserActions {
             users.get(i).setPseudeo(curseur.getString(5));
             users.get(i).setPhoto_path(curseur.getBlob(6));
             users.get(i).setDescription(curseur.getString(7));
+            users.get(i).setDate(curseur.getString(8));
             i++;
             curseur.moveToNext();
         }
@@ -208,6 +208,9 @@ public class UserActions {
             user.setMail(curseur.getString(3));
             user.setPassword(curseur.getString(4));
             user.setPseudeo(curseur.getString(5));
+            user.setPhoto_path(curseur.getBlob(6));
+            user.setDescription(curseur.getString(7));
+            user.setDate(curseur.getString(8));
         }
         return user;
     }

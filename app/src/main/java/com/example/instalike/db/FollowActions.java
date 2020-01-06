@@ -64,13 +64,13 @@ public class FollowActions {
         //on lui ajoute une valeur associée à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
         values.put(COL_USER_ID, follow.getUser_id());
         values.put(COL_USER_ID_FOLLOWED, follow.getUser_id_followed());
-        values.put(COL_DATE, follow.getDate().toString());
+        values.put(COL_DATE, follow.getDate());
 
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(FOLLOW_TABLE, null, values);
     }
 
-    public int updateFollow(int id, Follow follow){
+   /* public int updateFollow(int id, Follow follow){
         //La mise à jour d'un livre dans la BDD fonctionne plus ou moins comme une insertion
         //il faut simplement préciser quel livre on doit mettre à jour grâce à l'ID
         ContentValues values = new ContentValues();
@@ -80,7 +80,7 @@ public class FollowActions {
         values.put(COL_DATE, follow.getDate().toString());
 
         return bdd.update(FOLLOW_TABLE, values, COL_ID + " = " +id, null);
-    }
+    }*/
 
     public int removeFollowWithID(int id){
         //Suppression d'un livre de la BDD grâce à l'ID

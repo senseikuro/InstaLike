@@ -3,6 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="post_pading_horizontal">6dp</dimen>
+    <dimen name="post_pading_horizontal2">2dp</dimen>
     <dimen name="post_pading_vertical">8dp</dimen>
+    <dimen name="post_pading_vertical2">2dp</dimen>
 
 </resources>

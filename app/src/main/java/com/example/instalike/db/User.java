@@ -12,13 +12,13 @@ public class User {
     private String pseudeo;
     private byte[] photo_pp;
     private String description;
-    private Date date;
+    private String date;
 
     public User() {}
 
 
 
-    public User(String name, String surname, String mail,String password ,String pseudeo, byte[] photo_pp, String description, Date date) {
+    public User(String name, String surname, String mail,String password ,String pseudeo, byte[] photo_pp, String description, String date) {
         this.name = name;
         this.surname = surname;
         this.mail = mail;
@@ -80,11 +80,11 @@ public class User {
         this.pseudeo = pseudeo;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

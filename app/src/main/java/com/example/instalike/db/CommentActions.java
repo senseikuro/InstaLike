@@ -70,7 +70,7 @@ public class CommentActions {
         values.put(COL_USER_ID, comment.getUser_id());
         values.put(COL_POST_ID, comment.getPost_id());
         values.put(COL_CONTENT, comment.getContent());
-        values.put(COL_DATE, comment.getDate().toString());
+        values.put(COL_DATE, comment.getDate());
 
         //on insère l'objet dans la BDD via le ContentValues
         return bdd.insert(COMMENT_TABLE, null, values);
@@ -105,7 +105,8 @@ public class CommentActions {
             int userId=curseur.getInt(1);
             int post_id=curseur.getInt(2);
             String commentaire=curseur.getString(3);
-            Date date = new Date(Calendar.getInstance().getTime().getTime());
+            String date=curseur.getString(4);
+            //Date date = new Date(Calendar.getInstance().getTime().getTime());
             comments.add(new Comment(userId,post_id,commentaire,date));
             curseur.moveToNext();
         }

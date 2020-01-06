@@ -86,14 +86,14 @@ public class HomeFragment extends Fragment {
 
             newlike.setUser_id(mCurrent_User);
             newlike.setPost_id(postAbonnement.get(position).getId());
-            newlike.setDate(now);
+            newlike.setDate(now.toString());
             likeActions.insertLike(newlike);
             Posts.get(position).setmLike(String.valueOf(postActions.getNbLike(postAbonnement.get(position).getId())));
             Posts.get(position).setmColorLike(R.drawable.redheart);
             likeActions.close();
             notifyActions=new NotifyActions(getContext());
 
-            Notify notif= new Notify(mCurrent_User,postAbonnement.get(position).getUser_id(),postAbonnement.get(position).getId(),"like",now);
+            Notify notif= new Notify(mCurrent_User,postAbonnement.get(position).getUser_id(),postAbonnement.get(position).getId(),"like",now.toString());
             notifyActions.insertNotification(notif);
             notifyActions.close();
         }

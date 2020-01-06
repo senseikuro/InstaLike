@@ -7,13 +7,13 @@ public class Follow {
     private int id;
     private int user_id;
     private int user_id_followed;
-    private Date date;
+    private String date;
 
     public Follow() {}
 
 
 
-    public Follow(int user_id, int user_id_followed_id, Date date) {
+    public Follow(int user_id, int user_id_followed_id, String date) {
         this.user_id = user_id;
         this.user_id_followed = user_id_followed_id;
         this.date = date;
@@ -45,11 +45,11 @@ public class Follow {
         this.user_id_followed = user_id_followed;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

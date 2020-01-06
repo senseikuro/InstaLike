@@ -27,6 +27,8 @@ import com.example.instalike.db.Comment;
 import com.example.instalike.db.CommentActions;
 import com.example.instalike.db.Like;
 import com.example.instalike.db.LikeActions;
+import com.example.instalike.db.Notify;
+import com.example.instalike.db.NotifyActions;
 import com.example.instalike.db.Post;
 import com.example.instalike.db.PostActions;
 import com.example.instalike.db.UserActions;
@@ -46,6 +48,7 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
     private PostActions postAction;
     private UserActions mUserActions;
     private ImageView mModify;
+    private NotifyActions notifyActions;
 
     private static final int   MENU_SUPPRIMER= Menu.FIRST;
     private static final int   MENU_EDIT= Menu.FIRST+1;
@@ -225,10 +228,15 @@ public class FullPostFragment extends Fragment implements View.OnClickListener {
 
                     newlike.setUser_id(mCurrent_user);
                     newlike.setPost_id(post.getId());
-                    newlike.setDate(now);
+                    newlike.setDate(now.toString());
                     mLikeAction.insertLike(newlike);
                     mHeart.setImageResource(R.drawable.redheart);
                     mLikeAction.close();
+                    notifyActions=new NotifyActions(getContext());
+
+                    Notify notif= new Notify(mCurrent_user,mUserId_post,mPostID,"like",now.toString());
+                    notifyActions.insertNotification(notif);
+                    notifyActions.close();
                 }
 
 

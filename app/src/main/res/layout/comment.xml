@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="@dimen/post_pading_horizontal"
-    android:layout_marginTop="@dimen/post_pading_vertical"
+    android:layout_marginTop="@dimen/post_pading_vertical2"
     android:layout_marginRight="@dimen/post_pading_horizontal"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="4dp"
@@ -30,6 +30,8 @@
             android:background="@color/colorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/post_image_post"
             app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toStartOf="@+id/Comment_pseudo"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
@@ -38,9 +40,11 @@
             android:id="@+id/Comment_pseudo"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:paddingLeft="10dp"
             android:paddingTop="40dp"
@@ -52,22 +56,20 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/comment_pp"
             app:layout_constraintTop_toTopOf="@+id/comment_commentary"
-            app:layout_constraintVertical_bias="1.0"></TextView>
+            app:layout_constraintVertical_bias="0.555"></TextView>
 
         <TextView
             android:id="@+id/comment_commentary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_width="136dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:gravity="center_vertical"
             android:paddingLeft="0dp"
             android:paddingTop="0dp"
             android:text="comment"
             android:textColor="@color/colorPrimaryDark"
             app:layout_constraintBaseline_toBaselineOf="@+id/Comment_pseudo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/Comment_pseudo"></TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

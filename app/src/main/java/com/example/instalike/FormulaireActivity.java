@@ -251,7 +251,7 @@ public class FormulaireActivity extends AppCompatActivity {
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                         byte[] bitmapdata = stream.toByteArray();
-                        User newUser=new User(mName.getText().toString(),mSurname.getText().toString(),mEmail.getText().toString(),mMdp.getText().toString(), mPseudo.getText().toString(),bitmapdata, null, today);
+                        User newUser=new User(mName.getText().toString(),mSurname.getText().toString(),mEmail.getText().toString(),mMdp.getText().toString(), mPseudo.getText().toString(),bitmapdata, null, today.toString());
 
                         userActions.insertUser(newUser);
                         userActions.close();

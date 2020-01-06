@@ -116,13 +116,13 @@ public class NotificationFragment extends Fragment {
         if (!isFollow){
             Date now = new Date(Calendar.getInstance().getTime().getTime());
 
-            follow=new Follow(mCurrentUser,user.getId(),now);
+            follow=new Follow(mCurrentUser,user.getId(),now.toString());
             followActions.insertFollow(follow);
             followActions.close();
 
             notifyActions=new NotifyActions(getContext());
 
-            Notify notif= new Notify(mCurrentUser,user.getId(),-1,"follow",now);
+            Notify notif= new Notify(mCurrentUser,user.getId(),-1,"follow",now.toString());
             notifyActions.insertNotification(notif);
             notifyActions.close();
             Toast.makeText(getContext(),"vous suivez maintenant cette personne",Toast.LENGTH_SHORT).show();

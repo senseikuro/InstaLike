@@ -8,13 +8,13 @@ public class Comment {
     private int user_id;
     private int post_id;
     private String content;
-    private Date date;
+    private String date;
 
     public Comment() {}
 
 
 
-    public Comment(int user_id, int post_id, String content, Date date) {
+    public Comment(int user_id, int post_id, String content, String date) {
         this.user_id = user_id;
         this.post_id = post_id;
         this.content = content;
@@ -55,11 +55,11 @@ public class Comment {
         this.content = content;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

@@ -166,9 +166,8 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
                     }
                     else{
                         Date now = new Date(Calendar.getInstance().getTime().getTime());
-                        System.out.println("user_profil"+mUser_id+" user current"+mCurrent_User);
 
-                        follow=new Follow(mCurrent_User,mUser_id,now);
+                        follow=new Follow(mCurrent_User,mUser_id,now.toString());
                         followActions.insertFollow(follow);
                         int nbFollowers=Integer.parseInt(mFollowers.getText().toString());
                         int nbFollow=followActions.getNbFollow(mUser_id);
@@ -184,7 +183,7 @@ public class ProfilFragement extends Fragment  implements View.OnClickListener{
 
                         notifyActions=new NotifyActions(getContext());
 
-                        Notify notif= new Notify(mCurrent_User,mUser_id,-1,"follow",now);
+                        Notify notif= new Notify(mCurrent_User,mUser_id,-1,"follow",now.toString());
                         notifyActions.insertNotification(notif);
                         notifyActions.close();
                     }

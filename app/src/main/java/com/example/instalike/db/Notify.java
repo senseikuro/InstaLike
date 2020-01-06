@@ -8,13 +8,13 @@ public class Notify {
     private int user_notified_id;
     private int post_id;
     private String event;
-    private Date date;
+    private String date;
 
     public Notify() {}
 
 
 
-    public Notify(int user_id, int user_notified_id, int post_id, String event, Date date) {
+    public Notify(int user_id, int user_notified_id, int post_id, String event, String date) {
         this.user_id = user_id;
         this.user_notified_id = user_notified_id;
         this.post_id=post_id;
@@ -62,11 +62,11 @@ public class Notify {
         this.event = event;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
