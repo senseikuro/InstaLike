@@ -13,6 +13,7 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.instalike.db.NotifyActions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -141,5 +142,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.activity_home_parametre:
 
         }
+    }
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        Toast.makeText(HomeActivity.this,"There is no back action",Toast.LENGTH_LONG).show();
+        return;
     }
 }

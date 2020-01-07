@@ -37,23 +37,16 @@ public class FormulaireActivity extends AppCompatActivity {
     private boolean name=false;
     private boolean surname=false;
     private UserActions userActions;
-    protected void toastResgister(boolean valid,String error){
+    protected void toastResgister(boolean valid, String texte){
         if (valid){
             Context contexte=getApplicationContext();
-            CharSequence text="Create account";
+            //CharSequence text="Create account";
             int duration= Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(contexte,text,duration);
+            Toast toast = Toast.makeText(contexte,texte,duration);
             toast.show();
         }
-        else{
-            Context contexte=getApplicationContext();
-            CharSequence text=error;
-            int duration= Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(contexte,text,duration);
-            toast.show();
-        }
     }
 
     @Override
@@ -242,22 +235,37 @@ public class FormulaireActivity extends AppCompatActivity {
                         userActions = new UserActions(getApplicationContext());
 
                         userActions.open();
+                        User tempuser=userActions.getUserWithPseudeo(mPseudo.getText().toString());
+                        //System.out.println(tempuser.getId());
+                        int id=-1;
 
-                        toastResgister(true,"You create your account");
-                        Date today = Calendar.getInstance().getTime();
+                        try {
+                            id=tempuser.getId();
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                            if (id>0){
+                                toastResgister(true,"Username already exist");
+                            }
+                            else{
+                                toastResgister(true,"You create your account");
+                                Date today = Calendar.getInstance().getTime();
 
-                        Drawable imageDefault= getDrawable(R.drawable.user); // the drawable (Captain Obvious, to the rescue!!!)
-                        Bitmap bitmap = ((BitmapDrawable)imageDefault).getBitmap();
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                        byte[] bitmapdata = stream.toByteArray();
-                        User newUser=new User(mName.getText().toString(),mSurname.getText().toString(),mEmail.getText().toString(),mMdp.getText().toString(), mPseudo.getText().toString(),bitmapdata, null, today.toString());
+                                Drawable imageDefault= getDrawable(R.drawable.user); // the drawable (Captain Obvious, to the rescue!!!)
+                                Bitmap bitmap = ((BitmapDrawable)imageDefault).getBitmap();
+                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                                byte[] bitmapdata = stream.toByteArray();
+                                User newUser=new User(mName.getText().toString(),mSurname.getText().toString(),mEmail.getText().toString(),mMdp.getText().toString(), mPseudo.getText().toString(),bitmapdata, null, today.toString());
 
-                        userActions.insertUser(newUser);
-                        userActions.close();
+                                userActions.insertUser(newUser);
+                                userActions.close();
 
-                        Intent homeActivity=new Intent(FormulaireActivity.this,HomeActivity.class);
-                        startActivity(homeActivity);
+                                Intent homeActivity=new Intent(FormulaireActivity.this,HomeActivity.class);
+                                startActivity(homeActivity);
+                            }
+
+
                     }
                     else{
                         toastResgister(false,"Wrong emil address");
